@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		151E567026A5F4BB005D7D05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E566F26A5F4BB005D7D05 /* AppDelegate.swift */; };
 		151E567226A5F4BB005D7D05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E567126A5F4BB005D7D05 /* SceneDelegate.swift */; };
-		151E567426A5F4BB005D7D05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E567326A5F4BB005D7D05 /* ViewController.swift */; };
-		151E567726A5F4BB005D7D05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 151E567526A5F4BB005D7D05 /* Main.storyboard */; };
 		151E567926A5F4BF005D7D05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151E567826A5F4BF005D7D05 /* Assets.xcassets */; };
 		151E567C26A5F4BF005D7D05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */; };
 		151E568726A5F4BF005D7D05 /* GBShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E568626A5F4BF005D7D05 /* GBShopTests.swift */; };
@@ -38,8 +36,6 @@
 		151E566C26A5F4BB005D7D05 /* GBShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		151E566F26A5F4BB005D7D05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		151E567126A5F4BB005D7D05 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		151E567326A5F4BB005D7D05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		151E567626A5F4BB005D7D05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		151E567826A5F4BF005D7D05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		151E567B26A5F4BF005D7D05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		151E567D26A5F4BF005D7D05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,13 +95,10 @@
 		151E566E26A5F4BB005D7D05 /* GBShop */ = {
 			isa = PBXGroup;
 			children = (
-				151E566F26A5F4BB005D7D05 /* AppDelegate.swift */,
-				151E567126A5F4BB005D7D05 /* SceneDelegate.swift */,
-				151E567326A5F4BB005D7D05 /* ViewController.swift */,
-				151E567526A5F4BB005D7D05 /* Main.storyboard */,
-				151E567826A5F4BF005D7D05 /* Assets.xcassets */,
-				151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */,
-				151E567D26A5F4BF005D7D05 /* Info.plist */,
+				151E56A226A5FAC2005D7D05 /* App */,
+				151E56A726A5FB0E005D7D05 /* Core */,
+				151E56A926A5FB22005D7D05 /* Environments */,
+				151E56A826A5FB13005D7D05 /* Resources */,
 			);
 			path = GBShop;
 			sourceTree = "<group>";
@@ -126,6 +119,71 @@
 				151E569326A5F4BF005D7D05 /* Info.plist */,
 			);
 			path = GBShopUITests;
+			sourceTree = "<group>";
+		};
+		151E56A226A5FAC2005D7D05 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				151E566F26A5F4BB005D7D05 /* AppDelegate.swift */,
+				151E567126A5F4BB005D7D05 /* SceneDelegate.swift */,
+				151E56A626A5FB00005D7D05 /* Flows */,
+				151E56A526A5FAF0005D7D05 /* Assembly */,
+				151E56A426A5FAE4005D7D05 /* Entity */,
+				151E56A326A5FACE005D7D05 /* BusinessLogic */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		151E56A326A5FACE005D7D05 /* BusinessLogic */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BusinessLogic;
+			sourceTree = "<group>";
+		};
+		151E56A426A5FAE4005D7D05 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		151E56A526A5FAF0005D7D05 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		151E56A626A5FB00005D7D05 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		151E56A726A5FB0E005D7D05 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		151E56A826A5FB13005D7D05 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */,
+				151E567826A5F4BF005D7D05 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		151E56A926A5FB22005D7D05 /* Environments */ = {
+			isa = PBXGroup;
+			children = (
+				151E567D26A5F4BF005D7D05 /* Info.plist */,
+			);
+			path = Environments;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +291,6 @@
 			files = (
 				151E567C26A5F4BF005D7D05 /* LaunchScreen.storyboard in Resources */,
 				151E567926A5F4BF005D7D05 /* Assets.xcassets in Resources */,
-				151E567726A5F4BB005D7D05 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +315,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				151E567426A5F4BB005D7D05 /* ViewController.swift in Sources */,
 				151E567026A5F4BB005D7D05 /* AppDelegate.swift in Sources */,
 				151E567226A5F4BB005D7D05 /* SceneDelegate.swift in Sources */,
 			);
@@ -296,14 +352,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		151E567526A5F4BB005D7D05 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				151E567626A5F4BB005D7D05 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -438,7 +486,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DQ48S8SUS4;
-				INFOPLIST_FILE = GBShop/Info.plist;
+				INFOPLIST_FILE = GBShop/Environments/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,7 +505,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DQ48S8SUS4;
-				INFOPLIST_FILE = GBShop/Info.plist;
+				INFOPLIST_FILE = GBShop/Environments/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
