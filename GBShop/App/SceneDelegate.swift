@@ -23,6 +23,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error.localizedDescription)
             }
         }
+        
+        auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        auth.logout(id: 123) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
         guard let _ = (scene as? UIWindowScene) else { return }
     }
