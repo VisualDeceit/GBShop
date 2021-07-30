@@ -8,8 +8,9 @@
 import Foundation
 
 protocol AbstractRequestFactory {
-    var errorParser: AbstractErrorParser { get }
+    var errorParser: AbstractErrorParser { get }    
     var sessionManager: URLSession { get }
+    
     func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> ())
 }
 
