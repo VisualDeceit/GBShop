@@ -26,6 +26,7 @@
 		151E56FF26B1E6F6005D7D05 /* RegisterUserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E56FE26B1E6F6005D7D05 /* RegisterUserResult.swift */; };
 		151E570726B1ED83005D7D05 /* LogoutResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E570626B1ED83005D7D05 /* LogoutResult.swift */; };
 		151E570C26B1EF77005D7D05 /* ChangeUserDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E570B26B1EF77005D7D05 /* ChangeUserDataResult.swift */; };
+		151E571C26B3B031005D7D05 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E571B26B3B031005D7D05 /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		151E56FE26B1E6F6005D7D05 /* RegisterUserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserResult.swift; sourceTree = "<group>"; };
 		151E570626B1ED83005D7D05 /* LogoutResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResult.swift; sourceTree = "<group>"; };
 		151E570B26B1EF77005D7D05 /* ChangeUserDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUserDataResult.swift; sourceTree = "<group>"; };
+		151E571B26B3B031005D7D05 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,9 +221,9 @@
 			isa = PBXGroup;
 			children = (
 				151E56B726AF38E1005D7D05 /* AbstractErrorParser.swift */,
+				151E56DB26AF4B0F005D7D05 /* AbstractRequestFactory.swift */,
 				151E56BF26AF3A01005D7D05 /* ErrorParser.swift */,
 				151E56CE26AF4300005D7D05 /* RequestRouter.swift */,
-				151E56DB26AF4B0F005D7D05 /* AbstractRequestFactory.swift */,
 				151E56F626B1B5BE005D7D05 /* DataRequest.swift */,
 			);
 			path = Network;
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				151E56C426AF3FD6005D7D05 /* LoginResult.swift */,
+				151E571B26B3B031005D7D05 /* UserData.swift */,
 				151E570B26B1EF77005D7D05 /* ChangeUserDataResult.swift */,
 				151E570626B1ED83005D7D05 /* LogoutResult.swift */,
 				151E56FE26B1E6F6005D7D05 /* RegisterUserResult.swift */,
@@ -388,6 +391,7 @@
 			files = (
 				151E56EF26AF4B79005D7D05 /* RequestFactory.swift in Sources */,
 				151E56B826AF38E2005D7D05 /* AbstractErrorParser.swift in Sources */,
+				151E571C26B3B031005D7D05 /* UserData.swift in Sources */,
 				151E570C26B1EF77005D7D05 /* ChangeUserDataResult.swift in Sources */,
 				151E570726B1ED83005D7D05 /* LogoutResult.swift in Sources */,
 				151E56DC26AF4B0F005D7D05 /* AbstractRequestFactory.swift in Sources */,

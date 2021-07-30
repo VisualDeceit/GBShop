@@ -23,18 +23,18 @@ extension Auth: AuthRequestFactory {
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func registerUser(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
-        let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
-        self.request(request: requestModel, complitionHandler: completionHandler)
-    }
-    
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
         let requestModel = Logout(id: 123)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func changeUserData(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
+    func registerUser(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
         let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        self.request(request: requestModel, complitionHandler: completionHandler)
+    }
+    
+    func changeUserData(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
+        let requestModel = ChangeUserData(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
@@ -54,31 +54,6 @@ extension Auth {
         let encoding: RequestRouterEncoding = .url
     }
     
-    struct RegisterUser: RequestRouter {
-        let scheme = "https"
-        let host = "raw.githubusercontent.com"
-        let path = "/GeekBrainsTutorial/online-store-api/master/responses/registerUser.json"
-        let id: Int
-        let userName: String
-        let password: String
-        let email: String
-        let gender: UserGender
-        let creditCard: String
-        let bio: String
-        var queryItems: [URLQueryItem]? {
-            return [URLQueryItem(name: "id_use", value: String(id)),
-                    URLQueryItem(name: "username", value: userName),
-                    URLQueryItem(name: "password", value: password),
-                    URLQueryItem(name: "email", value: email),
-                    URLQueryItem(name: "gender", value: gender.rawValue),
-                    URLQueryItem(name: "credit_card", value: password),
-                    URLQueryItem(name: "bio", value: password),
-            ]
-        }
-        let method: RequestRouterMethod = .get
-        let encoding: RequestRouterEncoding = .url
-    }
-    
     struct Logout: RequestRouter {
         let scheme = "https"
         let host = "raw.githubusercontent.com"
@@ -92,27 +67,18 @@ extension Auth {
         let encoding: RequestRouterEncoding = .url
     }
     
-    struct ChangeUserData: RequestRouter {
+    class RegisterUser: UserData, RequestRouter {
         let scheme = "https"
         let host = "raw.githubusercontent.com"
         let path = "/GeekBrainsTutorial/online-store-api/master/responses/registerUser.json"
-        let id: Int
-        let userName: String
-        let password: String
-        let email: String
-        let gender: UserGender
-        let creditCard: String
-        let bio: String
-        var queryItems: [URLQueryItem]? {
-            return [URLQueryItem(name: "id_use", value: String(id)),
-                    URLQueryItem(name: "username", value: userName),
-                    URLQueryItem(name: "password", value: password),
-                    URLQueryItem(name: "email", value: email),
-                    URLQueryItem(name: "gender", value: gender.rawValue),
-                    URLQueryItem(name: "credit_card", value: password),
-                    URLQueryItem(name: "bio", value: password),
-            ]
-        }
+        let method: RequestRouterMethod = .get
+        let encoding: RequestRouterEncoding = .url
+    }
+    
+    class ChangeUserData: UserData, RequestRouter {
+        let scheme = "https"
+        let host = "raw.githubusercontent.com"
+        let path = "/GeekBrainsTutorial/online-store-api/master/responses/changeUserData.json"
         let method: RequestRouterMethod = .get
         let encoding: RequestRouterEncoding = .url
     }
