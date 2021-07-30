@@ -15,6 +15,6 @@ protocol AbstractRequestFactory {
 
 extension AbstractRequestFactory {
     public func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> ()) {
-        return sessionManager.responseData(errorParser: errorParser, request: try! request.asURLRequest(), completion: complitionHandler)
+        return sessionManager.responseData(errorParser: errorParser, request: request, completion: complitionHandler)
     }
 }
