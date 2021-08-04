@@ -22,7 +22,8 @@ extension URLSession: DataRequest {
                         completion(.failure(error))
                     }
                     do {
-                        let value = try JSONDecoder().decode(T.self, from: data!)
+                        guard let data = data else { throw error!}
+                        let value = try JSONDecoder().decode(T.self, from: data)
                         completion(Result{value})
                     }
                     catch {

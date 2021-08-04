@@ -35,6 +35,7 @@ extension RequestRouter {
         urlComponent.scheme = scheme
         urlComponent.host = host
         urlComponent.path = path
+        urlComponent.queryItems = queryItems
 
         guard let fullURL = urlComponent.url else {
             throw RequestRouterError.invalidURLComponent(urlComponent)
