@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum BaseUrl {
+    static let host = "raw.githubusercontent.com"
+    static let path = "/GeekBrainsTutorial/online-store-api/master/responses/"
+}
+
 class Auth: AbstractRequestFactory {
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
@@ -42,8 +47,8 @@ extension Auth: AuthRequestFactory {
 extension Auth {
     struct Login: RequestRouter {
         let scheme = "https"
-        let host = "raw.githubusercontent.com"
-        let path = "/GeekBrainsTutorial/online-store-api/master/responses/login.json"
+        let host = BaseUrl.host
+        let path = BaseUrl.path + "login.json"
         let login: String
         let password: String
         var queryItems: [URLQueryItem]? {
@@ -56,8 +61,8 @@ extension Auth {
     
     struct Logout: RequestRouter {
         let scheme = "https"
-        let host = "raw.githubusercontent.com"
-        let path = "/GeekBrainsTutorial/online-store-api/master/responses/logout.json"
+        let host = BaseUrl.host
+        let path = BaseUrl.path + "logout.json"
         let id: Int
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "id_use", value: String(id)),
@@ -69,16 +74,16 @@ extension Auth {
     
     class RegisterUser: UserData, RequestRouter {
         let scheme = "https"
-        let host = "raw.githubusercontent.com"
-        let path = "/GeekBrainsTutorial/online-store-api/master/responses/registerUser.json"
+        let host = BaseUrl.host
+        let path = BaseUrl.path + "registerUser.json"
         let method: RequestRouterMethod = .get
         let encoding: RequestRouterEncoding = .url
     }
     
     class ChangeUserData: UserData, RequestRouter {
         let scheme = "https"
-        let host = "raw.githubusercontent.com"
-        let path = "/GeekBrainsTutorial/online-store-api/master/responses/changeUserData.json"
+        let host = BaseUrl.host
+        let path = BaseUrl.path + "changeUserData.json"
         let method: RequestRouterMethod = .get
         let encoding: RequestRouterEncoding = .url
     }
