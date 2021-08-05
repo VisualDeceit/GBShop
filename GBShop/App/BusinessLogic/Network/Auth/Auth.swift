@@ -7,9 +7,8 @@
 
 import Foundation
 
-enum BaseUrl {
-    static let host = "raw.githubusercontent.com"
-    static let path = "/GeekBrainsTutorial/online-store-api/master/responses/"
+enum Constants {
+    static let baseURL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses"
 }
 
 class Auth: AbstractRequestFactory {
@@ -24,31 +23,30 @@ class Auth: AbstractRequestFactory {
 
 extension Auth: AuthRequestFactory {
     func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
-        let requestModel = Login(login: userName, password: password)
+        let requestModel = Login(baseURL: Constants.baseURL, login: userName, password: password)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
-        let requestModel = Logout(id: 123)
+        let requestModel = Logout(baseURL: Constants.baseURL, id: 123)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func registerUser(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
-        let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        let requestModel = RegisterUser(baseURL: Constants.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func changeUserData(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
-        let requestModel = ChangeUserData(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        let requestModel = ChangeUserData(baseURL: Constants.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
 
 extension Auth {
     struct Login: RequestRouter {
-        let scheme = "https"
-        let host = BaseUrl.host
-        let path = BaseUrl.path + "login.json"
+        var baseURL: String
+        let path = "/login.json"
         let login: String
         let password: String
         var queryItems: [URLQueryItem]? {
@@ -60,9 +58,8 @@ extension Auth {
     }
     
     struct Logout: RequestRouter {
-        let scheme = "https"
-        let host = BaseUrl.host
-        let path = BaseUrl.path + "logout.json"
+        var baseURL: String
+        let path = "/logout.json"
         let id: Int
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "id_use", value: String(id)),
@@ -73,18 +70,26 @@ extension Auth {
     }
     
     class RegisterUser: UserData, RequestRouter {
-        let scheme = "https"
-        let host = BaseUrl.host
-        let path = BaseUrl.path + "registerUser.json"
+        var baseURL: String
+        let path = "/registerUser.json"
         let method: RequestRouterMethod = .get
         let encoding: RequestRouterEncoding = .url
+        
+        init(baseURL: String, id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
+            self.baseURL = baseURL
+            super.init(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        }
     }
     
     class ChangeUserData: UserData, RequestRouter {
-        let scheme = "https"
-        let host = BaseUrl.host
-        let path = BaseUrl.path + "changeUserData.json"
+        var baseURL: String
+        let path = "/changeUserData.json"
         let method: RequestRouterMethod = .get
         let encoding: RequestRouterEncoding = .url
+        
+        init(baseURL: String, id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
+            self.baseURL = baseURL
+            super.init(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        }
     }
 }

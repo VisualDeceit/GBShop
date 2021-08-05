@@ -18,11 +18,11 @@ enum RequestRouterMethod: String {
 
 enum RequestRouterError: Error {
     case invalidURLComponent(URLComponents)
+    case invalidBaseURL(String)
 }
 
 protocol RequestRouter {
-    var scheme: String { get }
-    var host: String { get }
+    var baseURL: String { get }
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
     var method: RequestRouterMethod { get }
@@ -31,10 +31,11 @@ protocol RequestRouter {
 
 extension RequestRouter {
     func asURLRequest() throws -> URLRequest {
-        var urlComponent = URLComponents()
-        urlComponent.scheme = scheme
-        urlComponent.host = host
-        urlComponent.path = path
+        guard var urlComponent = URLComponents(string: baseURL)  else {
+            throw RequestRouterError.invalidBaseURL(baseURL)
+        }
+        //путь всегда добавляем в конец
+        urlComponent.path = urlComponent.path + path
         urlComponent.queryItems = queryItems
 
         guard let fullURL = urlComponent.url else {
