@@ -12,33 +12,39 @@ enum Constants {
 }
 
 class Auth: AbstractRequestFactory {
+    let baseURL: String
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
   
-    init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
+    init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
+        self.baseURL = baseURL
         self.errorParser = errorParser
         self.sessionManager = sessionManager
+    }
+    
+    convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
+        self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
     }
 }
 
 extension Auth: AuthRequestFactory {
     func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
-        let requestModel = Login(baseURL: Constants.baseURL, login: userName, password: password, method: .get)
+        let requestModel = Login(baseURL: self.baseURL, login: userName, password: password, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
-        let requestModel = Logout(baseURL: Constants.baseURL, id: 123, method: .get)
+        let requestModel = Logout(baseURL: self.baseURL, id: 123, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func registerUser(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
-        let requestModel = RegisterUser(baseURL: Constants.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        let requestModel = RegisterUser(baseURL: self.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func changeUserData(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String, completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
-        let requestModel = ChangeUserData(baseURL: Constants.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
+        let requestModel = ChangeUserData(baseURL: self.baseURL, id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
