@@ -23,12 +23,12 @@ class Auth: AbstractRequestFactory {
 
 extension Auth: AuthRequestFactory {
     func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
-        let requestModel = Login(baseURL: Constants.baseURL, login: userName, password: password)
+        let requestModel = Login(baseURL: Constants.baseURL, login: userName, password: password, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
-        let requestModel = Logout(baseURL: Constants.baseURL, id: 123)
+        let requestModel = Logout(baseURL: Constants.baseURL, id: 123, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
@@ -53,8 +53,7 @@ extension Auth {
             return [URLQueryItem(name: "username", value: login),
                     URLQueryItem(name: "password", value: password)]
         }
-        let method: RequestRouterMethod = .get
-        let encoding: RequestRouterEncoding = .url
+        let method: RequestRouterMethod
     }
     
     struct Logout: RequestRouter {
@@ -65,15 +64,13 @@ extension Auth {
             return [URLQueryItem(name: "id_use", value: String(id)),
             ]
         }
-        let method: RequestRouterMethod = .get
-        let encoding: RequestRouterEncoding = .url
+        let method: RequestRouterMethod
     }
     
     class RegisterUser: UserData, RequestRouter {
         var baseURL: String
         let path = "/registerUser.json"
         let method: RequestRouterMethod = .get
-        let encoding: RequestRouterEncoding = .url
         
         init(baseURL: String, id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
             self.baseURL = baseURL

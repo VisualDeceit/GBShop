@@ -41,7 +41,6 @@ struct ValidRequestStub: RequestRouter {
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
-    let encoding: RequestRouterEncoding = .url
 }
 
 struct InvalidHostStub: RequestRouter {
@@ -49,7 +48,6 @@ struct InvalidHostStub: RequestRouter {
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
-    let encoding: RequestRouterEncoding = .url
 }
 
 struct InvalidRequestStub: RequestRouter {
@@ -57,8 +55,14 @@ struct InvalidRequestStub: RequestRouter {
     let path = "posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
-    let encoding: RequestRouterEncoding = .url
 }
+
+//struct InvalidRequestStub: RequestRouter {
+//    let baseURL = "https://jsonplaceholder.typicode.ru"
+//    let path = "posts/1"
+//    var queryItems: [URLQueryItem]?
+//    let method: RequestRouterMethod = .get
+//}
 
 class DataRequestTests: XCTestCase {
     

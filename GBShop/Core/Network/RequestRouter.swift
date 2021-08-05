@@ -26,12 +26,12 @@ protocol RequestRouter {
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
     var method: RequestRouterMethod { get }
-    var encoding: RequestRouterEncoding { get }
 }
 
 extension RequestRouter {
     func asURLRequest() throws -> URLRequest {
-        guard var urlComponent = URLComponents(string: baseURL)  else {
+        guard var urlComponent = URLComponents(string: baseURL),
+              (urlComponent.scheme == "http" || urlComponent.scheme == "https") else {
             throw RequestRouterError.invalidBaseURL(baseURL)
         }
         //путь всегда добавляем в конец
