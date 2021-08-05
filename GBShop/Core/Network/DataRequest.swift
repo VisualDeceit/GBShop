@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum DataRequestErrors: Error {
+    case DataIsnil
+}
+
 protocol DataRequest {
     func responseData<T: Decodable>(errorParser: AbstractErrorParser, request: RequestRouter, completion: @escaping (Result<T, Error>) -> ())
 }
@@ -22,7 +26,7 @@ extension URLSession: DataRequest {
                         completion(.failure(error))
                     }
                     do {
-                        guard let data = data else { throw error!}
+                        guard let data = data else { throw DataRequestErrors.DataIsnil }
                         let value = try JSONDecoder().decode(T.self, from: data)
                         completion(Result{value})
                     }

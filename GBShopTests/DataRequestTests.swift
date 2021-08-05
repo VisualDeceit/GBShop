@@ -15,6 +15,13 @@ struct PostStub: Codable {
     let body: String
 }
 
+struct InvalidPostStub: Codable {
+    let usdsfer_Id: Int
+    let isdfd: Int
+    let tidfdstle: String
+    let boddsfy: String
+}
+
 enum ApiErrorStub: Error {
     case fatalError
 }
@@ -29,10 +36,28 @@ struct ErrorParserStub: AbstractErrorParser {
     }
 }
 
-struct LoginStub: RequestRouter {
+struct ValidRequestStub: RequestRouter {
     let scheme = "https"
-    let host = "failUrl"
-    let path = ""
+    let host = "jsonplaceholder.typicode.com"
+    let path = "/posts/1"
+    var queryItems: [URLQueryItem]?
+    let method: RequestRouterMethod = .get
+    let encoding: RequestRouterEncoding = .url
+}
+
+struct InvalidHostStub: RequestRouter {
+    let scheme = "https"
+    let host = "jsonplaceholder.typicode.ru"
+    let path = "/posts/1"
+    var queryItems: [URLQueryItem]?
+    let method: RequestRouterMethod = .get
+    let encoding: RequestRouterEncoding = .url
+}
+
+struct InvalidRequestStub: RequestRouter {
+    let scheme = "https"
+    let host = "jsonplaceholder.typicode.ru"
+    let path = "posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
     let encoding: RequestRouterEncoding = .url
@@ -40,29 +65,63 @@ struct LoginStub: RequestRouter {
 
 class DataRequestTests: XCTestCase {
     
-    let expectation = XCTestExpectation(description: "Download https://failUrl")
+    var expectation: XCTestExpectation!
     var errorParser: ErrorParserStub!
-    let login = LoginStub()
-
-    override func setUpWithError() throws {
-
-    }
-
-    override func tearDownWithError() throws {
-     
-    }
-
-    func testURLSessionResponseData() throws {
+    
+    override func setUp() {
+        super.setUp()
+        expectation = XCTestExpectation(description: "Download timout")
         errorParser = ErrorParserStub()
-        URLSession.shared.responseData(errorParser: errorParser, request: login) { [weak self] (response: Result<PostStub, Error>) in
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        expectation = nil
+        errorParser = nil
+    }
+
+    func testResponseData_WhenValidRequest_ThrowsNoErrors() throws {
+        let request = ValidRequestStub()
+        URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<PostStub, Error>) in
             switch response {
             case .success(_):
-                break
-            case .failure(_):
-                XCTFail()
+                XCTAssert(true)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
             }
             self?.expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
     }
+    
+    func testResponseData_WhenHostNotFound_ThrowsErrors() throws {
+        let request = InvalidHostStub()
+        URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<PostStub, Error>) in
+            switch response {
+            case .success(_):
+                XCTFail("Shoud throw error")
+            case .failure(let error):
+                print(error.localizedDescription)
+                XCTAssert(true)
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
+    func testResponseData_WhenInvalidURL_ThrowsErrors() throws {
+        let request = InvalidRequestStub()
+        URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<InvalidPostStub, Error>) in
+            switch response {
+            case .success(_):
+                XCTFail("Shoud throw error")
+            case .failure(let error):
+                print(error.localizedDescription)
+                XCTAssert(true)
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
 }
