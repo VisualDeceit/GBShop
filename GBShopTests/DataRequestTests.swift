@@ -37,8 +37,7 @@ struct ErrorParserStub: AbstractErrorParser {
 }
 
 struct ValidRequestStub: RequestRouter {
-    let scheme = "https"
-    let host = "jsonplaceholder.typicode.com"
+    let baseURL = "https://jsonplaceholder.typicode.com"
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
@@ -46,8 +45,7 @@ struct ValidRequestStub: RequestRouter {
 }
 
 struct InvalidHostStub: RequestRouter {
-    let scheme = "https"
-    let host = "jsonplaceholder.typicode.ru"
+    let baseURL = "https://jsonplaceholder.typicode.ru"
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
@@ -55,8 +53,7 @@ struct InvalidHostStub: RequestRouter {
 }
 
 struct InvalidRequestStub: RequestRouter {
-    let scheme = "https"
-    let host = "jsonplaceholder.typicode.ru"
+    let baseURL = "https://jsonplaceholder.typicode.ru"
     let path = "posts/1"
     var queryItems: [URLQueryItem]?
     let method: RequestRouterMethod = .get
