@@ -10,13 +10,14 @@ import XCTest
 
 class AuthTests: XCTestCase {
     
-    var auth: Auth!
     var commonSession: URLSession!
     var errorParser: ErrorParserStub!
     var expectation: XCTestExpectation!
     
     override func setUp() {
         super.setUp()
+        errorParser = ErrorParserStub()
+        expectation = XCTestExpectation(description: "Download timout")
         commonSession = {
             let configuration = URLSessionConfiguration.default
             configuration.httpShouldSetCookies = false
@@ -24,19 +25,16 @@ class AuthTests: XCTestCase {
             let manager = URLSession(configuration: configuration)
             return manager
         }()
-        errorParser = ErrorParserStub()
-        auth = Auth(errorParser: errorParser, sessionManager: commonSession)
-        expectation = XCTestExpectation(description: "Download timout")
     }
 
     override func tearDown() {
         super.tearDown()
         commonSession = nil
         errorParser = nil
-        auth = nil
     }
 
-    func testLogin_WithBaseURL_ThrowsNoErrors() throws {
+    func testLogin_withBaseURL_throwsNoErrors() throws {
+        let auth = Auth(errorParser: errorParser, sessionManager: commonSession)
         auth.login(userName: "test", password: "password") {[weak self] result in
             switch result {
             case .success(_):
@@ -48,5 +46,19 @@ class AuthTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10)
     }
-
+    
+    func testLogin_withInvalidURL_throwsErrors() throws {
+        let baseUrl = "https://failUrl"
+        let auth = Auth(baseURL: baseUrl, errorParser: errorParser, sessionManager: commonSession)
+        auth.login(userName: "test", password: "password") {[weak self] result in
+            switch result {
+            case .success(_):
+                XCTFail("Expected error")
+            case .failure(_):
+                XCTAssertTrue(true)
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10)
+    }
 }
