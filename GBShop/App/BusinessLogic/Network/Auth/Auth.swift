@@ -12,7 +12,7 @@ enum Constants {
 }
 
 class Auth: AbstractRequestFactory {
-    let baseURL: String
+    var baseURL: String
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
   

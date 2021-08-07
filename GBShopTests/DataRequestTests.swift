@@ -81,7 +81,7 @@ class DataRequestTests: XCTestCase {
         errorParser = nil
     }
 
-    func testResponseData_WhenValidRequest_ThrowsNoErrors() throws {
+    func testResponseData_whenValidRequest_throwsNoErrors() throws {
         let request = ValidRequestStub()
         URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<PostStub, Error>) in
             switch response {
@@ -95,7 +95,7 @@ class DataRequestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
     
-    func testResponseData_WhenHostNotFound_ThrowsErrors() throws {
+    func testResponseData_whenHostNotFound_throwsErrors() throws {
         let request = InvalidHostStub()
         URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<PostStub, Error>) in
             switch response {
@@ -110,7 +110,7 @@ class DataRequestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
     
-    func testResponseData_WhenInvalidURL_ThrowsErrors() throws {
+    func testResponseData_whenInvalidURL_throwsErrors() throws {
         let request = InvalidRequestStub()
         URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<InvalidPostStub, Error>) in
             switch response {

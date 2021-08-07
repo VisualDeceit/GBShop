@@ -9,13 +9,14 @@ import XCTest
 @testable import GBShop
 
 class AuthTests: XCTestCase {
-    
+    let baseUrl = "https://failUrl"
     var commonSession: URLSession!
     var errorParser: ErrorParserStub!
     var expectation: XCTestExpectation!
-    
+    var auth: Auth!
+
     override func setUp() {
-        super.setUp()
+        super.setUp()   
         errorParser = ErrorParserStub()
         expectation = XCTestExpectation(description: "Download timout")
         commonSession = {
@@ -25,6 +26,7 @@ class AuthTests: XCTestCase {
             let manager = URLSession(configuration: configuration)
             return manager
         }()
+        auth = Auth(errorParser: errorParser, sessionManager: commonSession)
     }
 
     override func tearDown() {
@@ -34,7 +36,6 @@ class AuthTests: XCTestCase {
     }
 
     func testLogin_withBaseURL_throwsNoErrors() throws {
-        let auth = Auth(errorParser: errorParser, sessionManager: commonSession)
         auth.login(userName: "test", password: "password") {[weak self] result in
             switch result {
             case .success(_):
@@ -48,8 +49,7 @@ class AuthTests: XCTestCase {
     }
     
     func testLogin_withInvalidURL_throwsErrors() throws {
-        let baseUrl = "https://failUrl"
-        let auth = Auth(baseURL: baseUrl, errorParser: errorParser, sessionManager: commonSession)
+        auth.baseURL = self.baseUrl
         auth.login(userName: "test", password: "password") {[weak self] result in
             switch result {
             case .success(_):
@@ -63,7 +63,6 @@ class AuthTests: XCTestCase {
     }
     
     func testLogout_withBaseURL_throwsNoErrors() throws {
-        let auth = Auth(errorParser: errorParser, sessionManager: commonSession)
         auth.logout(id: 123) {[weak self] result in
             switch result {
             case .success(_):
@@ -77,8 +76,7 @@ class AuthTests: XCTestCase {
     }
     
     func testLogout_withInvalidURL_throwsErrors() throws {
-        let baseUrl = "https://failUrl"
-        let auth = Auth(baseURL: baseUrl, errorParser: errorParser, sessionManager: commonSession)
+        auth.baseURL = self.baseUrl
         auth.logout(id: 123) {[weak self] result in
             switch result {
             case .success(_):
@@ -92,7 +90,6 @@ class AuthTests: XCTestCase {
     }
     
     func testRegisterUser_withBaseURL_throwsNoErrors() throws {
-        let auth = Auth(errorParser: errorParser, sessionManager: commonSession)
         auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") {[weak self] result in
             switch result {
             case .success(_):
@@ -106,8 +103,7 @@ class AuthTests: XCTestCase {
     }
     
     func testRegisterUser_withInvalidURL_throwsErrors() throws {
-        let baseUrl = "https://failUrl"
-        let auth = Auth(baseURL: baseUrl, errorParser: errorParser, sessionManager: commonSession)
+        auth.baseURL = self.baseUrl
         auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") {[weak self] result in
             switch result {
             case .success(_):
@@ -121,31 +117,32 @@ class AuthTests: XCTestCase {
     }
     
     func testChangeUserData_withBaseURL_throwsNoErrors() throws {
-        let auth = Auth(errorParser: errorParser, sessionManager: commonSession)
         auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") {[weak self] result in
             switch result {
             case .success(_):
                 XCTAssertTrue(true)
-            case .failure(_):
-                XCTFail()
+            case .failure(let error):
+                XCTFail("Expected to be a success but got a failure with \(error)")
             }
             self?.expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10)
     }
-    
+
     func testChangeUserData_withInvalidURL_throwsErrors() throws {
-        let baseUrl = "https://failUrl"
-        let auth = Auth(baseURL: baseUrl, errorParser: errorParser, sessionManager: commonSession)
-        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") {[weak self] result in
+        auth.baseURL = self.baseUrl
+        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as! SceneDelegate
+        
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { [weak self] result in
+            sceneDelegate.changeUserDataResultCallback(result)
             switch result {
-            case .success(_):
-                XCTFail("Expected error")
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
             case .failure(_):
                 XCTAssertTrue(true)
             }
             self?.expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 10)
+        wait(for: [expectation], timeout: 20)
     }
 }

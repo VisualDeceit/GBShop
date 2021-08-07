@@ -10,11 +10,22 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    let changeUserDataResultCallback: (Result<ChangeUserDataResult, Error>) -> Void = { response in
+        switch response {
+        case .success(let answer):
+            print(answer)
+        case .failure(let error):
+            print(error.localizedDescription)
+        }
+    }
+    
     let requestFactory = RequestFactory()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let auth = requestFactory.makeAuthRequestFatory()
+        
         auth.login(userName: "Somebody", password: "mypassword") { response in
             switch response {
             case .success(let login):
@@ -42,14 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         
-        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
-            switch response {
-            case .success(let answer):
-                print(answer)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language", completionHandler: changeUserDataResultCallback)
 
         guard let _ = (scene as? UIWindowScene) else { return }
     }
