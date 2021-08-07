@@ -25,7 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let auth = requestFactory.makeAuthRequestFatory()
+        let goods = requestFactory.makeGoodsRequestFatory()
         
+        //MARK:- AUTH
         auth.login(userName: "Somebody", password: "mypassword") { response in
             switch response {
             case .success(let login):
@@ -54,6 +56,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language", completionHandler: changeUserDataResultCallback)
+        
+        //MARK:- GOODS
+        goods.getProductById(id: 123)  { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
         guard let _ = (scene as? UIWindowScene) else { return }
     }
