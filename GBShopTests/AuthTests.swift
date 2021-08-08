@@ -33,6 +33,7 @@ class AuthTests: XCTestCase {
         super.tearDown()
         commonSession = nil
         errorParser = nil
+        auth = nil
     }
 
     func testLogin_withBaseURL_throwsNoErrors() throws {
@@ -40,8 +41,8 @@ class AuthTests: XCTestCase {
             switch result {
             case .success(_):
                 XCTAssertTrue(true)
-            case .failure(_):
-                XCTFail()
+            case .failure(let error):
+                XCTFail("Expected to be a success but got a failure with \(error)")
             }
             self?.expectation.fulfill()
         }
@@ -52,8 +53,8 @@ class AuthTests: XCTestCase {
         auth.baseURL = self.baseUrl
         auth.login(userName: "test", password: "password") {[weak self] result in
             switch result {
-            case .success(_):
-                XCTFail("Expected error")
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
             case .failure(_):
                 XCTAssertTrue(true)
             }
@@ -67,8 +68,8 @@ class AuthTests: XCTestCase {
             switch result {
             case .success(_):
                 XCTAssertTrue(true)
-            case .failure(_):
-                XCTFail()
+            case .failure(let error):
+                XCTFail("Expected to be a success but got a failure with \(error)")
             }
             self?.expectation.fulfill()
         }
@@ -79,8 +80,8 @@ class AuthTests: XCTestCase {
         auth.baseURL = self.baseUrl
         auth.logout(id: 123) {[weak self] result in
             switch result {
-            case .success(_):
-                XCTFail("Expected error")
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
             case .failure(_):
                 XCTAssertTrue(true)
             }
@@ -106,8 +107,8 @@ class AuthTests: XCTestCase {
         auth.baseURL = self.baseUrl
         auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") {[weak self] result in
             switch result {
-            case .success(_):
-                XCTFail("Expected error")
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
             case .failure(_):
                 XCTAssertTrue(true)
             }
@@ -131,10 +132,7 @@ class AuthTests: XCTestCase {
 
     func testChangeUserData_withInvalidURL_throwsErrors() throws {
         auth.baseURL = self.baseUrl
-        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as! SceneDelegate
-        
         auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { [weak self] result in
-            sceneDelegate.changeUserDataResultCallback(result)
             switch result {
             case .success(let value):
                 XCTFail("Expected to be a failure but got a success with \(value)")

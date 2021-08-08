@@ -34,6 +34,7 @@
 		15E70C9526BE55C000F59ED3 /* ProductResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E70C9426BE55C000F59ED3 /* ProductResult.swift */; };
 		15E70C9B26BE566A00F59ED3 /* GoodsRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E70C9A26BE566A00F59ED3 /* GoodsRequestFactory.swift */; };
 		15E70CA326BE572300F59ED3 /* Goods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E70CA226BE572300F59ED3 /* Goods.swift */; };
+		15E70CB026BF9B4500F59ED3 /* GoodsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E70CAF26BF9B4400F59ED3 /* GoodsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		15E70C9426BE55C000F59ED3 /* ProductResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResult.swift; sourceTree = "<group>"; };
 		15E70C9A26BE566A00F59ED3 /* GoodsRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsRequestFactory.swift; sourceTree = "<group>"; };
 		15E70CA226BE572300F59ED3 /* Goods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goods.swift; sourceTree = "<group>"; };
+		15E70CAF26BF9B4400F59ED3 /* GoodsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				151E568826A5F4BF005D7D05 /* Info.plist */,
 				158EC0B026BAF9B50082D5B8 /* DataRequestTests.swift */,
 				15E70C8126BC4AAC00F59ED3 /* AuthTests.swift */,
+				15E70CAF26BF9B4400F59ED3 /* GoodsTests.swift */,
 				15E70C8626BC5F6700F59ED3 /* RequestRouterTests.swift */,
 				158EC0BD26BB930E0082D5B8 /* ErrorParserTests.swift */,
 			);
@@ -455,6 +458,7 @@
 			files = (
 				15E70C8726BC5F6700F59ED3 /* RequestRouterTests.swift in Sources */,
 				158EC0B126BAF9B50082D5B8 /* DataRequestTests.swift in Sources */,
+				15E70CB026BF9B4500F59ED3 /* GoodsTests.swift in Sources */,
 				15E70C8226BC4AAC00F59ED3 /* AuthTests.swift in Sources */,
 				158EC0BE26BB930E0082D5B8 /* ErrorParserTests.swift in Sources */,
 			);

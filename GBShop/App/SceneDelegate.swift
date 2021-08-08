@@ -11,15 +11,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    let changeUserDataResultCallback: (Result<ChangeUserDataResult, Error>) -> Void = { response in
-        switch response {
-        case .success(let answer):
-            print(answer)
-        case .failure(let error):
-            print(error.localizedDescription)
-        }
-    }
-    
     let requestFactory = RequestFactory()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -55,10 +46,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         
-        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language", completionHandler: changeUserDataResultCallback)
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
         //MARK:- GOODS
         goods.getProductById(id: 123)  { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        goods.getCatalogData(page: 1, category: 1) { response in
             switch response {
             case .success(let answer):
                 print(answer)

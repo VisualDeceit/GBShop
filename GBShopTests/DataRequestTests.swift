@@ -88,7 +88,7 @@ class DataRequestTests: XCTestCase {
             case .success(_):
                 XCTAssert(true)
             case .failure(let error):
-                XCTFail(error.localizedDescription)
+                XCTFail("Expected to be a success but got a failure with \(error)")
             }
             self?.expectation.fulfill()
         }
@@ -99,10 +99,9 @@ class DataRequestTests: XCTestCase {
         let request = InvalidHostStub()
         URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<PostStub, Error>) in
             switch response {
-            case .success(_):
-                XCTFail("Shoud throw error")
-            case .failure(let error):
-                print(error.localizedDescription)
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
+            case .failure(_):
                 XCTAssert(true)
             }
             self?.expectation.fulfill()
@@ -114,10 +113,9 @@ class DataRequestTests: XCTestCase {
         let request = InvalidRequestStub()
         URLSession.shared.responseData(errorParser: errorParser, request: request) { [weak self] (response: Result<InvalidPostStub, Error>) in
             switch response {
-            case .success(_):
-                XCTFail("Shoud throw error")
-            case .failure(let error):
-                print(error.localizedDescription)
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
+            case .failure(_):
                 XCTAssert(true)
             }
             self?.expectation.fulfill()
