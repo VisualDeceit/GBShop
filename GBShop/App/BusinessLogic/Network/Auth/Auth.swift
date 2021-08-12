@@ -8,7 +8,8 @@
 import Foundation
 
 enum Constants {
-    static let baseURL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses"
+    static let baseURL = //"https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses"
+    "http://127.0.0.1:8080"
 }
 
 class Auth: AbstractRequestFactory {
@@ -75,8 +76,8 @@ extension Auth {
     
     class RegisterUser: UserData, RequestRouter {
         var baseURL: String
-        let path = "/registerUser.json"
-        let method: RequestRouterMethod = .get
+        let path = "/register"
+        let method: RequestRouterMethod = .post
         
         init(baseURL: String, id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
             self.baseURL = baseURL

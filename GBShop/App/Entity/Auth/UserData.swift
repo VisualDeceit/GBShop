@@ -16,7 +16,7 @@ class UserData {
     var creditCard: String = ""
     var bio: String = ""
     var queryItems: [URLQueryItem]? {
-        return [URLQueryItem(name: "id_use", value: String(id)),
+        return [URLQueryItem(name: "id_user", value: String(id)),
         URLQueryItem(name: "username", value: userName),
         URLQueryItem(name: "password", value: password),
         URLQueryItem(name: "email", value: email),
