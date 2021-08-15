@@ -18,15 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let auth = requestFactory.makeAuthRequestFatory()
         let goods = requestFactory.makeGoodsRequestFatory()
         
-//        //MARK:- AUTH
-//        auth.login(userName: "Somebody", password: "mypassword") { response in
-//            switch response {
-//            case .success(let login):
-//                print(login)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        //MARK:- AUTH
+        auth.login(userName: "Somebody", password: "mypassword") { response in
+            switch response {
+            case .success(let login):
+                print(login)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
         auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
             switch response {
@@ -37,42 +37,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         
-//        auth.logout(id: 123) { response in
-//            switch response {
-//            case .success(let answer):
-//                print(answer)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//        
-//        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
-//            switch response {
-//            case .success(let answer):
-//                print(answer)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        auth.logout(id: 123) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
-//        //MARK:- GOODS
-//        goods.getProductById(id: 123)  { response in
-//            switch response {
-//            case .success(let answer):
-//                print(answer)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//
-//        goods.getCatalogData(page: 1, category: 1) { response in
-//            switch response {
-//            case .success(let answer):
-//                print(answer)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        //MARK:- GOODS
+        goods.getProductById(id: 123)  { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        goods.getCatalogData(page: 1, category: 1) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
         guard let _ = (scene as? UIWindowScene) else { return }
     }

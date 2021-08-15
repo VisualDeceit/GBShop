@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum Constants {
+    static let baseURL = "https://gb-shop.herokuapp.com"
+}
+
 enum RequestRouterEncoding {
     case url, json
 }

@@ -25,12 +25,12 @@ class Goods: AbstractRequestFactory {
 
 extension Goods: GoodsRequestFactory {
     func getProductById(id: Int, completionHandler: @escaping (Result<ProductResult, Error>) -> Void) {
-        let requestModel = ProductById(baseURL: self.baseURL, id: id, method: .get)
+        let requestModel = ProductById(baseURL: self.baseURL, id: id)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func getCatalogData(page: Int, category: Int, completionHandler: @escaping (Result<[Product], Error>) -> Void) {
-        let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category, method: .get)
+        let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
@@ -38,18 +38,18 @@ extension Goods: GoodsRequestFactory {
 extension Goods {
     struct ProductById: RequestRouter {
         var baseURL: String
-        let path = "/getGoodById.json"
+        let path = "/product"
         let id: Int
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "id_product", value: String(id)),
             ]
         }
-        let method: RequestRouterMethod
+        let method: RequestRouterMethod = .get
     }
     
     struct CatalogData: RequestRouter {
         var baseURL: String
-        let path = "/catalogData.json"
+        let path = "/catalog"
         let page: Int
         let category: Int
         var queryItems: [URLQueryItem]? {
@@ -57,6 +57,6 @@ extension Goods {
                     URLQueryItem(name: "id_category", value: String(category))
             ]
         }
-        let method: RequestRouterMethod
+        let method: RequestRouterMethod = .get
     }
 }

@@ -15,6 +15,6 @@ struct Product: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "id_product"
         case name = "product_name"
-        case price = "price"
+        case price
     }
 }

@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum Constants {
-    static let baseURL = //"https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses"
-    "http://127.0.0.1:8080"
-}
-
 class Auth: AbstractRequestFactory {
     var baseURL: String
     var errorParser: AbstractErrorParser
@@ -30,12 +25,12 @@ class Auth: AbstractRequestFactory {
 
 extension Auth: AuthRequestFactory {
     func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
-        let requestModel = Login(baseURL: self.baseURL, login: userName, password: password, method: .get)
+        let requestModel = Login(baseURL: self.baseURL, login: userName, password: password)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
-        let requestModel = Logout(baseURL: self.baseURL, id: 123, method: .get)
+        let requestModel = Logout(baseURL: self.baseURL, id: 123)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
@@ -53,25 +48,25 @@ extension Auth: AuthRequestFactory {
 extension Auth {
     struct Login: RequestRouter {
         var baseURL: String
-        let path = "/login.json"
+        let path = "/login"
         let login: String
         let password: String
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "username", value: login),
                     URLQueryItem(name: "password", value: password)]
         }
-        let method: RequestRouterMethod
+        let method: RequestRouterMethod = .post
     }
     
     struct Logout: RequestRouter {
         var baseURL: String
-        let path = "/logout.json"
+        let path = "/logout"
         let id: Int
         var queryItems: [URLQueryItem]? {
-            return [URLQueryItem(name: "id_use", value: String(id)),
+            return [URLQueryItem(name: "id_user", value: String(id)),
             ]
         }
-        let method: RequestRouterMethod
+        let method: RequestRouterMethod = .post
     }
     
     class RegisterUser: UserData, RequestRouter {
@@ -87,9 +82,8 @@ extension Auth {
     
     class ChangeUserData: UserData, RequestRouter {
         var baseURL: String
-        let path = "/changeUserData.json"
-        let method: RequestRouterMethod = .get
-        let encoding: RequestRouterEncoding = .url
+        let path = "/change_user"
+        let method: RequestRouterMethod = .post
         
         init(baseURL: String, id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
             self.baseURL = baseURL
