@@ -8,14 +8,14 @@
 import Foundation
 
 protocol AbstractRequestFactory {
-    var errorParser: AbstractErrorParser { get }    
+    var errorParser: AbstractErrorParser { get }
     var sessionManager: URLSession { get }
-    
-    func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> ())
+
+    func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> Void)
 }
 
 extension AbstractRequestFactory {
-    public func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> ()) {
+    public func request<T: Decodable>(request: RequestRouter, complitionHandler: @escaping (Result<T, Error>) -> Void) {
         return sessionManager.responseData(errorParser: errorParser, request: request, completion: complitionHandler)
     }
 }

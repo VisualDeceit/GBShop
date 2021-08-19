@@ -11,13 +11,13 @@ class Goods: AbstractRequestFactory {
     var baseURL: String
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
-    
+
     init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
         self.baseURL = baseURL
         self.errorParser = errorParser
         self.sessionManager = sessionManager
     }
-    
+
     convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
         self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
     }
@@ -28,7 +28,7 @@ extension Goods: GoodsRequestFactory {
         let requestModel = ProductById(baseURL: self.baseURL, id: id)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
-    
+
     func getCatalogData(page: Int, category: Int, completionHandler: @escaping (Result<[Product], Error>) -> Void) {
         let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category)
         self.request(request: requestModel, complitionHandler: completionHandler)
@@ -41,12 +41,12 @@ extension Goods {
         let path = "/product"
         let id: Int
         var queryItems: [URLQueryItem]? {
-            return [URLQueryItem(name: "id_product", value: String(id)),
+            return [URLQueryItem(name: "id_product", value: String(id))
             ]
         }
         let method: RequestRouterMethod = .get
     }
-    
+
     struct CatalogData: RequestRouter {
         var baseURL: String
         let path = "/catalog"

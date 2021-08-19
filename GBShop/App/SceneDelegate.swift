@@ -10,15 +10,17 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
+
     let requestFactory = RequestFactory()
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+
         let auth = requestFactory.makeAuthRequestFatory()
         let goods = requestFactory.makeGoodsRequestFatory()
-        
-        //MARK:- AUTH
+
+        // MARK: - AUTH
         auth.login(userName: "Somebody", password: "mypassword") { response in
             switch response {
             case .success(let login):
@@ -27,8 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error.localizedDescription)
             }
         }
-        
-        auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+
+        auth.registerUser(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru",
+                          gender: UserGender.male, creditCard: "9872389-2424-234224-234",
+                          bio: "This is good! I think I will switch to another language") { response in
             switch response {
             case .success(let answer):
                 print(answer)
@@ -36,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
         auth.logout(id: 123) { response in
             switch response {
             case .success(let answer):
@@ -45,8 +49,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error.localizedDescription)
             }
         }
-        
-        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: UserGender.male, creditCard: "9872389-2424-234224-234", bio: "This is good! I think I will switch to another language") { response in
+
+        auth.changeUserData(id: 123, userName: "Somebody", password: "mypassword", email: "some@some.ru",
+                            gender: UserGender.male, creditCard: "9872389-2424-234224-234",
+                            bio: "This is good! I think I will switch to another language") { response in
             switch response {
             case .success(let answer):
                 print(answer)
@@ -54,9 +60,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error.localizedDescription)
             }
         }
-        
-        //MARK:- GOODS
-        goods.getProductById(id: 123)  { response in
+
+        // MARK: - GOODS
+        goods.getProductById(id: 123) { response in
             switch response {
             case .success(let answer):
                 print(answer)
@@ -78,10 +84,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -104,7 +106,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

@@ -16,19 +16,21 @@ struct Request: RequestRouter {
 }
 
 class RequestRouterTests: XCTestCase {
-    
+
     func testRequestRouter_withInvalidPath_throwsErrors() throws {
         let request = Request(baseURL: "https://yandex.ru", path: "login", queryItems: nil, method: .get)
         XCTAssertThrowsError(try request.asURLRequest())
     }
-    
+
     func testRequestRouter_withInvalidBaseURL_throwsErrors() throws {
         let request = Request(baseURL: "234234", path: "lo2345gin", queryItems: nil, method: .get)
         XCTAssertThrowsError(try request.asURLRequest())
     }
-    
+
     func testRequestRouter_withValidRequest_throwNoErrors() throws {
-        let expectedRequest = URLRequest(url: URL(string: "https://yandex.ru/login?username=Somebody&password=mypassword")!)
+        // swiftlint:disable force_unwrapping
+        let expectedRequest = URLRequest(url: URL(string: "https://ya.ru/login?username=Somebody&password=mypassword")!)
+        // swiftlint:enable force_unwrapping
         let request = Request(baseURL: "https://yandex.ru",
                               path: "/login",
                               queryItems: [URLQueryItem(name: "username", value: "Somebody"),
@@ -36,6 +38,5 @@ class RequestRouterTests: XCTestCase {
                               method: .get)
         let result = try? request.asURLRequest()
         XCTAssertEqual(result, expectedRequest)
-        
     }
 }

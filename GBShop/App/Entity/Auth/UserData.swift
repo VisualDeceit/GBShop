@@ -22,11 +22,17 @@ class UserData {
         URLQueryItem(name: "email", value: email),
         URLQueryItem(name: "gender", value: gender.rawValue),
         URLQueryItem(name: "credit_card", value: password),
-        URLQueryItem(name: "bio", value: password),
+        URLQueryItem(name: "bio", value: password)
         ]
     }
-    
-    init(id: Int, userName: String, password: String, email: String, gender: UserGender, creditCard: String, bio: String) {
+
+    init(id: Int,
+         userName: String,
+         password: String,
+         email: String,
+         gender: UserGender,
+         creditCard: String,
+         bio: String) {
         self.id = id
         self.userName = userName
         self.password = password

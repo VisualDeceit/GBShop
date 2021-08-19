@@ -38,9 +38,9 @@ extension RequestRouter {
               (urlComponent.scheme == "http" || urlComponent.scheme == "https") else {
             throw RequestRouterError.invalidBaseURL(baseURL)
         }
-        //путь всегда добавляем в конец
-        urlComponent.path = urlComponent.path + path
-        
+        // путь всегда добавляем в конец
+        urlComponent.path += path
+
         switch method {
         case .get:
             urlComponent.queryItems = queryItems
@@ -63,4 +63,3 @@ extension RequestRouter {
         }
     }
 }
-

@@ -39,7 +39,7 @@ class GoodsTests: XCTestCase {
     func testGetProductByID_whenBaseURLCorrect_throwsNoErrors() {
         goods.getProductById(id: 123) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTAssertTrue(true)
             case .failure(let error):
                 XCTFail("Expected to be a success but got a failure with \(error)")
@@ -48,25 +48,25 @@ class GoodsTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10)
     }
-    
+
     func testGetProductByID_withInvalidURL_throwsErrors() throws {
         goods.baseURL = self.baseUrl
         goods.getProductById(id: 123) { [weak self] result in
             switch result {
             case .success(let value):
                 XCTFail("Expected to be a failure but got a success with \(value)")
-            case .failure(_):
+            case .failure:
                 XCTAssertTrue(true)
             }
             self?.expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10)
     }
-    
+
     func testGetCatalogData_whenBaseURLCorrect_throwsNoErrors() {
         goods.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTAssertTrue(true)
             case .failure(let error):
                 XCTFail("Expected to be a success but got a failure with \(error)")
@@ -75,14 +75,14 @@ class GoodsTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10)
     }
-    
+
     func testGetCatalogData_withInvalidURL_throwsErrors() throws {
         goods.baseURL = self.baseUrl
         goods.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
             case .success(let value):
                 XCTFail("Expected to be a failure but got a success with \(value)")
-            case .failure(_):
+            case .failure:
                 XCTAssertTrue(true)
             }
             self?.expectation.fulfill()
