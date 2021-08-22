@@ -25,12 +25,12 @@ final class Auth: AbstractRequestFactory {
 
 extension Auth: AuthRequestFactory {
     func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
-        let requestModel = Login(baseURL: self.baseURL, login: userName, password: password)
+        let requestModel = Login(baseURL: self.baseURL, login: userName, password: password, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
     func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
-        let requestModel = Logout(baseURL: self.baseURL, id: 123)
+        let requestModel = Logout(baseURL: self.baseURL, id: 123, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
@@ -43,7 +43,7 @@ extension Auth: AuthRequestFactory {
                       bio: String,
                       completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
         let requestModel = RegisterUser(baseURL: self.baseURL, id: id, userName: userName, password: password,
-                                        email: email, gender: gender, creditCard: creditCard, bio: bio)
+                                        email: email, gender: gender, creditCard: creditCard, bio: bio, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
@@ -56,7 +56,7 @@ extension Auth: AuthRequestFactory {
                         bio: String,
                         completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
         let requestModel = ChangeUserData(baseURL: self.baseURL, id: id, userName: userName, password: password,
-                                          email: email, gender: gender, creditCard: creditCard, bio: bio)
+                                          email: email, gender: gender, creditCard: creditCard, bio: bio, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
@@ -71,7 +71,7 @@ extension Auth {
             return [URLQueryItem(name: "username", value: login),
                     URLQueryItem(name: "password", value: password)]
         }
-        let method: RequestRouterMethod = .post
+        let method: RequestRouterMethod
         let data: Data? = nil
     }
 
@@ -83,14 +83,14 @@ extension Auth {
             return [URLQueryItem(name: "id_user", value: String(id))
             ]
         }
-        let method: RequestRouterMethod = .post
+        let method: RequestRouterMethod
         let data: Data? = nil
     }
 
     class RegisterUser: UserData, RequestRouter {
         var baseURL: String
         let path = "/register"
-        let method: RequestRouterMethod = .post
+        let method: RequestRouterMethod
         let data: Data? = nil
 
         init(baseURL: String,
@@ -100,8 +100,10 @@ extension Auth {
              email: String,
              gender: UserGender,
              creditCard: String,
-             bio: String) {
+             bio: String,
+             method: RequestRouterMethod) {
             self.baseURL = baseURL
+            self.method = method
             super.init(id: id, userName: userName, password: password, email: email, gender: gender,
                        creditCard: creditCard, bio: bio)
         }
@@ -110,7 +112,7 @@ extension Auth {
     class ChangeUserData: UserData, RequestRouter {
         var baseURL: String
         let path = "/change_user"
-        let method: RequestRouterMethod = .post
+        let method: RequestRouterMethod
         let data: Data? = nil
 
         init(baseURL: String,
@@ -120,10 +122,12 @@ extension Auth {
              email: String,
              gender: UserGender,
              creditCard: String,
-             bio: String) {
-            self.baseURL = baseURL
-            super.init(id: id, userName: userName, password: password, email: email, gender: gender,
-                       creditCard: creditCard, bio: bio)
+             bio: String,
+             method: RequestRouterMethod) {
+           self.baseURL = baseURL
+           self.method = method
+           super.init(id: id, userName: userName, password: password, email: email, gender: gender,
+                      creditCard: creditCard, bio: bio)
         }
     }
 }

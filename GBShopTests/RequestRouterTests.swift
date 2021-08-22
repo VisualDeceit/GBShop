@@ -38,7 +38,6 @@ class RequestRouterTests: XCTestCase {
         XCTAssertThrowsError(try getRequest.asURLRequest())
     }
     
-
     func testRequestRouter_withValidRequest_throwNoErrors() throws {
         // swiftlint:disable force_unwrapping
         let expectedRequest = URLRequest(url: URL(string: "https://ya.ru/login?username=Somebody&password=mypassword")!)

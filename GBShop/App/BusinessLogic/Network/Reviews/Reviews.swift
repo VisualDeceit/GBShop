@@ -28,7 +28,7 @@ extension Reviews {
         var baseURL: String
         let path = "/reviews"
         let id: Int
-        let method: RequestRouterMethod = .get
+        let method: RequestRouterMethod
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "id_product", value: String(id))]
         }
@@ -42,7 +42,7 @@ extension Reviews {
         let productId: Int
         var queryItems: [URLQueryItem]?
         let data: Data?
-        var method: RequestRouterMethod = .post
+        var method: RequestRouterMethod
     }
     
     struct RemoveReview: RequestRouter {
@@ -53,25 +53,25 @@ extension Reviews {
             return [URLQueryItem(name: "id_comment", value: String(commentId))]
         }
         let data: Data? = nil
-        var method: RequestRouterMethod = .get
+        var method: RequestRouterMethod
     }
 }
 
 extension Reviews: ReviewsRequestFactory {
     func getReviewsForProduct(id: Int, completionHandler: @escaping (Result<ReviewResponse, Error>) -> Void) {
-        let requestModel = ReviewsForProduct(baseURL: self.baseURL, id: id)
+        let requestModel = ReviewsForProduct(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
         let requestBody = AddReviewRequestBody(userId: userId, productId: productId, review: review)
         let reviewData = try? JSONEncoder().encode(requestBody)
-        let requestModel = AddReview(baseURL: self.baseURL, userId: userId, productId: productId, data: reviewData)
+        let requestModel = AddReview(baseURL: self.baseURL, userId: userId, productId: productId, data: reviewData, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
     func removeReview(id: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
-        let requestModel = RemoveReview(baseURL: self.baseURL, commentId: id)
+        let requestModel = RemoveReview(baseURL: self.baseURL, commentId: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }

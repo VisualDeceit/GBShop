@@ -25,12 +25,12 @@ final class Goods: AbstractRequestFactory {
 
 extension Goods: GoodsRequestFactory {
     func getProductById(id: Int, completionHandler: @escaping (Result<ProductResult, Error>) -> Void) {
-        let requestModel = ProductById(baseURL: self.baseURL, id: id)
+        let requestModel = ProductById(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
     func getCatalogData(page: Int, category: Int, completionHandler: @escaping (Result<[Product], Error>) -> Void) {
-        let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category)
+        let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
@@ -40,7 +40,7 @@ extension Goods {
         var baseURL: String
         let path = "/product"
         let id: Int
-        let method: RequestRouterMethod = .get
+        let method: RequestRouterMethod
         var queryItems: [URLQueryItem]? {
             return [URLQueryItem(name: "id_product", value: String(id))]
         }
@@ -57,7 +57,7 @@ extension Goods {
                     URLQueryItem(name: "id_category", value: String(category))
             ]
         }
-        let method: RequestRouterMethod = .get
+        let method: RequestRouterMethod
         let data: Data? = nil
     }
 }
