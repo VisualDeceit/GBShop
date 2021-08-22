@@ -28,8 +28,9 @@ enum RequestRouterError: Error {
 protocol RequestRouter {
     var baseURL: String { get }
     var path: String { get }
-    var queryItems: [URLQueryItem]? { get }
     var method: RequestRouterMethod { get }
+    var queryItems: [URLQueryItem]? { get }
+    var data: Data? { get }
 }
 
 extension RequestRouter {
@@ -54,11 +55,18 @@ extension RequestRouter {
             guard let fullURL = urlComponent.url else {
                 throw RequestRouterError.invalidURLComponent(urlComponent)
             }
+            
             var urlRequest = URLRequest(url: fullURL)
             urlRequest.httpMethod = method.rawValue
-            urlRequest.setValue("application/x-www-form-urlencoded;charset=UTF-8", forHTTPHeaderField: "Content-Type")
-            urlComponent.queryItems = queryItems
-            urlRequest.httpBody = urlComponent.percentEncodedQuery?.data(using: .utf8)
+            
+            if let data = self.data {
+                urlRequest.httpBody = data
+                urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            } else {
+                urlComponent.queryItems = queryItems
+                urlRequest.httpBody = urlComponent.percentEncodedQuery?.data(using: .utf8)
+                urlRequest.setValue("application/x-www-form-urlencoded;charset=UTF-8", forHTTPHeaderField: "Content-Type")
+            }
             return urlRequest
         }
     }

@@ -40,6 +40,7 @@ struct ValidRequestStub: RequestRouter {
     let baseURL = "https://jsonplaceholder.typicode.com"
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
+    let data: Data? = nil
     let method: RequestRouterMethod = .get
 }
 
@@ -47,6 +48,7 @@ struct InvalidHostStub: RequestRouter {
     let baseURL = "https://jsonplaceholder.typicode.ru"
     let path = "/posts/1"
     var queryItems: [URLQueryItem]?
+    let data: Data? = nil
     let method: RequestRouterMethod = .get
 }
 
@@ -54,6 +56,7 @@ struct InvalidRequestStub: RequestRouter {
     let baseURL = "https://jsonplaceholder.typicode.ru"
     let path = "posts/1"
     var queryItems: [URLQueryItem]?
+    let data: Data? = nil
     let method: RequestRouterMethod = .get
 }
 

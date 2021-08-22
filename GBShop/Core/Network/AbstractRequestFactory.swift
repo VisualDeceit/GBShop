@@ -8,6 +8,7 @@
 import Foundation
 
 protocol AbstractRequestFactory {
+    var baseURL: String { get }
     var errorParser: AbstractErrorParser { get }
     var sessionManager: URLSession { get }
 

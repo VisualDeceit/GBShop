@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let auth = requestFactory.makeAuthRequestFatory()
         let goods = requestFactory.makeGoodsRequestFatory()
+        let reviews = requestFactory.makeReviewsRequestFatory()
 
         // MARK: - AUTH
         auth.login(userName: "Somebody", password: "mypassword") { response in
@@ -72,6 +73,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         goods.getCatalogData(page: 1, category: 1) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        // MARK: - REVIEWS
+        reviews.getReviewsForProduct(id: 1) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        let review = Review(caption: "Test", date: 1629584374, rating: 3, comment: "Test comment")
+        reviews.addReview(userId: 1, productId: 1, review: review) { response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        reviews.removeReview(id: 1) { response in
             switch response {
             case .success(let answer):
                 print(answer)

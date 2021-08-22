@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Goods: AbstractRequestFactory {
+final class Goods: AbstractRequestFactory {
     var baseURL: String
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
@@ -40,11 +40,11 @@ extension Goods {
         var baseURL: String
         let path = "/product"
         let id: Int
-        var queryItems: [URLQueryItem]? {
-            return [URLQueryItem(name: "id_product", value: String(id))
-            ]
-        }
         let method: RequestRouterMethod = .get
+        var queryItems: [URLQueryItem]? {
+            return [URLQueryItem(name: "id_product", value: String(id))]
+        }
+        let data: Data? = nil
     }
 
     struct CatalogData: RequestRouter {
@@ -58,5 +58,6 @@ extension Goods {
             ]
         }
         let method: RequestRouterMethod = .get
+        let data: Data? = nil
     }
 }

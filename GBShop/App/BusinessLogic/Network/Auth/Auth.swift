@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Auth: AbstractRequestFactory {
+final class Auth: AbstractRequestFactory {
     var baseURL: String
     var errorParser: AbstractErrorParser
     var sessionManager: URLSession
@@ -72,6 +72,7 @@ extension Auth {
                     URLQueryItem(name: "password", value: password)]
         }
         let method: RequestRouterMethod = .post
+        let data: Data? = nil
     }
 
     struct Logout: RequestRouter {
@@ -83,12 +84,14 @@ extension Auth {
             ]
         }
         let method: RequestRouterMethod = .post
+        let data: Data? = nil
     }
 
     class RegisterUser: UserData, RequestRouter {
         var baseURL: String
         let path = "/register"
         let method: RequestRouterMethod = .post
+        let data: Data? = nil
 
         init(baseURL: String,
              id: Int,
@@ -108,6 +111,7 @@ extension Auth {
         var baseURL: String
         let path = "/change_user"
         let method: RequestRouterMethod = .post
+        let data: Data? = nil
 
         init(baseURL: String,
              id: Int,
