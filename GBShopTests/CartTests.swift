@@ -1,19 +1,19 @@
 //
-//  GoodsTests.swift
+//  CartTests.swift
 //  GBShopTests
 //
-//  Created by Alexander Fomin on 08.08.2021.
+//  Created by Alexander Fomin on 29.08.2021.
 //
 
 import XCTest
 @testable import GBShop
 
-class GoodsTests: XCTestCase {
+class CartTests: XCTestCase {
     let baseUrl = "https://failUrl"
     var commonSession: URLSession!
     var errorParser: ErrorParserStub!
     var expectation: XCTestExpectation!
-    var goods: Goods!
+    var cart: Cart!
 
     override func setUp() {
         super.setUp()
@@ -26,46 +26,18 @@ class GoodsTests: XCTestCase {
             let manager = URLSession(configuration: configuration)
             return manager
         }()
-        goods = Goods(errorParser: errorParser, sessionManager: commonSession)
+        cart = Cart(errorParser: errorParser, sessionManager: commonSession)
     }
 
     override func tearDown() {
         super.tearDown()
         commonSession = nil
         errorParser = nil
-        goods = nil
+        cart = nil
     }
-
-    func testGetProductByID_whenBaseURLCorrect_throwsNoErrors() {
-        goods.getProductById(id: 1) { [weak self] result in
-            switch result {
-            case .success(let data):
-                print("\(data)")
-                XCTAssertTrue(true)
-            case .failure(let error):
-                XCTFail("Expected to be a success but got a failure with \(error)")
-            }
-            self?.expectation.fulfill()
-        }
-        wait(for: [expectation], timeout: 10)
-    }
-
-    func testGetProductByID_withInvalidURL_throwsErrors() throws {
-        goods.baseURL = self.baseUrl
-        goods.getProductById(id: 1) { [weak self] result in
-            switch result {
-            case .success(let value):
-                XCTFail("Expected to be a failure but got a success with \(value)")
-            case .failure:
-                XCTAssertTrue(true)
-            }
-            self?.expectation.fulfill()
-        }
-        wait(for: [expectation], timeout: 10)
-    }
-
-    func testGetCatalogData_whenBaseURLCorrect_throwsNoErrors() {
-        goods.getCatalogData(page: 1, category: 1) { [weak self] result in
+    
+    func testAddToCartProduct_whenBaseURLCorrect_throwsNoErrors() {
+        cart.addToCartProduct(id: 1, quantity: 1) { [weak self] result in
             switch result {
             case .success:
                 XCTAssertTrue(true)
@@ -77,9 +49,63 @@ class GoodsTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
 
-    func testGetCatalogData_withInvalidURL_throwsErrors() throws {
-        goods.baseURL = self.baseUrl
-        goods.getCatalogData(page: 1, category: 1) { [weak self] result in
+    func testAddToCartProduct_withInvalidURL_throwsErrors() throws {
+        cart.baseURL = self.baseUrl
+        cart.addToCartProduct(id: 1, quantity: 1) { [weak self] result in
+            switch result {
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
+            case .failure:
+                XCTAssertTrue(true)
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testRemoveFromCartProduct_whenBaseURLCorrect_throwsNoErrors() {
+        cart.removeFromCartProduct(id: 1) { [weak self] result in
+            switch result {
+            case .success:
+                XCTAssertTrue(true)
+            case .failure(let error):
+                XCTFail("Expected to be a success but got a failure with \(error)")
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testRemoveFromCartProduct_withInvalidURL_throwsErrors() throws {
+        cart.baseURL = self.baseUrl
+        cart.removeFromCartProduct(id: 1) { [weak self] result in
+            switch result {
+            case .success(let value):
+                XCTFail("Expected to be a failure but got a success with \(value)")
+            case .failure:
+                XCTAssertTrue(true)
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+    
+    func testPayCart_whenBaseURLCorrect_throwsNoErrors() {
+        cart.payCart { [weak self] result in
+            switch result {
+            case .success:
+                XCTAssertTrue(true)
+            case .failure(let error):
+                XCTFail("Expected to be a success but got a failure with \(error)")
+            }
+            self?.expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testPayCart_withInvalidURL_throwsErrors() throws {
+        cart.baseURL = self.baseUrl
+        cart.payCart { [weak self] result in
             switch result {
             case .success(let value):
                 XCTFail("Expected to be a failure but got a success with \(value)")
