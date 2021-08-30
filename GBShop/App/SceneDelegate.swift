@@ -10,12 +10,15 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var appLaunchManager: AppLaunchManager?
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        self.appLaunchManager = AppLaunchManager(with: scene)
+        self.appLaunchManager?.window = window
+        self.appLaunchManager?.start() 
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
