@@ -29,6 +29,7 @@
 		1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */; };
 		1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85926DD5086009E7D56 /* LoginViewController.swift */; };
 		1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D87426DD59E3009E7D56 /* LoginView.swift */; };
+		1553D88126DEA0B9009E7D56 /* UIColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */; };
 		15581B8C26D1EFF9007034B0 /* ReviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */; };
 		15581B9126D1F511007034B0 /* RequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9026D1F511007034B0 /* RequestFactoryTests.swift */; };
 		15581B9726DB6EC8007034B0 /* AddToCartRequstBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */; };
@@ -103,6 +104,7 @@
 		1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		1553D85926DD5086009E7D56 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1553D87426DD59E3009E7D56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
 		15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsTests.swift; sourceTree = "<group>"; };
 		15581B9026D1F511007034B0 /* RequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactoryTests.swift; sourceTree = "<group>"; };
 		15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartRequstBody.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		151E56A726A5FB0E005D7D05 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1553D87F26DE9E7D009E7D56 /* Extensions */,
 				1553D84E26DD4C05009E7D56 /* Services */,
 				151E56B626AF383D005D7D05 /* Network */,
 			);
@@ -378,6 +381,14 @@
 				1553D87426DD59E3009E7D56 /* LoginView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1553D87F26DE9E7D009E7D56 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		15581B9526DB6E4B007034B0 /* Cart */ = {
@@ -680,6 +691,7 @@
 				15581BA226DB706E007034B0 /* Cart.swift in Sources */,
 				151E56EF26AF4B79005D7D05 /* RequestFactory.swift in Sources */,
 				15C156A226D0C20B00960101 /* Reviews.swift in Sources */,
+				1553D88126DEA0B9009E7D56 /* UIColor+Style.swift in Sources */,
 				151E56B826AF38E2005D7D05 /* AbstractErrorParser.swift in Sources */,
 				15C1568D26D0B74D00960101 /* Review.swift in Sources */,
 				151E571C26B3B031005D7D05 /* UserData.swift in Sources */,
@@ -894,7 +906,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.50.AlexanderFomin.GBShop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -914,7 +926,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.50.AlexanderFomin.GBShop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
