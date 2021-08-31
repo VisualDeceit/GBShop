@@ -9,6 +9,18 @@ import UIKit
 
 class LoginView: UIView {
     
+    private(set) lazy var loginBottomLine: CALayer = {
+        let layer = CALayer()
+        layer.backgroundColor = UIColor.label.cgColor
+        return layer
+    }()
+    
+    private(set) lazy var passwordBottomLine: CALayer = {
+        let layer = CALayer()
+        layer.backgroundColor = UIColor.label.cgColor
+        return layer
+    }()
+
     private(set) lazy var loginTextField: UITextField = {
         let textFild = UITextField()
         textFild.translatesAutoresizingMaskIntoConstraints = false
@@ -79,16 +91,19 @@ class LoginView: UIView {
         self.addSubview(signUpLabel)
         self.addSubview(signUpButton)
         
+        loginTextField.layer.addSublayer(loginBottomLine)
+        passwordTextField.layer.addSublayer(passwordBottomLine)
+        
         NSLayoutConstraint.activate([
             loginTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 80),
+            loginTextField.heightAnchor.constraint(equalToConstant: 44),
+            loginTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             loginTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            loginTextField.heightAnchor.constraint(equalToConstant: 40),
-            loginTextField.widthAnchor.constraint(equalToConstant: 300),
             
-            passwordTextField.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 20),
+            passwordTextField.topAnchor.constraint(equalTo: loginTextField.topAnchor, constant: 80),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 44),
+            passwordTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             passwordTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 40),
-            passwordTextField.widthAnchor.constraint(equalToConstant: 300),
             
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             loginButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
@@ -106,14 +121,7 @@ class LoginView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let loginBottomLine = CALayer()
         loginBottomLine.frame = CGRect(x: 0.0, y: loginTextField.frame.height - 1, width: loginTextField.frame.width, height: 1.0)
-        loginBottomLine.backgroundColor = UIColor.label.cgColor
-        loginTextField.layer.addSublayer(loginBottomLine)
-        
-        let passwordBottomLine = CALayer()
         passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
-        passwordBottomLine.backgroundColor = UIColor.label.cgColor
-        passwordTextField.layer.addSublayer(passwordBottomLine)
     }
 }
