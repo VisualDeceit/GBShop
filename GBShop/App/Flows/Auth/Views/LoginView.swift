@@ -76,7 +76,7 @@ class LoginView: UIView {
        return button
     }()
     
-    private lazy var signUpStackView: UIStackView = {
+    private(set) lazy var signUpStackView: UIStackView = {
        let stackView = UIStackView(arrangedSubviews: [signUpLabel, signUpButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 0
@@ -123,9 +123,9 @@ class LoginView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            scrollView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
@@ -166,8 +166,8 @@ class LoginView: UIView {
         
         NSLayoutConstraint.activate([
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
-            loginButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
-            loginButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor)
+            loginButton.widthAnchor.constraint(equalToConstant: 100),
+            loginButton.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
         ])
     }
     
@@ -185,5 +185,7 @@ class LoginView: UIView {
         
         loginBottomLine.frame = CGRect(x: 0.0, y: loginTextField.frame.height - 1, width: loginTextField.frame.width, height: 1.0)
         passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
+        // ограничем contentSize по последнему view - signUpStackView + 20 для красоты
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpStackView.frame.origin.y + 20)
     }
 }
