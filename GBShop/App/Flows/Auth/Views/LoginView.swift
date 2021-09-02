@@ -113,9 +113,7 @@ class LoginView: UIView {
         
         configureScrollView()
         configureImageView()
-        configureTextFields()
-        configureLoginButton()
-        configureStackView()
+        configureView()
 }
     
     private func configureScrollView() {
@@ -136,48 +134,38 @@ class LoginView: UIView {
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 250),
             imageView.widthAnchor.constraint(equalToConstant: 250),
-            imageView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 20),
-            imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
+            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
     }
     
-    private func configureTextFields() {
+    private func configureView() {
         scrollView.addSubview(loginTextField)
         scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(loginButton)
+        scrollView.addSubview(signUpStackView)
         
         loginTextField.layer.addSublayer(loginBottomLine)
         passwordTextField.layer.addSublayer(passwordBottomLine)
         
         NSLayoutConstraint.activate([
-            loginTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            loginTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             loginTextField.heightAnchor.constraint(equalToConstant: 44),
-            loginTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20),
-            loginTextField.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
+            loginTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            loginTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
-            passwordTextField.topAnchor.constraint(equalTo: loginTextField.topAnchor, constant: 80),
+            passwordTextField.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 16),
             passwordTextField.heightAnchor.constraint(equalToConstant: 44),
-            passwordTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20),
-            passwordTextField.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
-        ])
-    }
-    
-    private func configureLoginButton() {
-        scrollView.addSubview(loginButton)
-        
-        NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            passwordTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            passwordTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
+            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
             loginButton.widthAnchor.constraint(equalToConstant: 100),
-            loginButton.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
-        ])
-    }
-    
-    private func configureStackView() {
-        scrollView.addSubview(signUpStackView)
-        
-        NSLayoutConstraint.activate([
+            loginButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
             signUpStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
-            signUpStackView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor)
-            ])
+            signUpStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+        ])
     }
 
     override func layoutSubviews() {
@@ -185,7 +173,8 @@ class LoginView: UIView {
         
         loginBottomLine.frame = CGRect(x: 0.0, y: loginTextField.frame.height - 1, width: loginTextField.frame.width, height: 1.0)
         passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
+        
         // ограничем contentSize по последнему view - signUpStackView + 20 для красоты
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpStackView.frame.origin.y + 20)
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpStackView.frame.origin.y + 16)
     }
 }

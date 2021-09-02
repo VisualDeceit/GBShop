@@ -22,30 +22,42 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addKeyboardToolbar()
-        
+
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
+        
+        self.loginView.signUpButton.addTarget(self, action: #selector(showSignUpForm), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        subscribeToNotification()
         }
     
-    // MARK: - Keyboard functions
-    private func addKeyboardToolbar() {
-        let keyboardToolbar = UIToolbar()
-            keyboardToolbar.sizeToFit()
-            let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneBarButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(hideKeyboard))
-            keyboardToolbar.items = [flexBarButton, doneBarButton]
-        self.loginView.loginTextField.inputAccessoryView = keyboardToolbar
-        self.loginView.passwordTextField.inputAccessoryView = keyboardToolbar
+    // MARK: - Button targets
+    @objc func showSignUpForm() {
+        let signUpViewController = SignUpViewController()
+        present(signUpViewController, animated: true) { [weak self] in
+            self?.unsubscribeFromNotifications()
+        }
+        
+        signUpViewController.onDismiss = { [weak self] in
+            self?.subscribeToNotification()
+        }
     }
     
+    // MARK: - Notifications
+    private func subscribeToNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func unsubscribeFromNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - Keyboard functions
     @objc func hideKeyboard() {
         self.loginView.endEditing(true)
     }

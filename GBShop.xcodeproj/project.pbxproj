@@ -30,6 +30,11 @@
 		1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85926DD5086009E7D56 /* LoginViewController.swift */; };
 		1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D87426DD59E3009E7D56 /* LoginView.swift */; };
 		1553D88126DEA0B9009E7D56 /* UIColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */; };
+		1553D88926E0068A009E7D56 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88826E0068A009E7D56 /* SignUpViewController.swift */; };
+		1553D88E26E006E1009E7D56 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88D26E006E1009E7D56 /* SignUpView.swift */; };
+		1553D89726E0899F009E7D56 /* PARANGON.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89626E0899F009E7D56 /* PARANGON.TTF */; };
+		1553D89D26E08C18009E7D56 /* PARANGON_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89B26E08C17009E7D56 /* PARANGON_0.TTF */; };
+		1553D89E26E08C18009E7D56 /* PARANGON_1.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */; };
 		15581B8C26D1EFF9007034B0 /* ReviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */; };
 		15581B9126D1F511007034B0 /* RequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9026D1F511007034B0 /* RequestFactoryTests.swift */; };
 		15581B9726DB6EC8007034B0 /* AddToCartRequstBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */; };
@@ -105,6 +110,11 @@
 		1553D85926DD5086009E7D56 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1553D87426DD59E3009E7D56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
+		1553D88826E0068A009E7D56 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		1553D88D26E006E1009E7D56 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		1553D89626E0899F009E7D56 /* PARANGON.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON.TTF; sourceTree = "<group>"; };
+		1553D89B26E08C17009E7D56 /* PARANGON_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON_0.TTF; sourceTree = "<group>"; };
+		1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON_1.TTF; sourceTree = "<group>"; };
 		15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsTests.swift; sourceTree = "<group>"; };
 		15581B9026D1F511007034B0 /* RequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactoryTests.swift; sourceTree = "<group>"; };
 		15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartRequstBody.swift; sourceTree = "<group>"; };
@@ -282,6 +292,7 @@
 		151E56A826A5FB13005D7D05 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1553D89526E08974009E7D56 /* Fonts */,
 				151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */,
 				151E567826A5F4BF005D7D05 /* Assets.xcassets */,
 			);
@@ -371,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				1553D85926DD5086009E7D56 /* LoginViewController.swift */,
+				1553D88826E0068A009E7D56 /* SignUpViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -379,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				1553D87426DD59E3009E7D56 /* LoginView.swift */,
+				1553D88D26E006E1009E7D56 /* SignUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -389,6 +402,16 @@
 				1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1553D89526E08974009E7D56 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1553D89B26E08C17009E7D56 /* PARANGON_0.TTF */,
+				1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */,
+				1553D89626E0899F009E7D56 /* PARANGON.TTF */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		15581B9526DB6E4B007034B0 /* Cart */ = {
@@ -576,7 +599,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				151E567C26A5F4BF005D7D05 /* LaunchScreen.storyboard in Resources */,
+				1553D89726E0899F009E7D56 /* PARANGON.TTF in Resources */,
+				1553D89E26E08C18009E7D56 /* PARANGON_1.TTF in Resources */,
 				151E567926A5F4BF005D7D05 /* Assets.xcassets in Resources */,
+				1553D89D26E08C18009E7D56 /* PARANGON_0.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +727,7 @@
 				151E56DC26AF4B0F005D7D05 /* AbstractRequestFactory.swift in Sources */,
 				151E56FF26B1E6F6005D7D05 /* RegisterUserResult.swift in Sources */,
 				151E56E226AF4B4C005D7D05 /* AuthRequestFactory.swift in Sources */,
+				1553D88926E0068A009E7D56 /* SignUpViewController.swift in Sources */,
 				151E567026A5F4BB005D7D05 /* AppDelegate.swift in Sources */,
 				1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */,
 				151E56CF26AF4300005D7D05 /* RequestRouter.swift in Sources */,
@@ -718,6 +745,7 @@
 				15C1569826D0BAE900960101 /* ReviewsRequestFactory.swift in Sources */,
 				151E567226A5F4BB005D7D05 /* SceneDelegate.swift in Sources */,
 				15E70CA326BE572300F59ED3 /* Goods.swift in Sources */,
+				1553D88E26E006E1009E7D56 /* SignUpView.swift in Sources */,
 				151E56C026AF3A01005D7D05 /* ErrorParser.swift in Sources */,
 				1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */,
 				15C1569D26D0BCC800960101 /* StandardResult.swift in Sources */,
