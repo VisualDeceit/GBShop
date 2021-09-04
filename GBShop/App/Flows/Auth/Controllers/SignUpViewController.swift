@@ -15,6 +15,10 @@ enum ControllerType {
 class SignUpViewController: UIViewController {
     
     var onDismiss: (() -> Void)?
+    
+    let requestFactory = RequestFactory()
+    var auth: AuthRequestFactory!
+    
     var user: User? {
         didSet {
             if let user = user {
@@ -26,7 +30,6 @@ class SignUpViewController: UIViewController {
     private var type: ControllerType
     private var caption: String
     private var buttonText: String
-    
     private var signUpView: SignUpView {
         // swiftlint:disable force_cast
         self.view as! SignUpView
@@ -61,8 +64,9 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.signUpView.scrollView.addGestureRecognizer(hideKeyboardGesture)
-        self.signUpView.signUpButton.addTarget(self, action: #selector(createNewUser), for: .touchUpInside)
+        self.signUpView.signUpButton.addTarget(self, action: #selector(actionWithUser), for: .touchUpInside)
         self.signUpView.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        auth = requestFactory.makeAuthRequestFatory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,39 +104,64 @@ class SignUpViewController: UIViewController {
         signUpView.logoutButton.isHidden = Session.shared.userId == nil
     }
     
-    @objc func createNewUser() {
-        let requestFactory = RequestFactory()
-        let auth = requestFactory.makeAuthRequestFatory()
+    @objc func actionWithUser() {
         let gender: UserGender
         if signUpView.genderSegmentedControl.selectedSegmentIndex == 0 {
             gender = .male
         } else {
             gender = .female
         }
-        auth.registerUser(id: 123,
-                          userName: signUpView.loginTextField.text ?? "",
-                          password: signUpView.passwordTextField.text ?? "",
-                          email: signUpView.emailTextField.text ?? "",
-                          gender: gender,
-                          creditCard: signUpView.creditCardTextField.text ?? "",
-                          bio: signUpView.bioTextView.text ?? "") { [weak self] response in
-                   switch response {
-                   case .success(let answer):
-                       print(answer)
+        
+        switch type {
+        case .signUp:
+            auth.registerUser(id: 123,
+                              userName: signUpView.loginTextField.text ?? "",
+                              password: signUpView.passwordTextField.text ?? "",
+                              email: signUpView.emailTextField.text ?? "",
+                              gender: gender,
+                              creditCard: signUpView.creditCardTextField.text ?? "",
+                              bio: signUpView.bioTextView.text ?? "") { [weak self] response in
+                switch response {
+                case .success(let answer):
+                    print(answer)
                     self?.dismiss(animated: true)
-                   case .failure(let error):
-                       print(error.localizedDescription)
-                   }
-               }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        case .changeUserData:
+            auth.changeUserData(id: 123,
+                                userName: signUpView.loginTextField.text ?? "",
+                                password: signUpView.passwordTextField.text ?? "",
+                                email: signUpView.emailTextField.text ?? "",
+                                gender: gender,
+                                creditCard: signUpView.creditCardTextField.text ?? "",
+                                bio: signUpView.bioTextView.text ?? "") { response in
+                switch response {
+                case .success(let answer):
+                    print(answer)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     @objc func logout() {
-        Session.shared.userId = nil
-        if let tabbarController = self.view.window?.rootViewController as? UITabBarController {
-            tabbarController.viewControllers?.remove(at: 0)
-            let accountViewController = LoginViewController()
-            accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
-            tabbarController.setViewControllers([accountViewController], animated: false)
+        auth.logout(id: Session.shared.userId ?? 0) { [weak self] response in
+            switch response {
+            case .success(let answer):
+                print(answer)
+                Session.shared.userId = nil
+                if let tabbarController = self?.view.window?.rootViewController as? UITabBarController {
+                    tabbarController.viewControllers?.remove(at: 0)
+                    let accountViewController = LoginViewController()
+                    accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
+                    tabbarController.setViewControllers([accountViewController], animated: false)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
     

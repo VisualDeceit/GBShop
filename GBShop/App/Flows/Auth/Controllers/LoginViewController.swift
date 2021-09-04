@@ -9,6 +9,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    let requestFactory = RequestFactory()
+    var auth: AuthRequestFactory!
+    
     private var loginView: LoginView {
         // swiftlint:disable force_cast
         self.view as! LoginView
@@ -47,6 +50,7 @@ class LoginViewController: UIViewController {
         auth.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
            switch response {
            case .success(let login):
+            print(login)
             Session.shared.userId = login.user.id
             if let tabbarController = self?.view.window?.rootViewController as? UITabBarController {
                 tabbarController.viewControllers?.remove(at: 0)
