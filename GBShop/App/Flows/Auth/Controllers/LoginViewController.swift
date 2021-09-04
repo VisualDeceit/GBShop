@@ -25,7 +25,6 @@ class LoginViewController: UIViewController {
 
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
-        
         self.loginView.signUpButton.addTarget(self, action: #selector(showSignUpForm), for: .touchUpInside)
     }
     
@@ -34,9 +33,14 @@ class LoginViewController: UIViewController {
         subscribeToNotification()
         }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupView()
+    }
+    
     // MARK: - Button targets
     @objc func showSignUpForm() {
-        let signUpViewController = SignUpViewController()
+        let signUpViewController = SignUpViewController(type: .signUp("Новый аккаунт", "Создать"))
         present(signUpViewController, animated: true) { [weak self] in
             self?.unsubscribeFromNotifications()
         }
@@ -55,6 +59,13 @@ class LoginViewController: UIViewController {
     private func unsubscribeFromNotifications() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - Private functions
+    private func setupView() {
+        self.loginView.loginTextField.setUnderLine()
+        self.loginView.passwordTextField.setUnderLine()
+        self.loginView.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: self.loginView.signUpStackView.frame.origin.y + 16)
     }
     
     // MARK: - Keyboard functions

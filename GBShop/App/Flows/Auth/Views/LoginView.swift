@@ -86,69 +86,41 @@ class LoginView: UIView {
         return stackView
     }()
     
-    private(set) lazy var loginBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
-    private(set) lazy var passwordBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.setupView()
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    private func configureUI() {
         self.backgroundColor = .systemBackground
-        
-        configureScrollView()
-        configureImageView()
-        configureView()
-}
-    
-    private func configureScrollView() {
-        self.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-    }
-    
-    private func configureImageView() {
+
+        self.addSubview(scrollView)
         scrollView.addSubview(imageView)
-        
-        NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 250),
-            imageView.widthAnchor.constraint(equalToConstant: 250),
-            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
-            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
-        ])
-    }
-    
-    private func configureView() {
         scrollView.addSubview(loginTextField)
         scrollView.addSubview(passwordTextField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(signUpStackView)
-        
-        loginTextField.layer.addSublayer(loginBottomLine)
-        passwordTextField.layer.addSublayer(passwordBottomLine)
-        
+
+        configureConstrains()
+    }
+    
+    private func configureConstrains() {
         NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            imageView.heightAnchor.constraint(equalToConstant: 250),
+            imageView.widthAnchor.constraint(equalToConstant: 250),
+            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
             loginTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             loginTextField.heightAnchor.constraint(equalToConstant: 44),
             loginTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
@@ -165,16 +137,6 @@ class LoginView: UIView {
             
             signUpStackView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
             signUpStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
-        ])
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        loginBottomLine.frame = CGRect(x: 0.0, y: loginTextField.frame.height - 1, width: loginTextField.frame.width, height: 1.0)
-        passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
-        
-        // ограничем contentSize по последнему view - signUpStackView + 20 для красоты
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpStackView.frame.origin.y + 16)
+        ])  
     }
 }

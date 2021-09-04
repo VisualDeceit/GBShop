@@ -11,9 +11,8 @@ class SignUpView: UIView {
     
     private(set) lazy var scrollView = UIScrollView()
     
-    private lazy var captionLabel: UILabel = {
+    private(set) lazy var captionLabel: UILabel = {
        let label = UILabel()
-        label.text = "Новый аккаунт"
         label.font = .boldSystemFont(ofSize: 50)
         label.textColor = .cinnabar
         label.textAlignment = .center
@@ -21,7 +20,7 @@ class SignUpView: UIView {
         return label
     }()
     
-    private(set) lazy var userNameTextField: UITextField = {
+    private(set) lazy var loginTextField: UITextField = {
         let textFild = UITextField()
         textFild.translatesAutoresizingMaskIntoConstraints = false
         textFild.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -105,10 +104,20 @@ class SignUpView: UIView {
     private(set) lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Создать", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         button.backgroundColor = .systemBackground
         button.tintColor = UIColor.cinnabar
+        return button
+    }()
+    
+    private(set) lazy var logoutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Выйти", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        button.backgroundColor = .systemBackground
+        button.tintColor = UIColor.cinnabar
+        button.isHidden = true
         return button
     }()
     
@@ -138,54 +147,27 @@ class SignUpView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
+        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.setupView()
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    private func configureUI() {
         self.backgroundColor = .systemBackground
-        configureCaptionLabel()
-        configureScrollView()
-        configureView()
-    }
-    
-    private func configureScrollView() {
-        self.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        captionLabel.adjustsFontForContentSizeCategory = false
         
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: captionLabel.bottomAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-    }
-    
-    private func configureCaptionLabel() {
-        self.addSubview(captionLabel)
         guard let customFont = UIFont(name: "Parangon410C", size: 50) else {
-            fatalError("""
-                Failed to load the "Parangon210C" font.
-                Make sure the font file is included in the project and the font name is spelled correctly.
-                """
+            fatalError("Failed to load the \"Parangon210C\" font"
             )
         }
         captionLabel.font = UIFontMetrics.default.scaledFont(for: customFont)
-        captionLabel.adjustsFontForContentSizeCategory = false
         
-        NSLayoutConstraint.activate([
-            captionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            captionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            captionLabel.heightAnchor.constraint(equalToConstant: 60)
-        ])
-    }
-    
-    private func configureView() {
-        scrollView.addSubview(userNameTextField)
+        self.addSubview(scrollView)
+        self.addSubview(captionLabel)
+        scrollView.addSubview(loginTextField)
         scrollView.addSubview(passwordTextField)
         scrollView.addSubview(emailTextField)
         scrollView.addSubview(genderSegmentedControl)
@@ -193,19 +175,28 @@ class SignUpView: UIView {
         scrollView.addSubview(bioLabel)
         scrollView.addSubview(bioTextView)
         scrollView.addSubview(signUpButton)
-
-        userNameTextField.layer.addSublayer(userBottomLine)
-        passwordTextField.layer.addSublayer(passwordBottomLine)
-        emailTextField.layer.addSublayer(emailBottomLine)
-        creditCardTextField.layer.addSublayer(creditCardBottomLine)
+        scrollView.addSubview(logoutButton)
         
+        configureConstrains()
+    }
+    
+    private func configureConstrains() {
         NSLayoutConstraint.activate([
-            userNameTextField.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            userNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            userNameTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            userNameTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: captionLabel.bottomAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            passwordTextField.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 16),
+            captionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            captionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            captionLabel.heightAnchor.constraint(equalToConstant: 60),
+            
+            loginTextField.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            loginTextField.heightAnchor.constraint(equalToConstant: 44),
+            loginTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            loginTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
+            passwordTextField.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 16),
             passwordTextField.heightAnchor.constraint(equalToConstant: 44),
             passwordTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             passwordTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
@@ -235,20 +226,16 @@ class SignUpView: UIView {
             
             signUpButton.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 16),
             signUpButton.widthAnchor.constraint(equalToConstant: 100),
-            signUpButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+            signUpButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
+            logoutButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
+            logoutButton.widthAnchor.constraint(equalToConstant: 100),
+            logoutButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         scrollView.layoutIfNeeded()
-        
-        userBottomLine.frame = CGRect(x: 0.0, y: userNameTextField.frame.height - 1, width: userNameTextField.frame.width, height: 1.0)
-        passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
-        emailBottomLine.frame = CGRect(x: 0.0, y: emailTextField.frame.height - 1, width: emailTextField.frame.width, height: 1.0)
-        creditCardBottomLine.frame = CGRect(x: 0.0, y: creditCardTextField.frame.height - 1, width: creditCardTextField.frame.width, height: 1.0)
-        
-        // ограничем contentSize по последнему view - signUpButton + 32 для красоты
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpButton.frame.origin.y + 32)
     }
 }

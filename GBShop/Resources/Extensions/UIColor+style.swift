@@ -1,5 +1,5 @@
 //
-//  UIColor+Style.swift
+//  UIColor+style.swift
 //  GBShop
 //
 //  Created by Alexander Fomin on 31.08.2021.

@@ -29,12 +29,14 @@
 		1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */; };
 		1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85926DD5086009E7D56 /* LoginViewController.swift */; };
 		1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D87426DD59E3009E7D56 /* LoginView.swift */; };
-		1553D88126DEA0B9009E7D56 /* UIColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */; };
+		1553D88126DEA0B9009E7D56 /* UIColor+style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88026DEA0B9009E7D56 /* UIColor+style.swift */; };
 		1553D88926E0068A009E7D56 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88826E0068A009E7D56 /* SignUpViewController.swift */; };
 		1553D88E26E006E1009E7D56 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D88D26E006E1009E7D56 /* SignUpView.swift */; };
 		1553D89726E0899F009E7D56 /* PARANGON.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89626E0899F009E7D56 /* PARANGON.TTF */; };
 		1553D89D26E08C18009E7D56 /* PARANGON_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89B26E08C17009E7D56 /* PARANGON_0.TTF */; };
 		1553D89E26E08C18009E7D56 /* PARANGON_1.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */; };
+		1553D8A526E3283B009E7D56 /* UITextField+underline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8A426E3283B009E7D56 /* UITextField+underline.swift */; };
+		1553D8B026E3461A009E7D56 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8AF26E3461A009E7D56 /* Session.swift */; };
 		15581B8C26D1EFF9007034B0 /* ReviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */; };
 		15581B9126D1F511007034B0 /* RequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9026D1F511007034B0 /* RequestFactoryTests.swift */; };
 		15581B9726DB6EC8007034B0 /* AddToCartRequstBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */; };
@@ -109,12 +111,14 @@
 		1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		1553D85926DD5086009E7D56 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1553D87426DD59E3009E7D56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Style.swift"; sourceTree = "<group>"; };
+		1553D88026DEA0B9009E7D56 /* UIColor+style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+style.swift"; sourceTree = "<group>"; };
 		1553D88826E0068A009E7D56 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1553D88D26E006E1009E7D56 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1553D89626E0899F009E7D56 /* PARANGON.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON.TTF; sourceTree = "<group>"; };
 		1553D89B26E08C17009E7D56 /* PARANGON_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON_0.TTF; sourceTree = "<group>"; };
 		1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON_1.TTF; sourceTree = "<group>"; };
+		1553D8A426E3283B009E7D56 /* UITextField+underline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+underline.swift"; sourceTree = "<group>"; };
+		1553D8AF26E3461A009E7D56 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsTests.swift; sourceTree = "<group>"; };
 		15581B9026D1F511007034B0 /* RequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactoryTests.swift; sourceTree = "<group>"; };
 		15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartRequstBody.swift; sourceTree = "<group>"; };
@@ -282,7 +286,6 @@
 		151E56A726A5FB0E005D7D05 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1553D87F26DE9E7D009E7D56 /* Extensions */,
 				1553D84E26DD4C05009E7D56 /* Services */,
 				151E56B626AF383D005D7D05 /* Network */,
 			);
@@ -292,6 +295,7 @@
 		151E56A826A5FB13005D7D05 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1553D87F26DE9E7D009E7D56 /* Extensions */,
 				1553D89526E08974009E7D56 /* Fonts */,
 				151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */,
 				151E567826A5F4BF005D7D05 /* Assets.xcassets */,
@@ -315,6 +319,7 @@
 				151E56BF26AF3A01005D7D05 /* ErrorParser.swift */,
 				151E56CE26AF4300005D7D05 /* RequestRouter.swift */,
 				151E56F626B1B5BE005D7D05 /* DataRequest.swift */,
+				1553D8AF26E3461A009E7D56 /* Session.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -399,7 +404,8 @@
 		1553D87F26DE9E7D009E7D56 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1553D88026DEA0B9009E7D56 /* UIColor+Style.swift */,
+				1553D88026DEA0B9009E7D56 /* UIColor+style.swift */,
+				1553D8A426E3283B009E7D56 /* UITextField+underline.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -717,7 +723,7 @@
 				15581BA226DB706E007034B0 /* Cart.swift in Sources */,
 				151E56EF26AF4B79005D7D05 /* RequestFactory.swift in Sources */,
 				15C156A226D0C20B00960101 /* Reviews.swift in Sources */,
-				1553D88126DEA0B9009E7D56 /* UIColor+Style.swift in Sources */,
+				1553D88126DEA0B9009E7D56 /* UIColor+style.swift in Sources */,
 				151E56B826AF38E2005D7D05 /* AbstractErrorParser.swift in Sources */,
 				15C1568D26D0B74D00960101 /* Review.swift in Sources */,
 				151E571C26B3B031005D7D05 /* UserData.swift in Sources */,
@@ -742,12 +748,14 @@
 				1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */,
 				15581B9726DB6EC8007034B0 /* AddToCartRequstBody.swift in Sources */,
 				151E56C526AF3FD6005D7D05 /* LoginResult.swift in Sources */,
+				1553D8B026E3461A009E7D56 /* Session.swift in Sources */,
 				15C1569826D0BAE900960101 /* ReviewsRequestFactory.swift in Sources */,
 				151E567226A5F4BB005D7D05 /* SceneDelegate.swift in Sources */,
 				15E70CA326BE572300F59ED3 /* Goods.swift in Sources */,
 				1553D88E26E006E1009E7D56 /* SignUpView.swift in Sources */,
 				151E56C026AF3A01005D7D05 /* ErrorParser.swift in Sources */,
 				1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */,
+				1553D8A526E3283B009E7D56 /* UITextField+underline.swift in Sources */,
 				15C1569D26D0BCC800960101 /* StandardResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
