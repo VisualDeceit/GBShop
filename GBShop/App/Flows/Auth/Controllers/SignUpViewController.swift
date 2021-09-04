@@ -15,6 +15,13 @@ enum ControllerType {
 class SignUpViewController: UIViewController {
     
     var onDismiss: (() -> Void)?
+    var user: User? {
+        didSet {
+            if let user = user {
+                self.signUpView.populate(user: user)
+            }
+        }
+    }
     
     private var type: ControllerType
     private var caption: String
@@ -28,8 +35,8 @@ class SignUpViewController: UIViewController {
     
     init(type: ControllerType) {
         self.type = type
-        switch type {
         
+        switch type {
         case let .signUp (caption, buttonText):
             self.caption = caption
             self.buttonText = buttonText
@@ -82,19 +89,41 @@ class SignUpViewController: UIViewController {
     
     // MARK: - Private functions
     private func setupView() {
-        self.signUpView.captionLabel.text = self.caption
-        self.signUpView.signUpButton.setTitle(self.buttonText, for: .normal)
-        self.signUpView.loginTextField.setUnderLine()
-        self.signUpView.passwordTextField.setUnderLine()
-        self.signUpView.emailTextField.setUnderLine()
-        self.signUpView.creditCardTextField.setUnderLine()
-        self.signUpView.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: self.signUpView.signUpButton.frame.origin.y + 32)
+        signUpView.captionLabel.text = self.caption
+        signUpView.signUpButton.setTitle(self.buttonText, for: .normal)
+        signUpView.loginTextField.setUnderLine()
+        signUpView.passwordTextField.setUnderLine()
+        signUpView.emailTextField.setUnderLine()
+        signUpView.creditCardTextField.setUnderLine()
+        signUpView.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: signUpView.signUpButton.frame.origin.y + 32)
         
-        self.signUpView.logoutButton.isHidden = Session.shared.userId == nil
+        signUpView.logoutButton.isHidden = Session.shared.userId == nil
     }
     
     @objc func createNewUser() {
-        dismiss(animated: true)
+        let requestFactory = RequestFactory()
+        let auth = requestFactory.makeAuthRequestFatory()
+        let gender: UserGender
+        if signUpView.genderSegmentedControl.selectedSegmentIndex == 0 {
+            gender = .male
+        } else {
+            gender = .female
+        }
+        auth.registerUser(id: 123,
+                          userName: signUpView.loginTextField.text ?? "",
+                          password: signUpView.passwordTextField.text ?? "",
+                          email: signUpView.emailTextField.text ?? "",
+                          gender: gender,
+                          creditCard: signUpView.creditCardTextField.text ?? "",
+                          bio: signUpView.bioTextView.text ?? "") { [weak self] response in
+                   switch response {
+                   case .success(let answer):
+                       print(answer)
+                    self?.dismiss(animated: true)
+                   case .failure(let error):
+                       print(error.localizedDescription)
+                   }
+               }
     }
     
     @objc func logout() {

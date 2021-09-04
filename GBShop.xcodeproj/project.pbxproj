@@ -319,7 +319,6 @@
 				151E56BF26AF3A01005D7D05 /* ErrorParser.swift */,
 				151E56CE26AF4300005D7D05 /* RequestRouter.swift */,
 				151E56F626B1B5BE005D7D05 /* DataRequest.swift */,
-				1553D8AF26E3461A009E7D56 /* Session.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -332,6 +331,7 @@
 				15E70C9926BE563400F59ED3 /* Goods */,
 				151E571026B1F04A005D7D05 /* Auth */,
 				151E56EE26AF4B79005D7D05 /* RequestFactory.swift */,
+				1553D8AF26E3461A009E7D56 /* Session.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

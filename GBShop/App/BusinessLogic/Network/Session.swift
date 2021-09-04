@@ -8,9 +8,8 @@
 import Foundation
 
 class Session {
+    static let shared = Session()
+    var userId: Int?
     
     private init() {}
-    
-    static let shared = Session()
-    var userId: Int? = 1
 }

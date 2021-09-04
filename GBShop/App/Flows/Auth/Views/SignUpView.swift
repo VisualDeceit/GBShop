@@ -121,30 +121,6 @@ class SignUpView: UIView {
         return button
     }()
     
-    lazy var userBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
-    private lazy var passwordBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
-    private lazy var emailBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
-    private lazy var creditCardBottomLine: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.blueSappire.cgColor
-        return layer
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureUI()
@@ -152,6 +128,10 @@ class SignUpView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func populate(user: User) {
+        loginTextField.text = user.login
     }
     
     private func configureUI() {

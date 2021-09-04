@@ -24,8 +24,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
-        self.loginView.signUpButton.addTarget(self, action: #selector(showSignUpForm), for: .touchUpInside)
+        loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
+        loginView.loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        loginView.signUpButton.addTarget(self, action: #selector(showSignUpForm), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +40,27 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Button targets
+    @objc func login() {
+        let requestFactory = RequestFactory()
+        let auth = requestFactory.makeAuthRequestFatory()
+
+        auth.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
+           switch response {
+           case .success(let login):
+            Session.shared.userId = login.user.id
+            if let tabbarController = self?.view.window?.rootViewController as? UITabBarController {
+                tabbarController.viewControllers?.remove(at: 0)
+                let accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"))
+                accountViewController.user = login.user
+                accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
+                tabbarController.setViewControllers([accountViewController], animated: false)
+            }
+           case .failure(let error):
+            print(error.localizedDescription)
+           }
+       }
+    }
+    
     @objc func showSignUpForm() {
         let signUpViewController = SignUpViewController(type: .signUp("Новый аккаунт", "Создать"))
         present(signUpViewController, animated: true) { [weak self] in
