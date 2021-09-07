@@ -62,6 +62,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.signUpView.scrollView.addGestureRecognizer(hideKeyboardGesture)
         self.signUpView.signUpButton.addTarget(self, action: #selector(actionWithUser), for: .touchUpInside)
@@ -153,11 +154,14 @@ class SignUpViewController: UIViewController {
             case .success(let answer):
                 print(answer)
                 Session.shared.userId = nil
-                if let tabbarController = self?.view.window?.rootViewController as? UITabBarController {
-                    tabbarController.viewControllers?.remove(at: 0)
+                // сохраняем ссылку на tabBarController
+                if let tabbarC = self?.tabBarController {
+                    // так как после удаления  контроллера self?.tabBarController == nil
+                    tabbarC.viewControllers?.removeLast()
                     let accountViewController = LoginViewController()
                     accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
-                    tabbarController.setViewControllers([accountViewController], animated: false)
+                    tabbarC.viewControllers?.append(accountViewController)
+                    tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1
                 }
             case .failure(let error):
                 print(error.localizedDescription)

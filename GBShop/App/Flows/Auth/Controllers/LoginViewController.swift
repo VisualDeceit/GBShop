@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
         loginView.loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
@@ -49,15 +49,19 @@ class LoginViewController: UIViewController {
 
         auth.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
            switch response {
+           
            case .success(let login):
             print(login)
             Session.shared.userId = login.user.id
-            if let tabbarController = self?.view.window?.rootViewController as? UITabBarController {
-                tabbarController.viewControllers?.remove(at: 0)
+            // сохраняем ссылку на tabBarController
+            if let tabbarC = self?.tabBarController {
+                // так как после удаления  контроллера self?.tabBarController == nil
+                tabbarC.viewControllers?.removeLast()
                 let accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"))
                 accountViewController.user = login.user
                 accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
-                tabbarController.setViewControllers([accountViewController], animated: false)
+                tabbarC.viewControllers?.append(accountViewController)
+                tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1
             }
            case .failure(let error):
             print(error.localizedDescription)

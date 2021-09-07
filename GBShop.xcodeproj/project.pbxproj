@@ -37,6 +37,8 @@
 		1553D89E26E08C18009E7D56 /* PARANGON_1.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */; };
 		1553D8A526E3283B009E7D56 /* UITextField+underline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8A426E3283B009E7D56 /* UITextField+underline.swift */; };
 		1553D8B026E3461A009E7D56 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8AF26E3461A009E7D56 /* Session.swift */; };
+		1553D8C126E7D140009E7D56 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8C026E7D13F009E7D56 /* CatalogViewController.swift */; };
+		1553D8C926E7D848009E7D56 /* UIFont+style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D8C826E7D848009E7D56 /* UIFont+style.swift */; };
 		15581B8C26D1EFF9007034B0 /* ReviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */; };
 		15581B9126D1F511007034B0 /* RequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9026D1F511007034B0 /* RequestFactoryTests.swift */; };
 		15581B9726DB6EC8007034B0 /* AddToCartRequstBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */; };
@@ -119,6 +121,8 @@
 		1553D89C26E08C17009E7D56 /* PARANGON_1.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PARANGON_1.TTF; sourceTree = "<group>"; };
 		1553D8A426E3283B009E7D56 /* UITextField+underline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+underline.swift"; sourceTree = "<group>"; };
 		1553D8AF26E3461A009E7D56 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		1553D8C026E7D13F009E7D56 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
+		1553D8C826E7D848009E7D56 /* UIFont+style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+style.swift"; sourceTree = "<group>"; };
 		15581B8B26D1EFF9007034B0 /* ReviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsTests.swift; sourceTree = "<group>"; };
 		15581B9026D1F511007034B0 /* RequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactoryTests.swift; sourceTree = "<group>"; };
 		15581B9626DB6EC8007034B0 /* AddToCartRequstBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartRequstBody.swift; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 		151E56A626A5FB00005D7D05 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				1553D8BE26E7D0DB009E7D56 /* Goods */,
 				1553D85826DD5027009E7D56 /* Auth */,
 			);
 			path = Flows;
@@ -406,6 +411,7 @@
 			children = (
 				1553D88026DEA0B9009E7D56 /* UIColor+style.swift */,
 				1553D8A426E3283B009E7D56 /* UITextField+underline.swift */,
+				1553D8C826E7D848009E7D56 /* UIFont+style.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,6 +424,22 @@
 				1553D89626E0899F009E7D56 /* PARANGON.TTF */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1553D8BE26E7D0DB009E7D56 /* Goods */ = {
+			isa = PBXGroup;
+			children = (
+				1553D8BF26E7D0F2009E7D56 /* Controllers */,
+			);
+			path = Goods;
+			sourceTree = "<group>";
+		};
+		1553D8BF26E7D0F2009E7D56 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1553D8C026E7D13F009E7D56 /* CatalogViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		15581B9526DB6E4B007034B0 /* Cart */ = {
@@ -728,6 +750,7 @@
 				15C1568D26D0B74D00960101 /* Review.swift in Sources */,
 				151E571C26B3B031005D7D05 /* UserData.swift in Sources */,
 				151E570C26B1EF77005D7D05 /* ChangeUserDataResult.swift in Sources */,
+				1553D8C926E7D848009E7D56 /* UIFont+style.swift in Sources */,
 				151E570726B1ED83005D7D05 /* LogoutResult.swift in Sources */,
 				15E70C8D26BE54A400F59ED3 /* Product.swift in Sources */,
 				151E56DC26AF4B0F005D7D05 /* AbstractRequestFactory.swift in Sources */,
@@ -742,6 +765,7 @@
 				15E70C9B26BE566A00F59ED3 /* GoodsRequestFactory.swift in Sources */,
 				15C1569226D0B9E500960101 /* ReviewsResult.swift in Sources */,
 				15C156A726D0CECF00960101 /* AddReviewRequestBody.swift in Sources */,
+				1553D8C126E7D140009E7D56 /* CatalogViewController.swift in Sources */,
 				151E56F726B1B5BE005D7D05 /* DataRequest.swift in Sources */,
 				151E56CA26AF3FE0005D7D05 /* User.swift in Sources */,
 				15E70C9526BE55C000F59ED3 /* ProductResult.swift in Sources */,

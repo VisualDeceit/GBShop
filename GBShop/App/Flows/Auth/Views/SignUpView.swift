@@ -138,12 +138,7 @@ class SignUpView: UIView {
         self.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         captionLabel.adjustsFontForContentSizeCategory = false
-        
-        guard let customFont = UIFont(name: "Parangon410C", size: 50) else {
-            fatalError("Failed to load the \"Parangon210C\" font"
-            )
-        }
-        captionLabel.font = UIFontMetrics.default.scaledFont(for: customFont)
+        captionLabel.font = UIFontMetrics.default.scaledFont(for: UIFont.captionParangon50)
         
         self.addSubview(scrollView)
         self.addSubview(captionLabel)

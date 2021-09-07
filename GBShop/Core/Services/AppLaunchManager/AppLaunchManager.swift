@@ -22,20 +22,18 @@ class AppLaunchManager {
     func start() {
         let window = UIWindow(windowScene: windowScene)
         
-        let accountViewController: UIViewController
-        
-        if Session.shared.userId == nil {
-            accountViewController = LoginViewController()
-        } else {
-            accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"))
-        }
-        
+        let accountViewController = LoginViewController()
         accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
         
-        let tabBarController = UITabBarController()
-        tabBarController.setViewControllers([accountViewController], animated: false)
-        tabBarController.tabBar.tintColor = UIColor.cinnabar
+        let catalogViewController = CatalogViewController()
+        let catalogNavController = UINavigationController(rootViewController: catalogViewController)
+        catalogNavController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "list.dash"), tag: 0)
         
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([catalogNavController, accountViewController], animated: false)
+        tabBarController.tabBar.tintColor = UIColor.cinnabar
+        tabBarController.selectedIndex = 1
+     
         window.rootViewController = tabBarController
         self.window = window
         window.makeKeyAndVisible()
