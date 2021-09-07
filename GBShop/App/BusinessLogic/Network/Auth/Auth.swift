@@ -42,8 +42,7 @@ extension Auth: AuthRequestFactory {
                       creditCard: String,
                       bio: String,
                       completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
-        let requestModel = RegisterUser(baseURL: self.baseURL, id: id, userName: userName, password: password,
-                                        email: email, gender: gender, creditCard: creditCard, bio: bio, method: .post)
+        let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
@@ -55,8 +54,7 @@ extension Auth: AuthRequestFactory {
                         creditCard: String,
                         bio: String,
                         completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
-        let requestModel = ChangeUserData(baseURL: self.baseURL, id: id, userName: userName, password: password,
-                                          email: email, gender: gender, creditCard: creditCard, bio: bio, method: .post)
+        let requestModel = ChangeUserData(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 }
@@ -86,48 +84,32 @@ extension Auth {
         let method: RequestRouterMethod
         let data: Data? = nil
     }
-
-    class RegisterUser: UserData, RequestRouter {
+    
+    struct RegisterUser: UserData, RequestRouter {
+        var id: Int
+        var userName: String
+        var password: String
+        var email: String
+        var gender: UserGender
+        var creditCard: String
+        var bio: String
         var baseURL: String
-        let path = "/register"
-        let method: RequestRouterMethod
-        let data: Data? = nil
-
-        init(baseURL: String,
-             id: Int,
-             userName: String,
-             password: String,
-             email: String,
-             gender: UserGender,
-             creditCard: String,
-             bio: String,
-             method: RequestRouterMethod) {
-            self.baseURL = baseURL
-            self.method = method
-            super.init(id: id, userName: userName, password: password, email: email, gender: gender,
-                       creditCard: creditCard, bio: bio)
-        }
+        var path = "/register"
+        var method: RequestRouterMethod
+        var data: Data?
     }
-
-    class ChangeUserData: UserData, RequestRouter {
+    
+    struct ChangeUserData: UserData, RequestRouter {
+        var id: Int
+        var userName: String
+        var password: String
+        var email: String
+        var gender: UserGender
+        var creditCard: String
+        var bio: String
         var baseURL: String
-        let path = "/change_user"
-        let method: RequestRouterMethod
-        let data: Data? = nil
-
-        init(baseURL: String,
-             id: Int,
-             userName: String,
-             password: String,
-             email: String,
-             gender: UserGender,
-             creditCard: String,
-             bio: String,
-             method: RequestRouterMethod) {
-           self.baseURL = baseURL
-           self.method = method
-           super.init(id: id, userName: userName, password: password, email: email, gender: gender,
-                      creditCard: creditCard, bio: bio)
-        }
+        var path = "/change_user"
+        var method: RequestRouterMethod
+        var data: Data?
     }
 }

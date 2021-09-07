@@ -7,14 +7,17 @@
 
 import Foundation
 
-class UserData {
-    var id: Int = 0
-    var userName: String = ""
-    var password: String = ""
-    var email: String = ""
-    var gender: UserGender = .male
-    var creditCard: String = ""
-    var bio: String = ""
+protocol UserData {
+    var id: Int { get set }
+    var userName: String { get set }
+    var password: String { get set }
+    var email: String { get set }
+    var gender: UserGender { get set }
+    var creditCard: String { get set }
+    var bio: String { get set }
+}
+
+extension UserData {
     var queryItems: [URLQueryItem]? {
         return [URLQueryItem(name: "id_user", value: String(id)),
         URLQueryItem(name: "username", value: userName),
@@ -24,21 +27,5 @@ class UserData {
         URLQueryItem(name: "credit_card", value: password),
         URLQueryItem(name: "bio", value: password)
         ]
-    }
-
-    init(id: Int,
-         userName: String,
-         password: String,
-         email: String,
-         gender: UserGender,
-         creditCard: String,
-         bio: String) {
-        self.id = id
-        self.userName = userName
-        self.password = password
-        self.email = email
-        self.gender = gender
-        self.creditCard = creditCard
-        self.bio = bio
     }
 }
