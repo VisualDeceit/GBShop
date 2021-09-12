@@ -8,7 +8,22 @@
 import UIKit
 
 class CatalogView: UIView {
-    private(set) lazy var tableView = UITableView()
+    private(set) lazy var collectionView: UICollectionView = {
+        let spaceBetweenCell: CGFloat = 8.0
+        let screenWidth = UIScreen.main.bounds.size.width - spaceBetweenCell * 2.0
+        let itemSize = CGSize(width: (screenWidth - spaceBetweenCell) / 2.0, height: (screenWidth - spaceBetweenCell) / 2.0 + 88)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: spaceBetweenCell, left: spaceBetweenCell, bottom: spaceBetweenCell, right: spaceBetweenCell)
+        layout.itemSize = itemSize
+        layout.minimumLineSpacing = spaceBetweenCell
+        layout.minimumInteritemSpacing = spaceBetweenCell
+          
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .systemBackground
+        return cv
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,14 +35,15 @@ class CatalogView: UIView {
     }
     
     private func configureUI() {
-        self.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(collectionView)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }

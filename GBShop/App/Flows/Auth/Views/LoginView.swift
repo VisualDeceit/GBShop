@@ -88,14 +88,7 @@ class LoginView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureUI() {
+        
         self.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -106,10 +99,14 @@ class LoginView: UIView {
         scrollView.addSubview(loginButton)
         scrollView.addSubview(signUpStackView)
 
-        configureConstrains()
+        setupConstraints()
     }
     
-    private func configureConstrains() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.topAnchor),

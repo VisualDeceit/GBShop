@@ -123,18 +123,7 @@ class SignUpView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func populate(user: User) {
-        loginTextField.text = user.login
-    }
-    
-    private func configureUI() {
+        
         self.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         captionLabel.adjustsFontForContentSizeCategory = false
@@ -152,10 +141,18 @@ class SignUpView: UIView {
         scrollView.addSubview(signUpButton)
         scrollView.addSubview(logoutButton)
         
-        configureConstrains()
+        setupConstraints()
     }
     
-    private func configureConstrains() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func populate(user: User) {
+        loginTextField.text = user.login
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: captionLabel.bottomAnchor),

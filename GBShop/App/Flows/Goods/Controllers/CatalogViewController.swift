@@ -33,7 +33,13 @@ class CatalogViewController: UIViewController {
             .font: UIFontMetrics.default.scaledFont(for: UIFont.captionParangon50)
         ]
         
-        catalogView.tableView.dataSource = self
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.cinnabar,
+            .font: UIFontMetrics.default.scaledFont(for: UIFont.captionParangon25)
+        ]
+        
+        catalogView.collectionView.dataSource = self
+        catalogView.collectionView.register(CatalogCell.self, forCellWithReuseIdentifier: CatalogCell.identifier)
         
         goods = requestFactory.makeGoodsRequestFatory()
         getCatalog()
@@ -44,7 +50,7 @@ class CatalogViewController: UIViewController {
             switch result {
             case .success(let catalog):
                 self?.products = catalog
-                self?.catalogView.tableView.reloadData()
+                self?.catalogView.collectionView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -52,22 +58,19 @@ class CatalogViewController: UIViewController {
     }
 }
 
-extension CatalogViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+// MARK: - CollectionViewDataSource
+extension CatalogViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         products.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var dequeuedCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        if dequeuedCell == nil {
-            dequeuedCell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "Cell")
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCell.identifier, for: indexPath) as? CatalogCell {
+            dequeuedCell.productName.text  = products[indexPath.row].name
+            dequeuedCell.productPrice.text = "\(products[indexPath.row].price) ₽"
+            return dequeuedCell
+        } else {
+            return UICollectionViewCell()
         }
-        
-        guard let cell = dequeuedCell else {
-            return UITableViewCell()
-        }
-        cell.textLabel?.text = products[indexPath.row].name
-        cell.detailTextLabel?.text = "\(products[indexPath.row].price) руб."
-        return cell
     }
 }
