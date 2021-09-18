@@ -10,4 +10,5 @@ import UIKit
 extension UIFont {
     static let captionParangon50 = UIFont(name: "Parangon410C", size: 50) ?? .systemFont(ofSize: 50)
     static let captionParangon25 = UIFont(name: "Parangon410C", size: 25) ?? .systemFont(ofSize: 25)
+    static let captionParangon16 = UIFont(name: "Parangon210C", size: 16) ?? .systemFont(ofSize: 16)
 }

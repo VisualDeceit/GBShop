@@ -47,6 +47,10 @@
 		15581BA726DB7311007034B0 /* CartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15581BA626DB7311007034B0 /* CartTests.swift */; };
 		1588A51226E9244400E974DA /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A51126E9244400E974DA /* CatalogView.swift */; };
 		1588A51A26EDAD5000E974DA /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A51926EDAD5000E974DA /* CatalogCell.swift */; };
+		1588A52226F10A8200E974DA /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A52126F10A8200E974DA /* ProductDetailViewController.swift */; };
+		1588A52726F10AFD00E974DA /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A52626F10AFD00E974DA /* ProductDetailView.swift */; };
+		1588A52E26F2F5D000E974DA /* UIViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A52D26F2F5D000E974DA /* UIViewPreview.swift */; };
+		1588A53626F5D3E500E974DA /* UIReviewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1588A53526F5D3E400E974DA /* UIReviewButton.swift */; };
 		158EC0B126BAF9B50082D5B8 /* DataRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158EC0B026BAF9B50082D5B8 /* DataRequestTests.swift */; };
 		158EC0BE26BB930E0082D5B8 /* ErrorParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158EC0BD26BB930E0082D5B8 /* ErrorParserTests.swift */; };
 		15C1568D26D0B74D00960101 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C1568C26D0B74C00960101 /* Review.swift */; };
@@ -133,6 +137,10 @@
 		15581BA626DB7311007034B0 /* CartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTests.swift; sourceTree = "<group>"; };
 		1588A51126E9244400E974DA /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		1588A51926EDAD5000E974DA /* CatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
+		1588A52126F10A8200E974DA /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		1588A52626F10AFD00E974DA /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
+		1588A52D26F2F5D000E974DA /* UIViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewPreview.swift; sourceTree = "<group>"; };
+		1588A53526F5D3E400E974DA /* UIReviewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIReviewButton.swift; sourceTree = "<group>"; };
 		158EC0B026BAF9B50082D5B8 /* DataRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequestTests.swift; sourceTree = "<group>"; };
 		158EC0BD26BB930E0082D5B8 /* ErrorParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorParserTests.swift; sourceTree = "<group>"; };
 		15C1568C26D0B74C00960101 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -295,6 +303,8 @@
 		151E56A726A5FB0E005D7D05 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1588A52C26F2F5B000E974DA /* Helpers */,
+				1553D87F26DE9E7D009E7D56 /* Extensions */,
 				1553D84E26DD4C05009E7D56 /* Services */,
 				151E56B626AF383D005D7D05 /* Network */,
 			);
@@ -304,7 +314,6 @@
 		151E56A826A5FB13005D7D05 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1553D87F26DE9E7D009E7D56 /* Extensions */,
 				1553D89526E08974009E7D56 /* Fonts */,
 				151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */,
 				151E567826A5F4BF005D7D05 /* Assets.xcassets */,
@@ -443,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				1553D8C026E7D13F009E7D56 /* CatalogViewController.swift */,
+				1588A52126F10A8200E974DA /* ProductDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -469,6 +479,7 @@
 			children = (
 				1588A51826EDAD1300E974DA /* Cells */,
 				1588A51126E9244400E974DA /* CatalogView.swift */,
+				1588A52626F10AFD00E974DA /* ProductDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -479,6 +490,15 @@
 				1588A51926EDAD5000E974DA /* CatalogCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		1588A52C26F2F5B000E974DA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1588A52D26F2F5D000E974DA /* UIViewPreview.swift */,
+				1588A53526F5D3E400E974DA /* UIReviewButton.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		15C1568B26D0B72100960101 /* Reviews */ = {
@@ -769,6 +789,7 @@
 				15C156A226D0C20B00960101 /* Reviews.swift in Sources */,
 				1588A51A26EDAD5000E974DA /* CatalogCell.swift in Sources */,
 				1553D88126DEA0B9009E7D56 /* UIColor+style.swift in Sources */,
+				1588A52E26F2F5D000E974DA /* UIViewPreview.swift in Sources */,
 				151E56B826AF38E2005D7D05 /* AbstractErrorParser.swift in Sources */,
 				15C1568D26D0B74D00960101 /* Review.swift in Sources */,
 				151E571C26B3B031005D7D05 /* UserData.swift in Sources */,
@@ -783,13 +804,16 @@
 				151E567026A5F4BB005D7D05 /* AppDelegate.swift in Sources */,
 				1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */,
 				151E56CF26AF4300005D7D05 /* RequestRouter.swift in Sources */,
+				1588A52726F10AFD00E974DA /* ProductDetailView.swift in Sources */,
 				151E56EA26AF4B63005D7D05 /* Auth.swift in Sources */,
 				15581B9D26DB6F5D007034B0 /* CartRequestFactory.swift in Sources */,
 				15E70C9B26BE566A00F59ED3 /* GoodsRequestFactory.swift in Sources */,
 				15C1569226D0B9E500960101 /* ReviewsResult.swift in Sources */,
+				1588A52226F10A8200E974DA /* ProductDetailViewController.swift in Sources */,
 				15C156A726D0CECF00960101 /* AddReviewRequestBody.swift in Sources */,
 				1553D8C126E7D140009E7D56 /* CatalogViewController.swift in Sources */,
 				151E56F726B1B5BE005D7D05 /* DataRequest.swift in Sources */,
+				1588A53626F5D3E500E974DA /* UIReviewButton.swift in Sources */,
 				151E56CA26AF3FE0005D7D05 /* User.swift in Sources */,
 				15E70C9526BE55C000F59ED3 /* ProductResult.swift in Sources */,
 				1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */,

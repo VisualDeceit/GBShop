@@ -8,6 +8,7 @@
 import UIKit
 
 class CatalogViewController: UIViewController {
+    
     private var catalogView: CatalogView {
         // swiftlint:disable force_cast
         self.view as! CatalogView
@@ -27,25 +28,25 @@ class CatalogViewController: UIViewController {
         
         self.view.backgroundColor = .systemBackground
         navigationItem.title = "Каталог"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.cinnabar,
-            .font: UIFontMetrics.default.scaledFont(for: UIFont.captionParangon50)
-        ]
-        
+ 
+        catalogView.collectionView.dataSource = self
+        catalogView.collectionView.delegate = self
+        catalogView.collectionView.register(CatalogCell.self, forCellWithReuseIdentifier: CatalogCell.identifier)
+
+        getCatalog()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.cinnabar,
             .font: UIFontMetrics.default.scaledFont(for: UIFont.captionParangon25)
         ]
-        
-        catalogView.collectionView.dataSource = self
-        catalogView.collectionView.register(CatalogCell.self, forCellWithReuseIdentifier: CatalogCell.identifier)
-        
-        goods = requestFactory.makeGoodsRequestFatory()
-        getCatalog()
     }
     
     private func getCatalog() {
+        goods = requestFactory.makeGoodsRequestFatory()
         goods.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
             case .success(let catalog):
@@ -72,5 +73,14 @@ extension CatalogViewController: UICollectionViewDataSource {
         } else {
             return UICollectionViewCell()
         }
+    }
+}
+
+extension CatalogViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let productDetailVC = ProductDetailViewController(productId: products[indexPath.row].id)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
+        navigationController?.pushViewController(productDetailVC, animated: true)
     }
 }
