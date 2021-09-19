@@ -31,8 +31,7 @@ class CatalogViewController: UIViewController {
  
         catalogView.collectionView.dataSource = self
         catalogView.collectionView.delegate = self
-        catalogView.collectionView.register(CatalogCell.self, forCellWithReuseIdentifier: CatalogCell.identifier)
-
+      
         getCatalog()
     }
     
@@ -52,6 +51,22 @@ class CatalogViewController: UIViewController {
             case .success(let catalog):
                 self?.products = catalog
                 self?.catalogView.collectionView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func showProductDetail(with id: Int) {
+        goods = requestFactory.makeGoodsRequestFatory()
+        goods.getProductById(id: id) {[weak self] result in
+            switch result {
+            case .success(let product):
+                let productDetailVC = ProductDetailViewController(with: product)
+                productDetailVC.productID = id
+                self?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+                self?.navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
+                self?.navigationController?.pushViewController(productDetailVC, animated: true)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -78,9 +93,6 @@ extension CatalogViewController: UICollectionViewDataSource {
 
 extension CatalogViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let productDetailVC = ProductDetailViewController(productId: products[indexPath.row].id)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
-        navigationController?.pushViewController(productDetailVC, animated: true)
+        showProductDetail(with: products[indexPath.row].id)
     }
 }

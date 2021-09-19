@@ -15,13 +15,11 @@ class ProductDetailViewController: UIViewController {
         // swiftlint:enable force_cast
     }
     
-    let productId: Int
-    let requestFactory = RequestFactory()
-    var goods: GoodsRequestFactory!
     var product: ProductResult?
+    var productID: Int?
     
-    init(productId: Int) {
-        self.productId = productId
+    init(with product: ProductResult) {
+        self.product = product
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,7 +30,8 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
-        getProduct()
+        productDetailView.showReviewsButton.addTarget(self, action: #selector(showReviews), for: .touchUpInside)
+        fillView()
     }
     
     override func loadView() {
@@ -46,25 +45,21 @@ class ProductDetailViewController: UIViewController {
         productDetailView.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: totalScrollViewHeight)
     }
     
+    @objc func showReviews() {
+        if let productID = productID {
+            let reviewsVC = ReviewsViewController(with: productID)
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
+            navigationController?.pushViewController(reviewsVC, animated: true)
+        }
+    }
+    
     private func fillView() {
         if let product = product {
             productDetailView.productName.text = product.name
             productDetailView.productPrice.text = "\(product.price) ₽"
             productDetailView.descriptionText.text = product.description
             productDetailView.addToCartButton.setTitle("В козину за \(product.price) ₽", for: .normal)
-        }
-    }
-    
-    private func getProduct() {
-        goods = requestFactory.makeGoodsRequestFatory()
-        goods.getProductById(id: self.productId) {[weak self] result in
-            switch result {
-            case .success(let product):
-                self?.product = product
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            self?.fillView()
         }
     }
 }

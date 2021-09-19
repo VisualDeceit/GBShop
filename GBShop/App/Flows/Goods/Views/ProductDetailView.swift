@@ -30,8 +30,8 @@ class ProductDetailView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        label.numberOfLines = 2
-        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.textColor = .label
         return label
     }()
@@ -71,9 +71,6 @@ class ProductDetailView: UIView {
         button.backgroundColor = .systemBackground
         button.tintColor = .label
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-       // button.contentHorizontalAlignment = .leading
-       // button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 150, bottom: 8, right: 0)
-        //button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 42.0, bottom: 0.0, right: 0.0)
         return button
     }()
     
@@ -104,13 +101,6 @@ class ProductDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func makeSeparatorLine() -> UIView {
-        let line = UIView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.backgroundColor = UIColor.blueSappire
-        return line
-    }
-    
     private func setupConstrains() {
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -125,7 +115,7 @@ class ProductDetailView: UIView {
             
             productName.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 8),
             productName.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8),
-            productName.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -8),
+            productName.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 16),
             
             productPrice.topAnchor.constraint(equalTo: productName.bottomAnchor, constant: 8),
             productPrice.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8),
@@ -139,7 +129,7 @@ class ProductDetailView: UIView {
             
             showReviewsButton.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
             showReviewsButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8),
-            showReviewsButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -8),
+            showReviewsButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 16),
             showReviewsButton.heightAnchor.constraint(equalToConstant: 44),
 
             addToCartButton.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -16 - 44),

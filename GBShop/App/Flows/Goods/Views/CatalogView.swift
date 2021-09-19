@@ -22,6 +22,9 @@ class CatalogView: UIView {
           
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .systemBackground
+        
+        cv.register(CatalogCell.self, forCellWithReuseIdentifier: CatalogCell.identifier)
+        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
@@ -36,8 +39,6 @@ class CatalogView: UIView {
     
     private func configureUI() {
         self.addSubview(collectionView)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: self.topAnchor),
