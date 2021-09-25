@@ -16,8 +16,8 @@ class SignUpViewController: UIViewController {
     
     var onDismiss: (() -> Void)?
     
-    let requestFactory = RequestFactory()
-    var auth: AuthRequestFactory!
+    let requestFactory: RequestFactory
+    let authRequestFactory: AuthRequestFactory
     
     var user: User? {
         didSet {
@@ -36,7 +36,7 @@ class SignUpViewController: UIViewController {
         // swiftlint:enable force_cast
     }
     
-    init(type: ControllerType) {
+    init(type: ControllerType, requestFactory: RequestFactory) {
         self.type = type
         
         switch type {
@@ -47,6 +47,10 @@ class SignUpViewController: UIViewController {
             self.caption = caption
             self.buttonText = buttonText
         }
+        
+        self.requestFactory = requestFactory
+        authRequestFactory = requestFactory.makeAuthRequestFatory()
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -67,7 +71,6 @@ class SignUpViewController: UIViewController {
         self.signUpView.scrollView.addGestureRecognizer(hideKeyboardGesture)
         self.signUpView.signUpButton.addTarget(self, action: #selector(actionWithUser), for: .touchUpInside)
         self.signUpView.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        auth = requestFactory.makeAuthRequestFatory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,13 +118,13 @@ class SignUpViewController: UIViewController {
         
         switch type {
         case .signUp:
-            auth.registerUser(id: 123,
-                              userName: signUpView.loginTextField.text ?? "",
-                              password: signUpView.passwordTextField.text ?? "",
-                              email: signUpView.emailTextField.text ?? "",
-                              gender: gender,
-                              creditCard: signUpView.creditCardTextField.text ?? "",
-                              bio: signUpView.bioTextView.text ?? "") { [weak self] response in
+            authRequestFactory.registerUser(id: 123,
+                                            userName: signUpView.loginTextField.text ?? "",
+                                            password: signUpView.passwordTextField.text ?? "",
+                                            email: signUpView.emailTextField.text ?? "",
+                                            gender: gender,
+                                            creditCard: signUpView.creditCardTextField.text ?? "",
+                                            bio: signUpView.bioTextView.text ?? "") { [weak self] response in
                 switch response {
                 case .success(let answer):
                     print(answer)
@@ -131,13 +134,13 @@ class SignUpViewController: UIViewController {
                 }
             }
         case .changeUserData:
-            auth.changeUserData(id: 123,
-                                userName: signUpView.loginTextField.text ?? "",
-                                password: signUpView.passwordTextField.text ?? "",
-                                email: signUpView.emailTextField.text ?? "",
-                                gender: gender,
-                                creditCard: signUpView.creditCardTextField.text ?? "",
-                                bio: signUpView.bioTextView.text ?? "") { response in
+            authRequestFactory.changeUserData(id: 123,
+                                              userName: signUpView.loginTextField.text ?? "",
+                                              password: signUpView.passwordTextField.text ?? "",
+                                              email: signUpView.emailTextField.text ?? "",
+                                              gender: gender,
+                                              creditCard: signUpView.creditCardTextField.text ?? "",
+                                              bio: signUpView.bioTextView.text ?? "") { response in
                 switch response {
                 case .success(let answer):
                     print(answer)
@@ -149,16 +152,17 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func logout() {
-        auth.logout(id: Session.shared.userId ?? 0) { [weak self] response in
+        authRequestFactory.logout(id: Session.shared.userId ?? 0) { [weak self] response in
             switch response {
             case .success(let answer):
                 print(answer)
                 Session.shared.userId = nil
                 // сохраняем ссылку на tabBarController
-                if let tabbarC = self?.tabBarController {
+                if let tabbarC = self?.tabBarController,
+                let self = self {
                     // так как после удаления  контроллера self?.tabBarController == nil
                     tabbarC.viewControllers?.removeLast()
-                    let accountViewController = LoginViewController()
+                    let accountViewController = LoginViewController(with: self.requestFactory)
                     accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
                     tabbarC.viewControllers?.append(accountViewController)
                     tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1

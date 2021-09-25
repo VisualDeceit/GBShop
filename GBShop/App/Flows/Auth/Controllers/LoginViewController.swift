@@ -9,15 +9,25 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    let requestFactory = RequestFactory()
-    var auth: AuthRequestFactory!
+    let requestFactory: RequestFactory
+    let authRequestFactory: AuthRequestFactory
     
     private var loginView: LoginView {
         // swiftlint:disable force_cast
         self.view as! LoginView
         // swiftlint:enable force_cast
     }
-
+    
+    init(with requestFactory: RequestFactory) {
+        self.requestFactory = requestFactory
+        authRequestFactory = requestFactory.makeAuthRequestFatory()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle
     override func loadView() {
         self.view = LoginView()
@@ -44,24 +54,30 @@ class LoginViewController: UIViewController {
     
     // MARK: - Button targets
     @objc func login() {
-        let requestFactory = RequestFactory()
-        let auth = requestFactory.makeAuthRequestFatory()
-
-        auth.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
+        authRequestFactory.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
            switch response {
-           
-           case .success(let login):
-            print(login)
-            Session.shared.userId = login.user.id
-            // сохраняем ссылку на tabBarController
-            if let tabbarC = self?.tabBarController {
-                // так как после удаления  контроллера self?.tabBarController == nil
-                tabbarC.viewControllers?.removeLast()
-                let accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"))
-                accountViewController.user = login.user
-                accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
-                tabbarC.viewControllers?.append(accountViewController)
-                tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1
+           case .success(let answer):
+            print(answer)
+            if answer.result == 0 {
+                let alert = UIAlertController(title: "Ошибка", message: answer.message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
+                alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
+                    self?.login()
+                }))
+                self?.present(alert, animated: true)
+            } else {
+                Session.shared.userId = answer.user?.id
+                // сохраняем ссылку на tabBarController
+                if let tabbarC = self?.tabBarController,
+                   let self = self {
+                    // так как после удаления  контроллера self?.tabBarController == nil
+                    tabbarC.viewControllers?.removeLast()
+                    let accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"), requestFactory: self.requestFactory)
+                    accountViewController.user = answer.user
+                    accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
+                    tabbarC.viewControllers?.append(accountViewController)
+                    tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1
+                }
             }
            case .failure(let error):
             print(error.localizedDescription)
@@ -70,7 +86,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func showSignUpForm() {
-        let signUpViewController = SignUpViewController(type: .signUp("Новый аккаунт", "Создать"))
+        let signUpViewController = SignUpViewController(type: .signUp("Новый аккаунт", "Создать"), requestFactory: self.requestFactory)
         present(signUpViewController, animated: true) { [weak self] in
             self?.unsubscribeFromNotifications()
         }

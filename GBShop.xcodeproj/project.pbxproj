@@ -32,6 +32,7 @@
 		151FEEBF26FBA0A200320A5D /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEEBE26FBA0A200320A5D /* Purchase.swift */; };
 		151FEED626FC2FBA00320A5D /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEED526FC2FBA00320A5D /* CartCell.swift */; };
 		151FEEDE26FEDC5000320A5D /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEEDD26FEDC5000320A5D /* CartItem.swift */; };
+		151FEEE326FF71E000320A5D /* AuthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEEE226FF71E000320A5D /* AuthUITests.swift */; };
 		1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */; };
 		1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85926DD5086009E7D56 /* LoginViewController.swift */; };
 		1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D87426DD59E3009E7D56 /* LoginView.swift */; };
@@ -131,6 +132,7 @@
 		151FEEBE26FBA0A200320A5D /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 		151FEED526FC2FBA00320A5D /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		151FEEDD26FEDC5000320A5D /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
+		151FEEE226FF71E000320A5D /* AuthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUITests.swift; sourceTree = "<group>"; };
 		1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		1553D85926DD5086009E7D56 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1553D87426DD59E3009E7D56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				151E569126A5F4BF005D7D05 /* GBShopUITests.swift */,
+				151FEEE226FF71E000320A5D /* AuthUITests.swift */,
 				151E569326A5F4BF005D7D05 /* Info.plist */,
 			);
 			path = GBShopUITests;
@@ -960,6 +963,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				151E569226A5F4BF005D7D05 /* GBShopUITests.swift in Sources */,
+				151FEEE326FF71E000320A5D /* AuthUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

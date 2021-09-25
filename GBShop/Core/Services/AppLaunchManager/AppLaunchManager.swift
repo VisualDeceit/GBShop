@@ -21,15 +21,16 @@ class AppLaunchManager {
     
     func start() {
         let window = UIWindow(windowScene: windowScene)
+        let requestFactory = RequestFactory()
         
-        let accountViewController = LoginViewController()
+        let accountViewController = LoginViewController(with: requestFactory)
         accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
         
-        let catalogViewController = CatalogViewController()
+        let catalogViewController = CatalogViewController(with: requestFactory)
         let catalogNavController = UINavigationController(rootViewController: catalogViewController)
         catalogNavController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "list.dash"), tag: 0)
         
-        let cartViewController = CartViewController()
+        let cartViewController = CartViewController(with: requestFactory)
         cartViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "cart"), tag: 0)
         
         let tabBarController = UITabBarController()

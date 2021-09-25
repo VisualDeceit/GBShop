@@ -8,6 +8,13 @@
 import Foundation
 
 struct LoginResult: Codable {
+    enum CodingKeys: String, CodingKey {
+        case result
+        case user
+        case message = "error_message"
+    }
+    
     let result: Int
-    let user: User
+    var user: User?
+    var message: String?
 }

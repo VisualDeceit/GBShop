@@ -15,9 +15,19 @@ class CatalogViewController: UIViewController {
         // swiftlint:enable force_cast
     }
     
-    let requestFactory = RequestFactory()
-    var goods: GoodsRequestFactory!
     var products = [Product]()
+    let requestFactory: RequestFactory
+    let goodsFactory: GoodsRequestFactory
+
+    init(with requestFactory: RequestFactory) {
+        self.requestFactory = requestFactory
+        goodsFactory = requestFactory.makeGoodsRequestFatory()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = CatalogView()
@@ -45,8 +55,7 @@ class CatalogViewController: UIViewController {
     }
     
     private func getCatalog() {
-        goods = requestFactory.makeGoodsRequestFatory()
-        goods.getCatalogData(page: 1, category: 1) { [weak self] result in
+        goodsFactory.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
             case .success(let catalog):
                 self?.products = catalog
@@ -58,15 +67,16 @@ class CatalogViewController: UIViewController {
     }
     
     private func showProductDetail(with id: Int) {
-        goods = requestFactory.makeGoodsRequestFatory()
-        goods.getProductById(id: id) {[weak self] result in
+        goodsFactory.getProductById(id: id) {[weak self] result in
             switch result {
             case .success(let product):
-                let productDetailVC = ProductDetailViewController(with: product)
-                productDetailVC.productID = id
-                self?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-                self?.navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
-                self?.navigationController?.pushViewController(productDetailVC, animated: true)
+                if let self = self {
+                    let productDetailVC = ProductDetailViewController(with: product, requestFactory: self.requestFactory)
+                    productDetailVC.productID = id
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+                    self.navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
+                    self.navigationController?.pushViewController(productDetailVC, animated: true)
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }

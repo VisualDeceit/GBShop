@@ -49,6 +49,16 @@
                ReferencedContainer = "container:GBShop.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "151E568C26A5F4BF005D7D05"
+               BuildableName = "GBShopUITests.xctest"
+               BlueprintName = "GBShopUITests"
+               ReferencedContainer = "container:GBShop.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

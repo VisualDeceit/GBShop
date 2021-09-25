@@ -11,8 +11,8 @@ class ProductDetailViewController: UIViewController {
 
     var product: ProductResult?
     var productID: Int?
-    var cartRequestFactory: CartRequestFactory!
-    let requestFactory = RequestFactory()
+    let requestFactory: RequestFactory
+    let cartRequestFactory: CartRequestFactory
     
     private var productDetailView: ProductDetailView {
         // swiftlint:disable force_cast
@@ -20,8 +20,10 @@ class ProductDetailViewController: UIViewController {
         // swiftlint:enable force_cast
     }
     
-    init(with product: ProductResult) {
+    init(with product: ProductResult, requestFactory: RequestFactory) {
         self.product = product
+        self.requestFactory = requestFactory
+        self.cartRequestFactory = self.requestFactory.makeCartRequestFatory()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,7 +35,6 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .systemBackground
-        cartRequestFactory = requestFactory.makeCartRequestFatory()
         productDetailView.showReviewsButton.addTarget(self, action: #selector(showReviews), for: .touchUpInside)
         productDetailView.addToCartButton.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
         fillView()

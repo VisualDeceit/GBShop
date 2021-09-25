@@ -9,13 +9,23 @@ import UIKit
 
 class CartViewController: UIViewController {
     
-    var cartRequestFactory: CartRequestFactory!
-    let requestFactory = RequestFactory()
+    let cartRequestFactory: CartRequestFactory
+    let requestFactory: RequestFactory
     
     private var cartView: CartView {
         // swiftlint:disable force_cast
         self.view as! CartView
         // swiftlint:enable force_cast
+    }
+    
+    init(with requestFactory: RequestFactory) {
+        self.requestFactory = requestFactory
+        self.cartRequestFactory = self.requestFactory.makeCartRequestFatory()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -24,7 +34,6 @@ class CartViewController: UIViewController {
         cartView.cartTableView.dataSource = self
         cartView.payButton.addTarget(self, action: #selector(payCart), for: .touchUpInside)
         cartView.cartTableView.delegate = self
-        cartRequestFactory = requestFactory.makeCartRequestFatory()
     }
     
     override func loadView() {
