@@ -35,4 +35,9 @@ class RequestFactory {
         let errorParser = makeErrorParser()
         return Reviews(errorParser: errorParser, sessionManager: commonSession)
     }
+    
+    func makeCartRequestFatory() -> CartRequestFactory {
+        let errorParser = makeErrorParser()
+        return Cart(errorParser: errorParser, sessionManager: commonSession)
+    }
 }

@@ -11,7 +11,7 @@ struct StandardResult: Codable {
     enum CodingKeys: String, CodingKey {
         case result
         case message = "user_message"
-        case error = "error_meessage"
+        case error = "error_message"
     }
     
     let result: Int

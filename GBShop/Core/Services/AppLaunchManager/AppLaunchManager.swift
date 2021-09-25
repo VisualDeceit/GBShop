@@ -29,10 +29,13 @@ class AppLaunchManager {
         let catalogNavController = UINavigationController(rootViewController: catalogViewController)
         catalogNavController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "list.dash"), tag: 0)
         
+        let cartViewController = CartViewController()
+        cartViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "cart"), tag: 0)
+        
         let tabBarController = UITabBarController()
-        tabBarController.setViewControllers([catalogNavController, accountViewController], animated: false)
+        tabBarController.setViewControllers([catalogNavController, cartViewController, accountViewController], animated: false)
         tabBarController.tabBar.tintColor = UIColor.cinnabar
-        tabBarController.selectedIndex = 1
+        tabBarController.selectedIndex = 2
      
         window.rootViewController = tabBarController
         self.window = window
