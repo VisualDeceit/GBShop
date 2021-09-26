@@ -30,11 +30,7 @@ class SignUpViewController: UIViewController {
     private var type: ControllerType
     private var caption: String
     private var buttonText: String
-    private var signUpView: SignUpView {
-        // swiftlint:disable force_cast
-        self.view as! SignUpView
-        // swiftlint:enable force_cast
-    }
+    private var signUpView = SignUpView()
     
     init(type: ControllerType, requestFactory: RequestFactory) {
         self.type = type
@@ -50,7 +46,6 @@ class SignUpViewController: UIViewController {
         
         self.requestFactory = requestFactory
         authRequestFactory = requestFactory.makeAuthRequestFatory()
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +56,7 @@ class SignUpViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        self.view = SignUpView()
+        self.view = signUpView
     }
     
     override func viewDidLoad() {

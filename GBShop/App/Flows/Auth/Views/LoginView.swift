@@ -30,6 +30,7 @@ class LoginView: UIView {
         textFild.clearButtonMode = .whileEditing
         textFild.placeholder = "имя пользователя"
         textFild.tintColor = UIColor.uaRed
+        textFild.accessibilityIdentifier = "loginTextField"
         return textFild
     }()
     
@@ -43,6 +44,7 @@ class LoginView: UIView {
         textFild.clearButtonMode = .whileEditing
         textFild.placeholder = "пароль"
         textFild.tintColor = UIColor.uaRed
+        textFild.accessibilityIdentifier = "passwordTextField"
         return textFild
     }()
     
@@ -53,6 +55,7 @@ class LoginView: UIView {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         button.backgroundColor = .systemBackground
         button.tintColor = UIColor.cinnabar
+        button.accessibilityIdentifier = "loginButton"
         return button
     }()
     
@@ -73,6 +76,7 @@ class LoginView: UIView {
         button.setTitle("Cоздайте новый.", for: .normal)
         button.contentHorizontalAlignment = .leading
         button.tintColor = UIColor.cinnabar
+        button.accessibilityIdentifier = "signUpButton"
        return button
     }()
     
@@ -91,6 +95,7 @@ class LoginView: UIView {
         
         self.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        accessibilityIdentifier = "LoginView"
 
         self.addSubview(scrollView)
         scrollView.addSubview(imageView)

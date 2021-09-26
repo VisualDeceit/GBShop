@@ -8,16 +8,11 @@
 import UIKit
 
 class CatalogViewController: UIViewController {
-    
-    private var catalogView: CatalogView {
-        // swiftlint:disable force_cast
-        self.view as! CatalogView
-        // swiftlint:enable force_cast
-    }
-    
     var products = [Product]()
     let requestFactory: RequestFactory
     let goodsFactory: GoodsRequestFactory
+    
+    private var catalogView = CatalogView()
 
     init(with requestFactory: RequestFactory) {
         self.requestFactory = requestFactory
@@ -30,7 +25,7 @@ class CatalogViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = CatalogView()
+        self.view = catalogView
     }
 
     override func viewDidLoad() {

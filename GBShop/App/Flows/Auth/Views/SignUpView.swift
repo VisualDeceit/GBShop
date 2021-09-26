@@ -107,6 +107,7 @@ class SignUpView: UIView {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         button.backgroundColor = .systemBackground
         button.tintColor = UIColor.cinnabar
+        button.accessibilityIdentifier = "signUpButton"
         return button
     }()
     
@@ -118,6 +119,7 @@ class SignUpView: UIView {
         button.backgroundColor = .systemBackground
         button.tintColor = UIColor.cinnabar
         button.isHidden = true
+        button.accessibilityIdentifier = "logoutButton"
         return button
     }()
     
@@ -128,6 +130,7 @@ class SignUpView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         captionLabel.adjustsFontForContentSizeCategory = false
         captionLabel.font = UIFontMetrics.default.scaledFont(for: UIFont.captionParangon50)
+        accessibilityIdentifier = "SignUpView"
         
         self.addSubview(scrollView)
         self.addSubview(captionLabel)

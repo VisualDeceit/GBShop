@@ -9,14 +9,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    let requestFactory: RequestFactory
-    let authRequestFactory: AuthRequestFactory
-    
-    private var loginView: LoginView {
-        // swiftlint:disable force_cast
-        self.view as! LoginView
-        // swiftlint:enable force_cast
-    }
+    private let requestFactory: RequestFactory
+    private let authRequestFactory: AuthRequestFactory
+    private var loginView = LoginView()
     
     init(with requestFactory: RequestFactory) {
         self.requestFactory = requestFactory
@@ -30,12 +25,12 @@ class LoginViewController: UIViewController {
     
     // MARK: - Lifecycle
     override func loadView() {
-        self.view = LoginView()
+        self.view = loginView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+ 
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
         loginView.loginButton.addTarget(self, action: #selector(onLoginButtonPressed), for: .touchUpInside)

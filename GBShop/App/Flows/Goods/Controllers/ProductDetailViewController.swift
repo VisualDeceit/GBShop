@@ -8,17 +8,12 @@
 import UIKit
 
 class ProductDetailViewController: UIViewController {
-
     var product: ProductResult?
     var productID: Int?
     let requestFactory: RequestFactory
     let cartRequestFactory: CartRequestFactory
     
-    private var productDetailView: ProductDetailView {
-        // swiftlint:disable force_cast
-        self.view as! ProductDetailView
-        // swiftlint:enable force_cast
-    }
+    private var productDetailView = ProductDetailView()
     
     init(with product: ProductResult, requestFactory: RequestFactory) {
         self.product = product
@@ -41,7 +36,7 @@ class ProductDetailViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = ProductDetailView()
+        self.view = productDetailView
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,6 +86,7 @@ class ProductDetailViewController: UIViewController {
             productDetailView.productPrice.text = "\(product.price) ₽"
             productDetailView.descriptionText.text = product.description
             productDetailView.addToCartButton.setTitle("В козину за \(product.price) ₽", for: .normal)
+            productDetailView.layoutIfNeeded()
         }
     }
 }

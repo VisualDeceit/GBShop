@@ -12,11 +12,7 @@ class CartViewController: UIViewController {
     let cartRequestFactory: CartRequestFactory
     let requestFactory: RequestFactory
     
-    private var cartView: CartView {
-        // swiftlint:disable force_cast
-        self.view as! CartView
-        // swiftlint:enable force_cast
-    }
+    private var cartView = CartView()
     
     init(with requestFactory: RequestFactory) {
         self.requestFactory = requestFactory
@@ -37,7 +33,7 @@ class CartViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = CartView()
+        self.view = cartView
     }
     
     override func viewWillAppear(_ animated: Bool) {

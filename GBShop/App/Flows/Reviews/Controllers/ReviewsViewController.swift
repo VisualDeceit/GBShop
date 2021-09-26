@@ -8,17 +8,12 @@
 import UIKit
 
 class ReviewsViewController: UIViewController {
-    
-    private var reviewsView: ReviewsView {
-        // swiftlint:disable force_cast
-        self.view as! ReviewsView
-        // swiftlint:enable force_cast
-    }
-    
     var requestFactory = RequestFactory()
     var reviewsFactory: ReviewsRequestFactory!
     var productID: Int
     var reviews = [Review]()
+    
+    private var reviewsView = ReviewsView()
     
     init(with productID: Int) {
         self.productID = productID
@@ -30,7 +25,7 @@ class ReviewsViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = ReviewsView()
+        self.view = reviewsView
     }
     
     override func viewDidLoad() {
