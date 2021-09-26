@@ -8,7 +8,6 @@
 import UIKit
 
 extension UITextField {
-
     func setUnderLine() {
         let border = CALayer()
         let width = CGFloat(1)

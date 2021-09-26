@@ -34,6 +34,11 @@ class RequestFactoryTests: XCTestCase {
         XCTAssertTrue((review as Any) is ReviewsRequestFactory)
     }
     
+    func testMakeCartRequestFatory() {
+        let cart = requestFactory.makeCartRequestFatory()
+        XCTAssertTrue((cart as Any) is CartRequestFactory)
+    }
+    
     func testMakeErrorParser() {
         let error = requestFactory.makeErrorParser()
         XCTAssertTrue((error as Any) is AbstractErrorParser)

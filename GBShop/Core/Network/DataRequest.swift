@@ -14,13 +14,13 @@ enum DataRequestErrors: Error {
 protocol DataRequest {
     func responseData<T: Decodable>(errorParser: AbstractErrorParser,
                                     request: RequestRouter,
-                                    completion: @escaping (Result<T, Error>) -> Void)
+                                    completion: @escaping (AbstractResult<T>) -> Void)
 }
 
 extension URLSession: DataRequest {
     func responseData<T>(errorParser: AbstractErrorParser,
                          request: RequestRouter,
-                         completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
+                         completion: @escaping (AbstractResult<T>) -> Void) where T: Decodable {
         do {
             let urlRequest = try request.asURLRequest()
 

@@ -10,7 +10,6 @@ import SwiftUI
 
 /// Используется для отображения в превью Xcode
 struct UIViewPreview<View: UIView>: UIViewRepresentable {
-    
     private let view: View
     
     init(_ view: View) {
@@ -21,6 +20,5 @@ struct UIViewPreview<View: UIView>: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: View, context: Context) {
-    }
+    func updateUIView(_ uiView: View, context: Context) {}
 }
