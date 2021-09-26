@@ -35,8 +35,8 @@ class ProductDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .systemBackground
-        productDetailView.showReviewsButton.addTarget(self, action: #selector(showReviews), for: .touchUpInside)
-        productDetailView.addToCartButton.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
+        productDetailView.showReviewsButton.addTarget(self, action: #selector(onShowReviewsButtonPressed), for: .touchUpInside)
+        productDetailView.addToCartButton.addTarget(self, action: #selector(onAddToCartButtonPressed), for: .touchUpInside)
         fillView()
     }
     
@@ -51,7 +51,7 @@ class ProductDetailViewController: UIViewController {
         productDetailView.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: totalScrollViewHeight)
     }
     
-    @objc func showReviews() {
+    @objc func onShowReviewsButtonPressed() {
         if let productID = productID {
             let reviewsVC = ReviewsViewController(with: productID)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -60,7 +60,7 @@ class ProductDetailViewController: UIViewController {
         }
     }
     
-    @objc func addToCart() {
+    @objc func onAddToCartButtonPressed() {
         cartRequestFactory.addToCartProduct(id: (self.productID ?? 0), quantity: 1) { result in
             switch result {
             case .success(let data):

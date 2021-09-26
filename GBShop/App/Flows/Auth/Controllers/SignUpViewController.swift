@@ -69,8 +69,8 @@ class SignUpViewController: UIViewController {
         
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.signUpView.scrollView.addGestureRecognizer(hideKeyboardGesture)
-        self.signUpView.signUpButton.addTarget(self, action: #selector(actionWithUser), for: .touchUpInside)
-        self.signUpView.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        self.signUpView.signUpButton.addTarget(self, action: #selector(onSignupButtonPressed), for: .touchUpInside)
+        self.signUpView.logoutButton.addTarget(self, action: #selector(onLogoutButtonPressed), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +108,7 @@ class SignUpViewController: UIViewController {
         signUpView.logoutButton.isHidden = Session.shared.userId == nil
     }
     
-    @objc func actionWithUser() {
+    @objc func onSignupButtonPressed() {
         let gender: UserGender
         if signUpView.genderSegmentedControl.selectedSegmentIndex == 0 {
             gender = .male
@@ -151,7 +151,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    @objc func logout() {
+    @objc func onLogoutButtonPressed() {
         authRequestFactory.logout(id: Session.shared.userId ?? 0) { [weak self] response in
             switch response {
             case .success(let answer):

@@ -38,8 +38,8 @@ class LoginViewController: UIViewController {
     
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         loginView.scrollView.addGestureRecognizer(hideKeyboardGesture)
-        loginView.loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
-        loginView.signUpButton.addTarget(self, action: #selector(showSignUpForm), for: .touchUpInside)
+        loginView.loginButton.addTarget(self, action: #selector(onLoginButtonPressed), for: .touchUpInside)
+        loginView.signUpButton.addTarget(self, action: #selector(onSignupButtonPressed), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Button targets
-    @objc func login() {
+    @objc func onLoginButtonPressed() {
         authRequestFactory.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
            switch response {
            case .success(let answer):
@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
                 let alert = UIAlertController(title: "Ошибка", message: answer.message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
                 alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
-                    self?.login()
+                    self?.onLoginButtonPressed()
                 }))
                 self?.present(alert, animated: true)
             } else {
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
        }
     }
     
-    @objc func showSignUpForm() {
+    @objc func onSignupButtonPressed() {
         let signUpViewController = SignUpViewController(type: .signUp("Новый аккаунт", "Создать"), requestFactory: self.requestFactory)
         present(signUpViewController, animated: true) { [weak self] in
             self?.unsubscribeFromNotifications()

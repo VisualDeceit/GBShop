@@ -32,7 +32,7 @@ class CartViewController: UIViewController {
         super.viewDidLoad()
         
         cartView.cartTableView.dataSource = self
-        cartView.payButton.addTarget(self, action: #selector(payCart), for: .touchUpInside)
+        cartView.payButton.addTarget(self, action: #selector(onPayButtonPressed), for: .touchUpInside)
         cartView.cartTableView.delegate = self
     }
     
@@ -50,7 +50,7 @@ class CartViewController: UIViewController {
         cartView.payButton.isHidden = true
     }
     
-    @objc func payCart() {
+    @objc func onPayButtonPressed() {
         cartRequestFactory.payCart {[weak self] result in
             switch result {
             case .success(let data):

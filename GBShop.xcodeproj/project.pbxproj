@@ -11,7 +11,6 @@
 		151E567226A5F4BB005D7D05 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E567126A5F4BB005D7D05 /* SceneDelegate.swift */; };
 		151E567926A5F4BF005D7D05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151E567826A5F4BF005D7D05 /* Assets.xcassets */; };
 		151E567C26A5F4BF005D7D05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 151E567A26A5F4BF005D7D05 /* LaunchScreen.storyboard */; };
-		151E569226A5F4BF005D7D05 /* GBShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E569126A5F4BF005D7D05 /* GBShopUITests.swift */; };
 		151E56B826AF38E2005D7D05 /* AbstractErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E56B726AF38E1005D7D05 /* AbstractErrorParser.swift */; };
 		151E56C026AF3A01005D7D05 /* ErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E56BF26AF3A01005D7D05 /* ErrorParser.swift */; };
 		151E56C526AF3FD6005D7D05 /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E56C426AF3FD6005D7D05 /* LoginResult.swift */; };
@@ -110,7 +109,6 @@
 		151E568226A5F4BF005D7D05 /* GBShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		151E568826A5F4BF005D7D05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		151E568D26A5F4BF005D7D05 /* GBShopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBShopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		151E569126A5F4BF005D7D05 /* GBShopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBShopUITests.swift; sourceTree = "<group>"; };
 		151E569326A5F4BF005D7D05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		151E56B726AF38E1005D7D05 /* AbstractErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractErrorParser.swift; sourceTree = "<group>"; };
 		151E56BF26AF3A01005D7D05 /* ErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorParser.swift; sourceTree = "<group>"; };
@@ -265,7 +263,6 @@
 		151E569026A5F4BF005D7D05 /* GBShopUITests */ = {
 			isa = PBXGroup;
 			children = (
-				151E569126A5F4BF005D7D05 /* GBShopUITests.swift */,
 				151FEEE226FF71E000320A5D /* AuthUITests.swift */,
 				151E569326A5F4BF005D7D05 /* Info.plist */,
 			);
@@ -962,7 +959,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				151E569226A5F4BF005D7D05 /* GBShopUITests.swift in Sources */,
 				151FEEE326FF71E000320A5D /* AuthUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

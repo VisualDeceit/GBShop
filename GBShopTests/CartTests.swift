@@ -39,8 +39,12 @@ class CartTests: XCTestCase {
     func testAddToCartProduct_whenBaseURLCorrect_throwsNoErrors() {
         cart.addToCartProduct(id: 1, quantity: 1) { [weak self] result in
             switch result {
-            case .success:
-                XCTAssertTrue(true)
+            case .success(let answer):
+                if answer.result == 1 {
+                    XCTAssertTrue(true)
+                } else {
+                    XCTFail("Expected to be a success but got a failure with \(String(describing: answer.error))")
+                }
             case .failure(let error):
                 XCTFail("Expected to be a success but got a failure with \(error)")
             }
