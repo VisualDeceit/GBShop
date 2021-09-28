@@ -35,6 +35,7 @@ class CartView: UIView {
         cartTableView.register(CartHeaderView.self, forHeaderFooterViewReuseIdentifier: CartHeaderView.identifier)
 
         self.addSubview(cartTableView)
+        setupConstrains()
         
         if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             keyWindow.addSubview(payButton)
@@ -44,7 +45,6 @@ class CartView: UIView {
                 payButton.trailingAnchor.constraint(equalTo: keyWindow.trailingAnchor, constant: -16)
             ])
         }
-        setupConstrains()
     }
     
     required init?(coder: NSCoder) {

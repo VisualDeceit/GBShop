@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class CatalogViewController: UIViewController {
     var products = [Product]()
@@ -53,6 +54,11 @@ class CatalogViewController: UIViewController {
         goodsFactory.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
             case .success(let catalog):
+                Analytics.logEvent(AnalyticsEventViewItemList, parameters: [
+                    AnalyticsParameterItems: catalog.map {
+                        [AnalyticsParameterItemName: $0.name]
+                    } as NSArray
+                ])
                 self?.products = catalog
                 self?.catalogView.collectionView.reloadData()
             case .failure(let error):

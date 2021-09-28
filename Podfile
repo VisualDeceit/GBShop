@@ -5,9 +5,11 @@ target 'GBShop' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for GBShop
-
   pod 'SwiftLint'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
+
+  # Pods for GBShop
 
   target 'GBShopTests' do
     inherit! :search_paths

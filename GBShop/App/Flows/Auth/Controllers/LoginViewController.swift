@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class LoginViewController: UIViewController {
     
@@ -52,8 +53,11 @@ class LoginViewController: UIViewController {
         authRequestFactory.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
            switch response {
            case .success(let answer):
-            print(answer)
             if answer.result == 0 {
+                Analytics.logEvent("login_failure", parameters: [
+                    "login": self?.loginView.loginTextField.text ?? "" as NSObject,
+                    "message": answer.message ?? "" as NSObject
+                ])
                 let alert = UIAlertController(title: "Ошибка", message: answer.message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
                 alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
@@ -61,6 +65,10 @@ class LoginViewController: UIViewController {
                 }))
                 self?.present(alert, animated: true)
             } else {
+                Analytics.logEvent(AnalyticsEventLogin,
+                                   parameters: [
+                                    AnalyticsParameterItemName: answer.user?.login ?? "default" as NSObject
+                                   ])
                 Session.shared.userId = answer.user?.id
                 // сохраняем ссылку на tabBarController
                 if let tabbarC = self?.tabBarController,

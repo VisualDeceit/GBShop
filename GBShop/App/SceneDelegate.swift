@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        
         self.appLaunchManager = AppLaunchManager(with: scene)
         self.appLaunchManager?.window = window
         self.appLaunchManager?.start() 

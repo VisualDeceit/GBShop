@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class CartViewController: UIViewController {
     
     let cartRequestFactory: CartRequestFactory
     let requestFactory: RequestFactory
     
-    private var cartView = CartView()
+    private lazy var cartView = CartView()
     
     init(with requestFactory: RequestFactory) {
         self.requestFactory = requestFactory
@@ -27,8 +28,8 @@ class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cartView.cartTableView.dataSource = self
         cartView.payButton.addTarget(self, action: #selector(onPayButtonPressed), for: .touchUpInside)
+        cartView.cartTableView.dataSource = self
         cartView.cartTableView.delegate = self
     }
     
@@ -53,6 +54,14 @@ class CartViewController: UIViewController {
                 if data.result == 0 {
                     print("Ошибка при оплате:" + String(describing: data.error))
                 } else {
+                    Analytics.logEvent(AnalyticsEventPurchase, parameters: [
+                        AnalyticsParameterItems: Purchase.cart.items.map {[
+                            AnalyticsParameterItemName: $0.product.name,
+                            "quantity": $0.quantity]
+                            } as NSArray,
+                        AnalyticsParameterValue: Purchase.total as NSNumber,
+                        AnalyticsParameterCurrency: "RUB" as NSString
+                    ])
                     print("Покупки успешно оплачены:" + String(describing: data.message))
                     Purchase.cart.items.removeAll()
                     self?.cartView.cartTableView.reloadData()
