@@ -6,17 +6,21 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class ReviewsViewController: UIViewController {
-    var requestFactory = RequestFactory()
-    var reviewsFactory: ReviewsRequestFactory!
+    let requestFactory: RequestFactory
+    let reviewsFactory: ReviewsRequestFactory
     var productID: Int
     var reviews = [Review]()
     
-    private var reviewsView = ReviewsView()
+    private lazy var reviewsView = ReviewsView()
+    private var newReviewView: NewReviewView!
     
-    init(with productID: Int) {
+    init(with productID: Int, requestFactory: RequestFactory) {
         self.productID = productID
+        self.requestFactory = requestFactory
+        reviewsFactory = self.requestFactory.makeReviewsRequestFatory()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,6 +28,7 @@ class ReviewsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func loadView() {
         self.view = reviewsView
     }
@@ -31,12 +36,51 @@ class ReviewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         reviewsView.reviewsTableView.dataSource = self
-        
+        let showViewToAddReviewButton = UIBarButtonItem(image: UIImage(systemName: "plus.bubble"), style: .plain, target: self, action: #selector(onShowViewToAddReviewButtonPressed))
+        navigationItem.rightBarButtonItem = showViewToAddReviewButton
+        navigationItem.rightBarButtonItem?.tintColor = .blueSappire
         getReviews()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if newReviewView != nil {
+            newReviewView.captionTextField.setUnderLine()
+        }
+    }
+    
+    // MARK: - Private
+    @objc func onShowViewToAddReviewButtonPressed() {
+        newReviewView = NewReviewView()
+        newReviewView.postReviewButton.addTarget(self, action: #selector(onPostReviewButtonPressed), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = nil
+        self.view = newReviewView
+    }
+    
+    @objc func onPostReviewButtonPressed() {
+        let review = Review(caption: newReviewView.captionTextField.text ?? "Нет заголовка",
+                            date: Int(Date().timeIntervalSince1970),
+                            rating: newReviewView.ratingSegmentedControl.selectedSegmentIndex,
+                            comment: newReviewView.commentTextView.text)
+        reviewsFactory.addReview(userId: 1, productId: productID, review: review) { [weak self] result in
+            switch result {
+            case .success(let resultReviews):
+                if resultReviews.result == 1 {
+                    Analytics.logEvent("new_review", parameters: [
+                        "caption": review.caption as NSObject,
+                        "date": review.date as NSInteger,
+                        "rating": review.rating as NSInteger,
+                        "comment": review.comment as NSString
+                    ])
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     private func getReviews() {
-        reviewsFactory = requestFactory.makeReviewsRequestFatory()
         reviewsFactory.getReviewsForProduct(id: productID) { [weak self] result in
             switch result {
             case .success(let resultReviews):
@@ -50,6 +94,7 @@ class ReviewsViewController: UIViewController {
     }
 }
 
+// MARK: - TableViewDataSource
 extension ReviewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         reviews.count

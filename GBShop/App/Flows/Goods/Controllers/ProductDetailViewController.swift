@@ -54,7 +54,7 @@ class ProductDetailViewController: UIViewController {
     
     @objc func onShowReviewsButtonPressed() {
         if let productID = productID {
-            let reviewsVC = ReviewsViewController(with: productID)
+            let reviewsVC = ReviewsViewController(with: productID, requestFactory: requestFactory)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             navigationItem.backBarButtonItem?.tintColor = UIColor.blueSappire
             navigationController?.pushViewController(reviewsVC, animated: true)
