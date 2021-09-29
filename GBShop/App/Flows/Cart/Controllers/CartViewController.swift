@@ -24,6 +24,11 @@ class CartViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle
+    override func loadView() {
+        self.view = cartView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +36,6 @@ class CartViewController: UIViewController {
         cartView.payButton.addTarget(self, action: #selector(onPayButtonPressed), for: .touchUpInside)
         cartView.cartTableView.dataSource = self
         cartView.cartTableView.delegate = self
-    }
-    
-    override func loadView() {
-        self.view = cartView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +47,8 @@ class CartViewController: UIViewController {
         super.viewWillDisappear(animated)
         cartView.payButton.isHidden = true
     }
-    
+  
+    // MARK: - Private
     @objc func onPayButtonPressed() {
         cartRequestFactory.payCart {[weak self] result in
             switch result {
@@ -72,7 +74,7 @@ class CartViewController: UIViewController {
         }
     }
 }
-
+// MARK: - TableViewDataSource, TableViewDelegate
 extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if Purchase.cart.items.isEmpty {
@@ -82,14 +84,13 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
             messageLabel.textAlignment = .center
             messageLabel.font = .systemFont(ofSize: 18, weight: .semibold)
             messageLabel.sizeToFit()
-
+            
             cartView.cartTableView.backgroundView = messageLabel
             cartView.payButton.isHidden = true
         } else {
             cartView.cartTableView.backgroundView = nil
             cartView.payButton.isHidden = false
         }
-        
         return Purchase.cart.items.count
     }
     
@@ -110,5 +111,44 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         Purchase.cart.items.isEmpty ? 0 : 50
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let productName = Purchase.cart.items[indexPath.row].product.name
+            let productID = Purchase.cart.items[indexPath.row].product.id
+            let productQuantity = Purchase.cart.items[indexPath.row].quantity
+            let productPrice = Purchase.cart.items[indexPath.row].product.price
+            // Запрос на сервер
+            cartRequestFactory.removeFromCartProduct(id: productID) {result in
+                switch result {
+                case .success(let answer):
+                    if answer.result == 0 {
+                        print("Ошибка при удалении: " + String(describing: answer.error))
+                    } else {
+                        // Аналитика
+                        Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
+                            AnalyticsParameterItems: [[
+                                                        AnalyticsParameterItemName: productName,
+                                                        "quantity": productQuantity]] as NSArray,
+                            AnalyticsParameterValue: (productPrice * productQuantity)  as NSNumber,
+                            AnalyticsParameterCurrency: "RUB" as NSString
+                        ])
+                        //  Удаление из таблицы
+                        Purchase.cart.items.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                        if Purchase.cart.items.isEmpty {
+                            tableView.tableHeaderView = nil
+                        }
+                    }
+                case .failure(let error):
+                    print("Ошибка при удалении: \(error)")
+                }
+            }
+        }
     }
 }
