@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewsView: UIView {
+class ReviewsListView: UIView {
 
     var reviewsTableView: UITableView!
 

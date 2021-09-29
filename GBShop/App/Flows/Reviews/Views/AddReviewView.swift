@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewReviewView: UIView {
+class AddReviewView: UIView {
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .cinnabar
