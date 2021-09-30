@@ -52,22 +52,17 @@ class CartViewController: UIViewController {
     @objc func onPayButtonPressed() {
         cartRequestFactory.payCart {[weak self] result in
             switch result {
-            case .success(let data):
-                if data.result == 0 {
-                    print("Ошибка при оплате:" + String(describing: data.error))
-                } else {
-                    Analytics.logEvent(AnalyticsEventPurchase, parameters: [
-                        AnalyticsParameterItems: Purchase.cart.items.map {[
-                            AnalyticsParameterItemName: $0.product.name,
-                            "quantity": $0.quantity]
-                            } as NSArray,
-                        AnalyticsParameterValue: Purchase.total as NSNumber,
-                        AnalyticsParameterCurrency: "RUB" as NSString
-                    ])
-                    print("Покупки успешно оплачены:" + String(describing: data.message))
-                    Purchase.cart.items.removeAll()
-                    self?.cartView.cartTableView.reloadData()
+            case .success(let content):
+                guard content.result == 1 else {
+                    let alert = UIAlertController(title: "Ошибка", message: content.error, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                    self?.present(alert, animated: true)
+                    return
                 }
+                AnalyticsFacade.purchase()
+                Purchase.cart.items.removeAll()
+                self?.cartView.cartTableView.reloadData()
+                
             case .failure(let error):
                 print("Ошибка при оплате: \(error)")
             }
@@ -119,31 +114,22 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let productName = Purchase.cart.items[indexPath.row].product.name
             let productID = Purchase.cart.items[indexPath.row].product.id
-            let productQuantity = Purchase.cart.items[indexPath.row].quantity
-            let productPrice = Purchase.cart.items[indexPath.row].product.price
-            // Запрос на сервер
+            // Запрос на удаление
             cartRequestFactory.removeFromCartProduct(id: productID) {result in
                 switch result {
-                case .success(let answer):
-                    if answer.result == 0 {
-                        print("Ошибка при удалении: " + String(describing: answer.error))
-                    } else {
-                        // Аналитика
-                        Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
-                            AnalyticsParameterItems: [[
-                                                        AnalyticsParameterItemName: productName,
-                                                        "quantity": productQuantity]] as NSArray,
-                            AnalyticsParameterValue: (productPrice * productQuantity)  as NSNumber,
-                            AnalyticsParameterCurrency: "RUB" as NSString
-                        ])
-                        //  Удаление из таблицы
-                        Purchase.cart.items.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .automatic)
-                        if Purchase.cart.items.isEmpty {
-                            tableView.tableHeaderView = nil
-                        }
+                case .success(let content):
+                    guard content.result == 1 else {
+                        print("Ошибка при удалении: " + String(describing: content.error))
+                        return
+                    }
+                    // Аналитика
+                    AnalyticsFacade.removeFromCart(item: Purchase.cart.items[indexPath.row])
+                    //  Удаление из таблицы
+                    Purchase.cart.items.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    if Purchase.cart.items.isEmpty {
+                        tableView.tableHeaderView = nil
                     }
                 case .failure(let error):
                     print("Ошибка при удалении: \(error)")
