@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class ProductDetailViewController: UIViewController {
     var product: ProductResult?
@@ -29,12 +28,9 @@ class ProductDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        Analytics.logEvent(AnalyticsEventViewItem, parameters: [
-            AnalyticsParameterItemName: product?.name ?? "" as NSString,
-            AnalyticsParameterValue: product?.price ?? 0 as NSNumber
-        ])
-        
+        if let product = product {
+            AnalyticsFacade.getProductDetail(item: product)
+        }
         self.view.backgroundColor = .systemBackground
         productDetailView.showReviewsButton.addTarget(self, action: #selector(onShowReviewsButtonPressed), for: .touchUpInside)
         productDetailView.addToCartButton.addTarget(self, action: #selector(onAddToCartButtonPressed), for: .touchUpInside)
@@ -64,15 +60,13 @@ class ProductDetailViewController: UIViewController {
     @objc func onAddToCartButtonPressed() {
         cartRequestFactory.addToCartProduct(id: (self.productID ?? 0), quantity: 1) {[weak self] result in
             switch result {
-            case .success(let data):
-                if data.result == 0 {
-                    print("Ошибка при добавлении:" + String(describing: data.error))
-                } else {
-                    print("Товар успешно добавлен: " + String(describing: data.message))
-                    Analytics.logEvent(AnalyticsEventAddToCart, parameters: [
-                        AnalyticsParameterItemName: self?.product?.name ?? "" as NSString,
-                        AnalyticsParameterValue: self?.product?.price ?? 0 as NSNumber
-                    ])
+            case .success(let content):
+                guard content.result == 1 else {
+                    print("Ошибка при добавлении:" + String(describing: content.error))
+                    return
+                }
+                if let product = self?.product {
+                    AnalyticsFacade.addToCart(item: product)
                 }
             case .failure(let error):
                 print("Ошибка при добавлении: \(error)")

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class ReviewsViewController: UIViewController {
     let requestFactory: RequestFactory
@@ -68,16 +67,11 @@ class ReviewsViewController: UIViewController {
                             comment: addReviewView.commentTextView.text)
         reviewsFactory.addReview(userId: 1, productId: productID, review: review) { [weak self] result in
             switch result {
-            case .success(let resultReviews):
-                if resultReviews.result == 1 {
-                    Analytics.logEvent("new_review", parameters: [
-                        "caption": review.caption as NSObject,
-                        "date": review.date as NSInteger,
-                        "rating": review.rating as NSInteger,
-                        "comment": review.comment as NSString
-                    ])
-                    self?.navigationController?.popViewController(animated: true)
-                }
+            case .success(let content):
+                guard content.result == 1 else {
+                    return }
+                AnalyticsFacade.addReview(item: review)
+                self?.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print(error.localizedDescription)
             }

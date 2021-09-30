@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 enum ControllerType {
     case signUp(String, String)
@@ -114,10 +113,8 @@ class SignUpViewController: UIViewController {
         
         switch type {
         case .signUp:
-            Analytics.logEvent(AnalyticsEventSignUp,
-                               parameters: [
-                                AnalyticsParameterItemName: signUpView.loginTextField.text ?? "" as NSObject
-                               ])
+            AnalyticsFacade.singUp(login: signUpView.loginTextField.text)
+            
             authRequestFactory.registerUser(id: 123,
                                             userName: signUpView.loginTextField.text ?? "",
                                             password: signUpView.passwordTextField.text ?? "",
@@ -155,9 +152,8 @@ class SignUpViewController: UIViewController {
         authRequestFactory.logout(id: Session.shared.userId ?? 0) { [weak self] response in
             switch response {
             case .success:
-                Analytics.logEvent("logout", parameters: [
-                    "login": self?.signUpView.loginTextField.text ?? "" as NSObject
-                ])
+                AnalyticsFacade.logout(login: self?.signUpView.loginTextField.text)
+
                 Session.shared.userId = nil
                 // сохраняем ссылку на tabBarController
                 if let tabbarC = self?.tabBarController,

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class LoginViewController: UIViewController {
     
@@ -51,41 +50,37 @@ class LoginViewController: UIViewController {
     // MARK: - Button targets
     @objc func onLoginButtonPressed() {
         authRequestFactory.login(userName: loginView.loginTextField.text ?? "", password: loginView.passwordTextField.text ?? "") { [weak self] response in
-           switch response {
-           case .success(let answer):
-            if answer.result == 0 {
-                Analytics.logEvent("login_failure", parameters: [
-                    "login": self?.loginView.loginTextField.text ?? "" as NSObject,
-                    "message": answer.message ?? "" as NSObject
-                ])
-                let alert = UIAlertController(title: "Ошибка", message: answer.message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
-                alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
-                    self?.onLoginButtonPressed()
-                }))
-                self?.present(alert, animated: true)
-            } else {
-                Analytics.logEvent(AnalyticsEventLogin,
-                                   parameters: [
-                                    AnalyticsParameterItemName: answer.user?.login ?? "default" as NSObject
-                                   ])
-                Session.shared.userId = answer.user?.id
+            switch response {
+            case .success(let content):
+                guard content.result == 1 else {
+                    AnalyticsFacade.loginFailure(login: self?.loginView.passwordTextField.text, reason: content.message)
+                    
+                    let alert = UIAlertController(title: "Ошибка", message: content.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
+                    alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
+                        self?.onLoginButtonPressed()
+                    }))
+                    self?.present(alert, animated: true)
+                    return
+                }
+                AnalyticsFacade.login(login: content.user?.login)
+                
+                Session.shared.userId = content.user?.id
                 // сохраняем ссылку на tabBarController
                 if let tabbarC = self?.tabBarController,
                    let self = self {
                     // так как после удаления  контроллера self?.tabBarController == nil
                     tabbarC.viewControllers?.removeLast()
                     let accountViewController = SignUpViewController(type: .changeUserData("Личные данные", "Изменить"), requestFactory: self.requestFactory)
-                    accountViewController.user = answer.user
+                    accountViewController.user = content.user
                     accountViewController.tabBarItem = UITabBarItem(title: "Кабинет", image: UIImage(systemName: "person"), tag: 0)
                     tabbarC.viewControllers?.append(accountViewController)
                     tabbarC.selectedIndex = (tabbarC.viewControllers?.count ?? 1) - 1
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-           case .failure(let error):
-            print(error.localizedDescription)
-           }
-       }
+        }
     }
     
     @objc func onSignupButtonPressed() {
