@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CartItem: Equatable {
+struct CartItem: Equatable, Codable {
     var quantity: Int
     var product: Product
     

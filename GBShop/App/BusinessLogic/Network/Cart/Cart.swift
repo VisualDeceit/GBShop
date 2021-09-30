@@ -55,20 +55,33 @@ extension Cart {
         let data: Data? = nil
         var method: RequestRouterMethod
     }
+    
+    struct GetCart: RequestRouter {
+        let baseURL: String
+        let path: String = "/get_cart"
+        var queryItems: [URLQueryItem]?
+        let data: Data? = nil
+        var method: RequestRouterMethod
+    }
 }
 
 extension Cart: CartRequestFactory {
-    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
+    func getCart(completionHandler: @escaping (AbstractResult<GetCartResult>) -> Void) {
+        let requestModel = GetCart(baseURL: self.baseURL, method: .get)
+        self.request(request: requestModel, complitionHandler: completionHandler)
+    }
+    
+    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
         let requestModel = AddProduct(baseURL: self.baseURL, productId: id, quantity: quantity, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func removeFromCartProduct(id: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
+    func removeFromCartProduct(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
         let requestModel = RemoveProduct(baseURL: self.baseURL, productId: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func payCart(completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
+    func payCart(completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
         let requestModel = PayCart(baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

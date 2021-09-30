@@ -8,7 +8,8 @@
 import Foundation
 
 protocol CartRequestFactory {
-    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void)
-    func removeFromCartProduct(id: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void)
-    func payCart(completionHandler: @escaping (Result<StandardResult, Error>) -> Void)
+    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void)
+    func removeFromCartProduct(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void)
+    func payCart(completionHandler: @escaping (AbstractResult<StandardResult>) -> Void)
+    func getCart(completionHandler: @escaping (AbstractResult<GetCartResult>) -> Void)
 }

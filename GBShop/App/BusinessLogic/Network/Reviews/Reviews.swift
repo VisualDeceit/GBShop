@@ -58,19 +58,19 @@ extension Reviews {
 }
 
 extension Reviews: ReviewsRequestFactory {
-    func getReviewsForProduct(id: Int, completionHandler: @escaping (Result<ReviewResponse, Error>) -> Void) {
+    func getReviewsForProduct(id: Int, completionHandler: @escaping (AbstractResult<ReviewResponse>) -> Void) {
         let requestModel = ReviewsForProduct(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
+    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
         let requestBody = AddReviewRequestBody(userId: userId, productId: productId, review: review)
         let reviewData = try? JSONEncoder().encode(requestBody)
         let requestModel = AddReview(baseURL: self.baseURL, userId: userId, productId: productId, data: reviewData, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func removeReview(id: Int, completionHandler: @escaping (Result<StandardResult, Error>) -> Void) {
+    func removeReview(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
         let requestModel = RemoveReview(baseURL: self.baseURL, commentId: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

@@ -24,12 +24,12 @@ final class Goods: AbstractRequestFactory {
 }
 
 extension Goods: GoodsRequestFactory {
-    func getProductById(id: Int, completionHandler: @escaping (Result<ProductResult, Error>) -> Void) {
+    func getProductById(id: Int, completionHandler: @escaping (AbstractResult<ProductResult>) -> Void) {
         let requestModel = ProductById(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
-    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (Result<[Product], Error>) -> Void) {
+    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (AbstractResult<[Product]>) -> Void) {
         let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

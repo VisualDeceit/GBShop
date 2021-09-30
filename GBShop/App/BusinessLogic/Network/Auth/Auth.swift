@@ -24,12 +24,12 @@ final class Auth: AbstractRequestFactory {
 }
 
 extension Auth: AuthRequestFactory {
-    func login(userName: String, password: String, completionHandler: @escaping (Result<LoginResult, Error>) -> Void) {
+    func login(userName: String, password: String, completionHandler: @escaping (AbstractResult<LoginResult>) -> Void) {
         let requestModel = Login(baseURL: self.baseURL, login: userName, password: password, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
-    func logout(id: Int, completionHandler: @escaping (Result<LogoutResult, Error>) -> Void) {
+    func logout(id: Int, completionHandler: @escaping (AbstractResult<LogoutResult>) -> Void) {
         let requestModel = Logout(baseURL: self.baseURL, id: 123, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
@@ -41,7 +41,7 @@ extension Auth: AuthRequestFactory {
                       gender: UserGender,
                       creditCard: String,
                       bio: String,
-                      completionHandler: @escaping (Result<RegisterUserResult, Error>) -> Void) {
+                      completionHandler: @escaping (AbstractResult<RegisterUserResult>) -> Void) {
         let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
@@ -53,7 +53,7 @@ extension Auth: AuthRequestFactory {
                         gender: UserGender,
                         creditCard: String,
                         bio: String,
-                        completionHandler: @escaping (Result<ChangeUserDataResult, Error>) -> Void) {
+                        completionHandler: @escaping (AbstractResult<ChangeUserDataResult>) -> Void) {
         let requestModel = ChangeUserData(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
