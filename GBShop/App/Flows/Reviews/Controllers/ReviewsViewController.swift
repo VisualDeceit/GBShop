@@ -53,10 +53,14 @@ class ReviewsViewController: UIViewController {
     @objc func onShowViewToAddReviewButtonPressed() {
         addReviewView = AddReviewView()
         addReviewView.postReviewButton.addTarget(self, action: #selector(onPostReviewButtonPressed), for: .touchUpInside)
+        UIView.transition(from: self.view,
+                          to: addReviewView,
+                          duration: 0.5,
+                          options: [.transitionFlipFromLeft])
         navigationItem.rightBarButtonItem = nil
         self.view = addReviewView
     }
-    
+
     @objc func onPostReviewButtonPressed() {
         let review = Review(caption: addReviewView.captionTextField.text ?? "Нет заголовка",
                             date: Int(Date().timeIntervalSince1970),
