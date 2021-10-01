@@ -25,7 +25,7 @@ class AnalyticsFacade {
                 AnalyticsParameterItemName: $0.product.name,
                 "quantity": $0.quantity]
             } as NSArray,
-            AnalyticsParameterValue: Purchase.total as NSNumber,
+            AnalyticsParameterValue: Purchase.cart.total as NSNumber,
             AnalyticsParameterCurrency: "RUB" as NSString
         ])
     }

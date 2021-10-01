@@ -7,11 +7,16 @@
 
 import Foundation
 
-struct CartItem: Equatable, Codable {
+struct CartItem: Hashable, Codable {
     var quantity: Int
     var product: Product
     
     static func == (lhs: CartItem, rhs: CartItem) -> Bool {
-        (lhs.product.id == rhs.product.id)
+        lhs.product.id == rhs.product.id && lhs.quantity == rhs.quantity
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(quantity.hashValue)
+        hasher.combine(product.hashValue)
     }
 }

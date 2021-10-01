@@ -72,16 +72,6 @@ class ProductDetailViewController: UIViewController {
                 print("Ошибка при добавлении: \(error)")
             }
         }
-        
-        if let cartItemIndex = Purchase.cart.items.firstIndex(where: { $0.product.id == self.productID }) {
-            Purchase.cart.items[cartItemIndex].quantity += 1
-        } else {
-            let cartItem = CartItem(quantity: 1,
-                                    product: Product(id: self.productID ?? 0,
-                                                     name: product?.name ?? "",
-                                                     price: product?.price ?? 0))
-            Purchase.cart.items.append(cartItem)
-        }
     }
     
     private func fillView() {

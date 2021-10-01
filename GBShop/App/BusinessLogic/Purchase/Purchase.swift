@@ -7,13 +7,21 @@
 
 import Foundation
 
-final class Purchase {
+final class Purchase: Hashable {
     static var cart = Purchase()
-    static var total: Int { cart.items.reduce(0) { (total, cartItem) -> Int in
+   
+    var items = [CartItem]()
+    var total: Int { self.items.reduce(0) { (total, cartItem) -> Int in
         total + cartItem.quantity * cartItem.product.price
     } }
     
-    var items = [CartItem]()
-    
     private init() {}
+    
+    static func == (lhs: Purchase, rhs: Purchase) -> Bool {
+        lhs.items == rhs.items
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(items.hashValue)
+    }
 }

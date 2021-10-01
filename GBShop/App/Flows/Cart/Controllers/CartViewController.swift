@@ -43,7 +43,7 @@ class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        cartView.payButton.isHidden = true
+        setupTableViewBackground()
         getCartItems()
     }
     
@@ -66,7 +66,6 @@ class CartViewController: UIViewController {
                 AnalyticsFacade.purchase()
                 Purchase.cart.items.removeAll()
                 self?.cartView.cartTableView.reloadData()
-                self?.setEmptyTablePlaceholder()
                 
             case .failure(let error):
                 print("Ошибка при оплате: \(error)")
@@ -83,25 +82,29 @@ class CartViewController: UIViewController {
             self?.cartView.cartTableView.refreshControl?.endRefreshing()
             switch result {
             case .success(let content):
+                // если корзина не изменилась то ничего не обновляем
+                if let hashValue = content.items?.hashValue,
+                   hashValue == Purchase.cart.items.hashValue {
+                    return
+                }
                 guard content.result == 1,
                       let cartItems = content.items,
                       !cartItems.isEmpty else {
                     // пустая корзина
                     Purchase.cart.items.removeAll()
                     self?.cartView.cartTableView.reloadData()
-                    self?.setEmptyTablePlaceholder()
                     return
                 }
+                
                 Purchase.cart.items = cartItems
                 self?.cartView.cartTableView.reloadData()
-                self?.setEmptyTablePlaceholder()
             case .failure(let error):
                 print("Ошибка при  обновлении: \(error)")
             }
         }
     }
     
-    private func setEmptyTablePlaceholder() {
+    private func setupTableViewBackground() {
         if Purchase.cart.items.isEmpty {
             let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
             messageLabel.text = "Корзина пуста"
@@ -121,6 +124,7 @@ class CartViewController: UIViewController {
 // MARK: - TableViewDataSource, TableViewDelegate
 extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        setupTableViewBackground()
         return Purchase.cart.items.count
     }
     
@@ -135,7 +139,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: CartHeaderView.identifier) as? CartHeaderView,
               !Purchase.cart.items.isEmpty else { return nil }
-        view.summLabel.text = "\(Purchase.total) ₽"
+        view.summLabel.text = "\(Purchase.cart.total) ₽"
         return view
     }
     
@@ -151,7 +155,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             let productID = Purchase.cart.items[indexPath.row].product.id
             // Запрос на удаление
-            cartRequestFactory.removeFromCartProduct(id: productID) {[weak self]result in
+            cartRequestFactory.removeFromCartProduct(id: productID) {[weak self] result in
                 switch result {
                 case .success(let content):
                     guard content.result == 1 else {
@@ -164,8 +168,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
                     Purchase.cart.items.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                     if Purchase.cart.items.isEmpty {
-                        self?.cartView.cartTableView.reloadData()
-                        self?.setEmptyTablePlaceholder()
+                        self?.setupTableViewBackground()
                         tableView.tableHeaderView = nil
                     }
                 case .failure(let error):

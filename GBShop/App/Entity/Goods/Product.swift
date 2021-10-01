@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product: Codable {
+struct Product: Hashable, Codable {
     enum CodingKeys: String, CodingKey {
         case id = "id_product"
         case name = "product_name"
