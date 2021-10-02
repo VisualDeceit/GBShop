@@ -63,7 +63,7 @@ class CartViewController: UIViewController {
                     self?.present(alert, animated: true)
                     return
                 }
-                AnalyticsFacade.purchase()
+                AnalyticsFacade.shared.purchase()
                 Purchase.cart.items.removeAll()
                 self?.cartView.cartTableView.reloadData()
                 
@@ -163,7 +163,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
                         return
                     }
                     // Аналитика
-                    AnalyticsFacade.removeFromCart(item: Purchase.cart.items[indexPath.row])
+                    AnalyticsFacade.shared.removeFromCart(item: Purchase.cart.items[indexPath.row])
                     //  Удаление из таблицы
                     Purchase.cart.items.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)

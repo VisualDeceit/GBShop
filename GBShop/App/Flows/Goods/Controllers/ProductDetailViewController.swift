@@ -29,7 +29,7 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let product = product {
-            AnalyticsFacade.getProductDetail(item: product)
+            AnalyticsFacade.shared.getProductDetail(item: product)
         }
         self.view.backgroundColor = .systemBackground
         productDetailView.showReviewsButton.addTarget(self, action: #selector(onShowReviewsButtonPressed), for: .touchUpInside)
@@ -66,7 +66,7 @@ class ProductDetailViewController: UIViewController {
                     return
                 }
                 if let product = self?.product {
-                    AnalyticsFacade.addToCart(item: product)
+                    AnalyticsFacade.shared.addToCart(item: product)
                 }
             case .failure(let error):
                 print("Ошибка при добавлении: \(error)")

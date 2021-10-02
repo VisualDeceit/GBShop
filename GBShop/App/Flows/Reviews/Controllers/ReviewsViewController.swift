@@ -70,7 +70,7 @@ class ReviewsViewController: UIViewController {
             case .success(let content):
                 guard content.result == 1 else {
                     return }
-                AnalyticsFacade.addReview(item: review)
+                AnalyticsFacade.shared.addReview(item: review)
                 self?.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print(error.localizedDescription)

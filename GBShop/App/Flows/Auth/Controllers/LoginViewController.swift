@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
             switch response {
             case .success(let content):
                 guard content.result == 1 else {
-                    AnalyticsFacade.loginFailure(login: self?.loginView.passwordTextField.text, reason: content.message)
+                    AnalyticsFacade.shared.loginFailure(login: self?.loginView.passwordTextField.text, reason: content.message)
                     
                     let alert = UIAlertController(title: "Ошибка", message: content.message, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
                     self?.present(alert, animated: true)
                     return
                 }
-                AnalyticsFacade.login(login: content.user?.login)
+                AnalyticsFacade.shared.login(login: content.user?.login)
                 
                 Session.shared.userId = content.user?.id
                 // сохраняем ссылку на tabBarController

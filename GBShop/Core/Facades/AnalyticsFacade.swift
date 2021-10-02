@@ -8,8 +8,28 @@
 import Foundation
 import FirebaseAnalytics
 
-class AnalyticsFacade {
-    static func removeFromCart(item: CartItem) {
+protocol AnalyticsFacadeProtocol {
+    func login(login: String?)
+    func loginFailure(login: String?, reason: String?)
+    func logout(login: String?)
+    func singUp(login: String?)
+    
+    func getCatalogList(items: [Product])
+    func getProductDetail(item: ProductResult)
+    
+    func addToCart(item: ProductResult)
+    func removeFromCart(item: CartItem)
+    func purchase()
+    
+    func addReview(item: Review) 
+}
+
+struct AnalyticsFacade: AnalyticsFacadeProtocol {
+    static let shared = AnalyticsFacade()
+    
+    private init() {}
+    
+    func removeFromCart(item: CartItem) {
         Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
             AnalyticsParameterItems: [[
                                         AnalyticsParameterItemName: item.product.name,
@@ -19,7 +39,7 @@ class AnalyticsFacade {
         ])
     }
 
-    static func purchase() {
+    func purchase() {
         Analytics.logEvent(AnalyticsEventPurchase, parameters: [
             AnalyticsParameterItems: Purchase.cart.items.map {[
                 AnalyticsParameterItemName: $0.product.name,
@@ -30,7 +50,7 @@ class AnalyticsFacade {
         ])
     }
     
-    static func addReview(item: Review) {
+    func addReview(item: Review) {
         Analytics.logEvent("new_review", parameters: [
             "caption": item.caption as NSObject,
             "date": item.date as NSInteger,
@@ -39,7 +59,7 @@ class AnalyticsFacade {
         ])
     }
     
-    static func getCatalogList(items: [Product]) {
+    func getCatalogList(items: [Product]) {
         Analytics.logEvent(AnalyticsEventViewItemList, parameters: [
             AnalyticsParameterItems: items.map {
                 [AnalyticsParameterItemName: $0.name]
@@ -47,14 +67,14 @@ class AnalyticsFacade {
         ])
     }
     
-    static func getProductDetail(item: ProductResult) {
+    func getProductDetail(item: ProductResult) {
         Analytics.logEvent(AnalyticsEventViewItem, parameters: [
             AnalyticsParameterItemName: item.name  as NSString,
             AnalyticsParameterValue: item.price as NSNumber
         ])
     }
     
-    static func addToCart(item: ProductResult) {
+    func addToCart(item: ProductResult) {
         Analytics.logEvent(AnalyticsEventAddToCart,
                            parameters: [
                             AnalyticsParameterItemName: item.name as NSString,
@@ -62,7 +82,7 @@ class AnalyticsFacade {
                            ])
     }
     
-    static func loginFailure(login: String?, reason: String?) {
+    func loginFailure(login: String?, reason: String?) {
         Analytics.logEvent("login_failure",
                            parameters: [
                             "login": login ?? "" as NSObject,
@@ -70,21 +90,21 @@ class AnalyticsFacade {
                            ])
     }
     
-    static func login(login: String?) {
+    func login(login: String?) {
         Analytics.logEvent(AnalyticsEventLogin,
                            parameters: [
                             AnalyticsParameterItemName: login ?? "default" as NSObject
                            ])
     }
     
-    static func singUp(login: String?) {
+    func singUp(login: String?) {
         Analytics.logEvent(AnalyticsEventSignUp,
                            parameters: [
                             AnalyticsParameterItemName: login ?? "" as NSObject
                            ])
     }
     
-    static func logout(login: String?) {
+    func logout(login: String?) {
         Analytics.logEvent("logout",
                            parameters: [
                             "login": login ?? "" as NSObject

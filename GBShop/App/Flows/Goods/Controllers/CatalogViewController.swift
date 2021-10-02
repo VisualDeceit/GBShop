@@ -53,7 +53,7 @@ class CatalogViewController: UIViewController {
         goodsFactory.getCatalogData(page: 1, category: 1) { [weak self] result in
             switch result {
             case .success(let content):
-                AnalyticsFacade.getCatalogList(items: content)
+                AnalyticsFacade.shared.getCatalogList(items: content)
                 self?.products = content
                 self?.catalogView.collectionView.reloadData()
             case .failure(let error):

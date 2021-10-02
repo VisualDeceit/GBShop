@@ -113,7 +113,7 @@ class SignUpViewController: UIViewController {
         
         switch type {
         case .signUp:
-            AnalyticsFacade.singUp(login: signUpView.loginTextField.text)
+            AnalyticsFacade.shared.singUp(login: signUpView.loginTextField.text)
             
             authRequestFactory.registerUser(id: 123,
                                             userName: signUpView.loginTextField.text ?? "",
@@ -152,7 +152,7 @@ class SignUpViewController: UIViewController {
         authRequestFactory.logout(id: Session.shared.userId ?? 0) { [weak self] response in
             switch response {
             case .success:
-                AnalyticsFacade.logout(login: self?.signUpView.loginTextField.text)
+                AnalyticsFacade.shared.logout(login: self?.signUpView.loginTextField.text)
 
                 Session.shared.userId = nil
                 // сохраняем ссылку на tabBarController
