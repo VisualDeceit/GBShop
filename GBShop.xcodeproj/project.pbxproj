@@ -33,6 +33,8 @@
 		151FEEDE26FEDC5000320A5D /* CartItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEEDD26FEDC5000320A5D /* CartItem.swift */; };
 		151FEEE326FF71E000320A5D /* AuthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151FEEE226FF71E000320A5D /* AuthUITests.swift */; };
 		151FEEF32702CE9500320A5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 151FEEF22702CE9500320A5D /* GoogleService-Info.plist */; };
+		154B8816270B79AF00445641 /* GBShopSnapshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B8815270B79AF00445641 /* GBShopSnapshots.swift */; };
+		154B8839270B7A8800445641 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B8838270B7A8800445641 /* SnapshotHelper.swift */; };
 		1553D85426DD4C96009E7D56 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */; };
 		1553D85A26DD5086009E7D56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D85926DD5086009E7D56 /* LoginViewController.swift */; };
 		1553D87526DD59E3009E7D56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553D87426DD59E3009E7D56 /* LoginView.swift */; };
@@ -99,6 +101,13 @@
 			remoteGlobalIDString = 151E566B26A5F4BB005D7D05;
 			remoteInfo = GBShop;
 		};
+		154B8818270B79AF00445641 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 151E566426A5F4BB005D7D05 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 151E566B26A5F4BB005D7D05;
+			remoteInfo = GBShop;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +143,10 @@
 		151FEEDD26FEDC5000320A5D /* CartItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItem.swift; sourceTree = "<group>"; };
 		151FEEE226FF71E000320A5D /* AuthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUITests.swift; sourceTree = "<group>"; };
 		151FEEF22702CE9500320A5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		154B8813270B79AF00445641 /* GBShopSnapshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBShopSnapshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		154B8815270B79AF00445641 /* GBShopSnapshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBShopSnapshots.swift; sourceTree = "<group>"; };
+		154B8817270B79AF00445641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		154B8838270B7A8800445641 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		1553D85326DD4C96009E7D56 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		1553D85926DD5086009E7D56 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1553D87426DD59E3009E7D56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -216,6 +229,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		154B8810270B79AF00445641 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -225,6 +245,7 @@
 				151E566E26A5F4BB005D7D05 /* GBShop */,
 				151E568526A5F4BF005D7D05 /* GBShopTests */,
 				151E569026A5F4BF005D7D05 /* GBShopUITests */,
+				154B8814270B79AF00445641 /* GBShopSnapshots */,
 				151E566D26A5F4BB005D7D05 /* Products */,
 				AFCDBF6ABF74E2339CB24665 /* Pods */,
 				41C9545DEC83EAC11451A0EB /* Frameworks */,
@@ -237,6 +258,7 @@
 				151E566C26A5F4BB005D7D05 /* GBShop.app */,
 				151E568226A5F4BF005D7D05 /* GBShopTests.xctest */,
 				151E568D26A5F4BF005D7D05 /* GBShopUITests.xctest */,
+				154B8813270B79AF00445641 /* GBShopSnapshots.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -448,6 +470,16 @@
 				151FEED526FC2FBA00320A5D /* CartCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		154B8814270B79AF00445641 /* GBShopSnapshots */ = {
+			isa = PBXGroup;
+			children = (
+				154B8838270B7A8800445641 /* SnapshotHelper.swift */,
+				154B8815270B79AF00445641 /* GBShopSnapshots.swift */,
+				154B8817270B79AF00445641 /* Info.plist */,
+			);
+			path = GBShopSnapshots;
 			sourceTree = "<group>";
 		};
 		1553D84F26DD4C5E009E7D56 /* AppLaunchManager */ = {
@@ -751,6 +783,24 @@
 			productReference = 151E568D26A5F4BF005D7D05 /* GBShopUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		154B8812270B79AF00445641 /* GBShopSnapshots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 154B881A270B79AF00445641 /* Build configuration list for PBXNativeTarget "GBShopSnapshots" */;
+			buildPhases = (
+				154B880F270B79AF00445641 /* Sources */,
+				154B8810270B79AF00445641 /* Frameworks */,
+				154B8811270B79AF00445641 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				154B8819270B79AF00445641 /* PBXTargetDependency */,
+			);
+			name = GBShopSnapshots;
+			productName = GBShopSnapshots;
+			productReference = 154B8813270B79AF00445641 /* GBShopSnapshots.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -768,6 +818,10 @@
 						TestTargetID = 151E566B26A5F4BB005D7D05;
 					};
 					151E568C26A5F4BF005D7D05 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 151E566B26A5F4BB005D7D05;
+					};
+					154B8812270B79AF00445641 = {
 						CreatedOnToolsVersion = 12.1;
 						TestTargetID = 151E566B26A5F4BB005D7D05;
 					};
@@ -789,6 +843,7 @@
 				151E566B26A5F4BB005D7D05 /* GBShop */,
 				151E568126A5F4BF005D7D05 /* GBShopTests */,
 				151E568C26A5F4BF005D7D05 /* GBShopUITests */,
+				154B8812270B79AF00445641 /* GBShopSnapshots */,
 			);
 		};
 /* End PBXProject section */
@@ -815,6 +870,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		151E568B26A5F4BF005D7D05 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		154B8811270B79AF00445641 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1052,6 +1114,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		154B880F270B79AF00445641 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				154B8816270B79AF00445641 /* GBShopSnapshots.swift in Sources */,
+				154B8839270B7A8800445641 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1064,6 +1135,11 @@
 			isa = PBXTargetDependency;
 			target = 151E566B26A5F4BB005D7D05 /* GBShop */;
 			targetProxy = 151E568E26A5F4BF005D7D05 /* PBXContainerItemProxy */;
+		};
+		154B8819270B79AF00445641 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 151E566B26A5F4BB005D7D05 /* GBShop */;
+			targetProxy = 154B8818270B79AF00445641 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1325,6 +1401,45 @@
 			};
 			name = Release;
 		};
+		154B881B270B79AF00445641 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DQ48S8SUS4;
+				INFOPLIST_FILE = GBShopSnapshots/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.50.AlexanderFomin.GBShopSnapshots;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GBShop;
+			};
+			name = Debug;
+		};
+		154B881C270B79AF00445641 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ48S8SUS4;
+				INFOPLIST_FILE = GBShopSnapshots/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.50.AlexanderFomin.GBShopSnapshots;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GBShop;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1360,6 +1475,15 @@
 			buildConfigurations = (
 				151E569D26A5F4BF005D7D05 /* Debug */,
 				151E569E26A5F4BF005D7D05 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		154B881A270B79AF00445641 /* Build configuration list for PBXNativeTarget "GBShopSnapshots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				154B881B270B79AF00445641 /* Debug */,
+				154B881C270B79AF00445641 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

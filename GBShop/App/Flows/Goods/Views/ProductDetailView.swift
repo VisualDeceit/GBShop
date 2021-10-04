@@ -81,6 +81,7 @@ class ProductDetailView: UIView {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         button.backgroundColor = .cinnabar
         button.tintColor = .white
+        button.accessibilityIdentifier = "addToCartButton"
         return button
     }()
     
