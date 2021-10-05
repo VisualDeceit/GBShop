@@ -19,7 +19,7 @@ class GBShopSnapshots: XCTestCase {
     func testExample() throws {
         let app = XCUIApplication()
         setupSnapshot(app)
-                app.launch()
+        app.launch()
         snapshot("0Launch")
         
         let tabBar = app.tabBars["Tab Bar"]

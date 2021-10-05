@@ -8,64 +8,92 @@
 import XCTest
 @testable import GBShop
 
-struct Request: RequestRouter {
-    let baseURL: String
-    let path: String
-    var queryItems: [URLQueryItem]?
-    let data: Data?
-    let method: RequestRouterMethod
-}
-
-struct PostRequest: RequestRouter {
-    let baseURL: String
-    let path: String = "/add_review"
-    let userId: Int
-    let productId: Int
-    var queryItems: [URLQueryItem]?
-    let data: Data?
-    var method: RequestRouterMethod = .post
-}
-
 class RequestRouterTests: XCTestCase {
-
-    func testRequestRouter_withGetMethodAndInvalidPath_throwsErrors() throws {
-        let getRequest = Request(baseURL: "https://yandex.ru", path: "login", queryItems: nil, data: nil, method: .get)
-        XCTAssertThrowsError(try getRequest.asURLRequest())
+    
+    struct Request: RequestRouter {
+        let baseURL: String
+        let path: String
+        var queryItems: [URLQueryItem]?
+        let data: Data?
+        let method: RequestRouterMethod
     }
 
-    func testRequestRouter_withInvalidBaseURL_throwsErrors() throws {
-        let getRequest = Request(baseURL: "234234", path: "lo2345gin", queryItems: nil, data: nil, method: .get)
-        XCTAssertThrowsError(try getRequest.asURLRequest())
+    func testWhenInvalidURLThenThrowError() throws {
+        let host = "https://xxxxx."
+        let getMethod = Request(baseURL: host, path: "", queryItems: nil, data: nil, method: .get)
+        XCTAssertThrowsError(try getMethod.asURLRequest(), "Expected to be a failure but got a success") { error in
+            XCTAssertEqual(error as? RequestRouterError, RequestRouterError.invalidURL, "Expected to be a failure with error 'invalidURL' but got a '\(error)'")
+        }
     }
     
-    func testRequestRouter_withValidRequest_throwNoErrors() throws {
+    func testGetMethodWhenInvalidPathThenThrowError() throws {
+        let host = "https://xxxxx.xx"
+        let path = "path"
+        let getMethod = Request(baseURL: host, path: path, queryItems: nil, data: nil, method: .get)
+        XCTAssertThrowsError(try getMethod.asURLRequest(), "Expected to be a failure but got a success") { error in
+            XCTAssertEqual(error as? RequestRouterError, RequestRouterError.invalidPath, "Expected to be a failure with error 'invalidPath' but got a '\(error)'")
+        }
+    }
+    
+    func testPostMethodWhenInvalidPathThenThrowError() throws {
+        let host = "https://xxxxx.xx"
+        let path = "path"
+        let postMethod = Request(baseURL: host, path: path, queryItems: nil, data: nil, method: .post)
+        XCTAssertThrowsError(try postMethod.asURLRequest(), "Expected to be a failure but got a success") { error in
+            XCTAssertEqual(error as? RequestRouterError, RequestRouterError.invalidPath, "Expected to be a failure with error 'invalidPath' but got a '\(error)'")
+        }
+    }
+    
+    func testGetMethodWhenValidRequestThenReturn() throws {
         // swiftlint:disable force_unwrapping
-        let expectedRequest = URLRequest(url: URL(string: "https://ya.ru/login?username=Somebody&password=mypassword")!)
+        var expectedRequest = URLRequest(url: URL(string: "https://xxxxx.xx/path?a=1&b=2")!)
+        expectedRequest.httpMethod = "GET"
         // swiftlint:enable force_unwrapping
-        let request = Request(baseURL: "https://ya.ru",
-                              path: "/login",
-                              queryItems: [URLQueryItem(name: "username", value: "Somebody"),
-                                           URLQueryItem(name: "password", value: "mypassword")],
+        let request = Request(baseURL: "https://xxxxx.xx",
+                              path: "/path",
+                              queryItems: [URLQueryItem(name: "a", value: "1"),
+                                           URLQueryItem(name: "b", value: "2")],
                               data: nil,
                               method: .get)
         let result = try? request.asURLRequest()
         XCTAssertEqual(result, expectedRequest)
     }
     
-    func testRequestRouter_withPostMethodAndInvalidPath_throwsErrors() throws {
-        let postRequest = Request(baseURL: "https://yandex.ru", path: "login", queryItems: nil, data: nil, method: .post)
-        XCTAssertThrowsError(try postRequest.asURLRequest())
+    func testPotsMethodWithQueryItemWhenValidRequestThenReturn() throws {
+        // swiftlint:disable force_unwrapping
+        var expectedRequest = URLRequest(url: URL(string: "https://xxxxx.xx/path")!)
+        // swiftlint:enable force_unwrapping
+        let parameters = "{\n\"a\" : \"1\",\n\"b\" : \"2\"\n}"
+        let postData = parameters.data(using: .utf8)
+        expectedRequest.addValue("application/x-www-form-urlencoded;charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        expectedRequest.httpMethod = "POST"
+        expectedRequest.httpBody = postData
+        
+        let request = Request(baseURL: "https://xxxxx.xx",
+                              path: "/path",
+                              queryItems: [URLQueryItem(name: "a", value: "1"),
+                                           URLQueryItem(name: "b", value: "2")],
+                              data: nil,
+                              method: .post)
+        let result = try? request.asURLRequest()
+        XCTAssertEqual(result, expectedRequest)
     }
     
-    func testRequesrRouter_withPostMethod_throwNoErrors() throws {
-        let review = Review(caption: "Test", date: 1629584374, rating: 3, comment: "Test comment")
-        let requestBody = AddReviewRequestBody(userId: 767, productId: 1, review: review)
-        do {
-            let reviewData = try JSONEncoder().encode(requestBody)
-            let postRequest = PostRequest(baseURL: Constants.baseURL, userId: 767, productId: 1, data: reviewData)
-            XCTAssertNoThrow(try postRequest.asURLRequest())
-        } catch {
-            XCTFail("Encode error \(error)")
-        }
+    func testPotsMethodWithDataValidRequestThenReturn() throws {
+        // swiftlint:disable force_unwrapping
+        var expectedRequest = URLRequest(url: URL(string: "https://xxxxx.xx/path")!)
+        // swiftlint:enable force_unwrapping
+        let parameters = "{\n\"a\" : \"1\",\n\"b\" : \"2\"\n}"
+        let postData = parameters.data(using: .utf8)
+        expectedRequest.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        expectedRequest.httpMethod = "POST"
+        expectedRequest.httpBody = postData
+        
+        let request = Request(baseURL: "https://xxxxx.xx",
+                              path: "/path",
+                              data: postData,
+                              method: .post)
+        let result = try? request.asURLRequest()
+        XCTAssertEqual(result, expectedRequest)
     }
 }

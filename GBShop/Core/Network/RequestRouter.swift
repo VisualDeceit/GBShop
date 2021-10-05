@@ -21,8 +21,8 @@ enum RequestRouterMethod: String {
 }
 
 enum RequestRouterError: Error {
-    case invalidURLComponent(URLComponents)
-    case invalidBaseURL(String)
+    case invalidURL
+    case invalidPath
 }
 
 protocol RequestRouter {
@@ -34,26 +34,32 @@ protocol RequestRouter {
 }
 
 extension RequestRouter {
+    
     func asURLRequest() throws -> URLRequest {
         guard var urlComponent = URLComponents(string: baseURL),
-              (urlComponent.scheme == "http" || urlComponent.scheme == "https") else {
-            throw RequestRouterError.invalidBaseURL(baseURL)
+              (urlComponent.scheme == "http" || urlComponent.scheme == "https"),
+              let domainName = urlComponent.host,
+              domainName.components(separatedBy: ".").count > 1,
+              let topLevelDomain = domainName.components(separatedBy: ".").last,
+              !topLevelDomain.isEmpty
+        else {
+            throw RequestRouterError.invalidURL
         }
-        // путь всегда добавляем в конец
-        urlComponent.path += path
 
+        urlComponent.path += path
+        
         switch method {
         case .get:
             urlComponent.queryItems = queryItems
             guard let fullURL = urlComponent.url else {
-                throw RequestRouterError.invalidURLComponent(urlComponent)
+                throw RequestRouterError.invalidPath
             }
             var urlRequest = URLRequest(url: fullURL)
             urlRequest.httpMethod = method.rawValue
             return urlRequest
         case .post:
             guard let fullURL = urlComponent.url else {
-                throw RequestRouterError.invalidURLComponent(urlComponent)
+                throw RequestRouterError.invalidPath
             }
             
             var urlRequest = URLRequest(url: fullURL)
