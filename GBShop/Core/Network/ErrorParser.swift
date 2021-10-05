@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ErrorParser: AbstractErrorParser {
+class ErrorParser: ErrorParserProtocol {
     func parse(_ result: Error) -> Error {
         return result
     }

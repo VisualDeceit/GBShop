@@ -8,6 +8,6 @@
 import Foundation
 
 protocol GoodsRequestFactory {
-    func getProductById(id: Int, completionHandler: @escaping (AbstractResult<ProductResult>) -> Void)
-    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (AbstractResult<[Product]>) -> Void)
+    func getProductById(id: Int, completionHandler: @escaping (RequestResult<ProductResult>) -> Void)
+    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (RequestResult<[Product]>) -> Void)
 }

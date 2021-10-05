@@ -9,17 +9,15 @@ import Foundation
 
 final class Cart: AbstractRequestFactory {
     var baseURL: String
-    var errorParser: AbstractErrorParser
-    var sessionManager: URLSession
+    var networkService: NetworkServiceProtocol
     
-    init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
+    init(baseURL: String, networkService: NetworkServiceProtocol) {
         self.baseURL = baseURL
-        self.errorParser = errorParser
-        self.sessionManager = sessionManager
+        self.networkService = networkService
     }
 
-    convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
-        self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
+    convenience init(networkService: NetworkServiceProtocol) {
+        self.init(baseURL: Constants.baseURL, networkService: networkService)
     }
 }
 
@@ -66,22 +64,22 @@ extension Cart {
 }
 
 extension Cart: CartRequestFactory {
-    func getCart(completionHandler: @escaping (AbstractResult<GetCartResult>) -> Void) {
+    func getCart(completionHandler: @escaping (RequestResult<GetCartResult>) -> Void) {
         let requestModel = GetCart(baseURL: self.baseURL, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
+    func addToCartProduct(id: Int, quantity: Int, completionHandler: @escaping (RequestResult<StandardResult>) -> Void) {
         let requestModel = AddProduct(baseURL: self.baseURL, productId: id, quantity: quantity, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func removeFromCartProduct(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
+    func removeFromCartProduct(id: Int, completionHandler: @escaping (RequestResult<StandardResult>) -> Void) {
         let requestModel = RemoveProduct(baseURL: self.baseURL, productId: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func payCart(completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
+    func payCart(completionHandler: @escaping (RequestResult<StandardResult>) -> Void) {
         let requestModel = PayCart(baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

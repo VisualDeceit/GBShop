@@ -9,17 +9,15 @@ import Foundation
 
 final class Reviews: AbstractRequestFactory {
     var baseURL: String
-    var errorParser: AbstractErrorParser
-    var sessionManager: URLSession
+    var networkService: NetworkServiceProtocol
     
-    init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
+    init(baseURL: String, networkService: NetworkServiceProtocol) {
         self.baseURL = baseURL
-        self.errorParser = errorParser
-        self.sessionManager = sessionManager
+        self.networkService = networkService
     }
 
-    convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
-        self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
+    convenience init(networkService: NetworkServiceProtocol) {
+        self.init(baseURL: Constants.baseURL, networkService: networkService)
     }
 }
 
@@ -58,19 +56,19 @@ extension Reviews {
 }
 
 extension Reviews: ReviewsRequestFactory {
-    func getReviewsForProduct(id: Int, completionHandler: @escaping (AbstractResult<ReviewResponse>) -> Void) {
+    func getReviewsForProduct(id: Int, completionHandler: @escaping (RequestResult<ReviewResponse>) -> Void) {
         let requestModel = ReviewsForProduct(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
+    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (RequestResult<StandardResult>) -> Void) {
         let requestBody = AddReviewRequestBody(userId: userId, productId: productId, review: review)
         let reviewData = try? JSONEncoder().encode(requestBody)
         let requestModel = AddReview(baseURL: self.baseURL, userId: userId, productId: productId, data: reviewData, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
     
-    func removeReview(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void) {
+    func removeReview(id: Int, completionHandler: @escaping (RequestResult<StandardResult>) -> Void) {
         let requestModel = RemoveReview(baseURL: self.baseURL, commentId: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

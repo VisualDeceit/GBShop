@@ -9,35 +9,28 @@ import Foundation
 
 class RequestFactory {
 
-    lazy var commonSession: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        configuration.httpShouldSetCookies = false
-        configuration.httpAdditionalHeaders = .none
-        let manager = URLSession(configuration: configuration)
-        return manager
-    }()
-
-    func makeErrorParser() -> AbstractErrorParser {
-        return ErrorParser()
-    }
+//    lazy var commonSession: URLSession = {
+//        let configuration = URLSessionConfiguration.default
+//        configuration.httpShouldSetCookies = false
+//        configuration.httpAdditionalHeaders = .none
+//        let manager = URLSession(configuration: configuration)
+//        return manager
+//    }()
+    let commonSession = NetworkService()
 
     func makeAuthRequestFatory() -> AuthRequestFactory {
-        let errorParser = makeErrorParser()
-        return Auth(errorParser: errorParser, sessionManager: commonSession)
+        return Auth(networkService: commonSession)
     }
 
     func makeGoodsRequestFatory() -> GoodsRequestFactory {
-        let errorParser = makeErrorParser()
-        return Goods(errorParser: errorParser, sessionManager: commonSession)
+        return Goods(networkService: commonSession)
     }
     
     func makeReviewsRequestFatory() -> ReviewsRequestFactory {
-        let errorParser = makeErrorParser()
-        return Reviews(errorParser: errorParser, sessionManager: commonSession)
+        return Reviews(networkService: commonSession)
     }
     
     func makeCartRequestFatory() -> CartRequestFactory {
-        let errorParser = makeErrorParser()
-        return Cart(errorParser: errorParser, sessionManager: commonSession)
+        return Cart(networkService: commonSession)
     }
 }

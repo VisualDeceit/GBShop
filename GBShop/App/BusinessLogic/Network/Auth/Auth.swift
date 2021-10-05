@@ -9,27 +9,25 @@ import Foundation
 
 final class Auth: AbstractRequestFactory {
     var baseURL: String
-    var errorParser: AbstractErrorParser
-    var sessionManager: URLSession
+    var networkService: NetworkServiceProtocol
 
-    init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
+    init(baseURL: String, networkService: NetworkServiceProtocol) {
         self.baseURL = baseURL
-        self.errorParser = errorParser
-        self.sessionManager = sessionManager
+        self.networkService = networkService
     }
 
-    convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
-        self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
+    convenience init(networkService: NetworkServiceProtocol) {
+        self.init(baseURL: Constants.baseURL, networkService: networkService)
     }
 }
 
 extension Auth: AuthRequestFactory {
-    func login(userName: String, password: String, completionHandler: @escaping (AbstractResult<LoginResult>) -> Void) {
+    func login(userName: String, password: String, completionHandler: @escaping (RequestResult<LoginResult>) -> Void) {
         let requestModel = Login(baseURL: self.baseURL, login: userName, password: password, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
-    func logout(id: Int, completionHandler: @escaping (AbstractResult<LogoutResult>) -> Void) {
+    func logout(id: Int, completionHandler: @escaping (RequestResult<LogoutResult>) -> Void) {
         let requestModel = Logout(baseURL: self.baseURL, id: 123, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
@@ -41,7 +39,7 @@ extension Auth: AuthRequestFactory {
                       gender: UserGender,
                       creditCard: String,
                       bio: String,
-                      completionHandler: @escaping (AbstractResult<RegisterUserResult>) -> Void) {
+                      completionHandler: @escaping (RequestResult<RegisterUserResult>) -> Void) {
         let requestModel = RegisterUser(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
@@ -53,7 +51,7 @@ extension Auth: AuthRequestFactory {
                         gender: UserGender,
                         creditCard: String,
                         bio: String,
-                        completionHandler: @escaping (AbstractResult<ChangeUserDataResult>) -> Void) {
+                        completionHandler: @escaping (RequestResult<ChangeUserDataResult>) -> Void) {
         let requestModel = ChangeUserData(id: id, userName: userName, password: password, email: email, gender: gender, creditCard: creditCard, bio: bio, baseURL: self.baseURL, method: .post)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

@@ -9,27 +9,25 @@ import Foundation
 
 final class Goods: AbstractRequestFactory {
     var baseURL: String
-    var errorParser: AbstractErrorParser
-    var sessionManager: URLSession
+    var networkService: NetworkServiceProtocol
 
-    init(baseURL: String, errorParser: AbstractErrorParser, sessionManager: URLSession) {
+    init(baseURL: String, networkService: NetworkServiceProtocol) {
         self.baseURL = baseURL
-        self.errorParser = errorParser
-        self.sessionManager = sessionManager
+        self.networkService = networkService
     }
 
-    convenience init(errorParser: AbstractErrorParser, sessionManager: URLSession) {
-        self.init(baseURL: Constants.baseURL, errorParser: errorParser, sessionManager: sessionManager)
+    convenience init(networkService: NetworkServiceProtocol) {
+        self.init(baseURL: Constants.baseURL, networkService: networkService)
     }
 }
 
 extension Goods: GoodsRequestFactory {
-    func getProductById(id: Int, completionHandler: @escaping (AbstractResult<ProductResult>) -> Void) {
+    func getProductById(id: Int, completionHandler: @escaping (RequestResult<ProductResult>) -> Void) {
         let requestModel = ProductById(baseURL: self.baseURL, id: id, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }
 
-    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (AbstractResult<[Product]>) -> Void) {
+    func getCatalogData(page: Int, category: Int, completionHandler: @escaping (RequestResult<[Product]>) -> Void) {
         let requestModel = CatalogData(baseURL: self.baseURL, page: page, category: category, method: .get)
         self.request(request: requestModel, complitionHandler: completionHandler)
     }

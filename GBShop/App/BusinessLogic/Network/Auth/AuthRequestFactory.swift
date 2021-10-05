@@ -8,9 +8,9 @@
 import Foundation
 
 protocol AuthRequestFactory {
-    func login(userName: String, password: String, completionHandler: @escaping (AbstractResult<LoginResult>) -> Void)
+    func login(userName: String, password: String, completionHandler: @escaping (RequestResult<LoginResult>) -> Void)
 
-    func logout(id: Int, completionHandler: @escaping (AbstractResult<LogoutResult>) -> Void)
+    func logout(id: Int, completionHandler: @escaping (RequestResult<LogoutResult>) -> Void)
 
     func registerUser(id: Int,
                       userName: String,
@@ -19,7 +19,7 @@ protocol AuthRequestFactory {
                       gender: UserGender,
                       creditCard: String,
                       bio: String,
-                      completionHandler: @escaping (AbstractResult<RegisterUserResult>) -> Void)
+                      completionHandler: @escaping (RequestResult<RegisterUserResult>) -> Void)
 
     func changeUserData(id: Int,
                         userName: String,
@@ -28,5 +28,5 @@ protocol AuthRequestFactory {
                         gender: UserGender,
                         creditCard: String,
                         bio: String,
-                        completionHandler: @escaping (AbstractResult<ChangeUserDataResult>) -> Void)
+                        completionHandler: @escaping (RequestResult<ChangeUserDataResult>) -> Void)
 }

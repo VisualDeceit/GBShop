@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ReviewsRequestFactory {
-    func getReviewsForProduct(id: Int, completionHandler: @escaping (AbstractResult<ReviewResponse>) -> Void)
-    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void)
-    func removeReview(id: Int, completionHandler: @escaping (AbstractResult<StandardResult>) -> Void)
+    func getReviewsForProduct(id: Int, completionHandler: @escaping (RequestResult<ReviewResponse>) -> Void)
+    func addReview(userId: Int, productId: Int, review: Review, completionHandler: @escaping (RequestResult<StandardResult>) -> Void)
+    func removeReview(id: Int, completionHandler: @escaping (RequestResult<StandardResult>) -> Void)
 }
