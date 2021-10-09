@@ -41,13 +41,6 @@ class ProductDetailViewController: UIViewController {
         self.view = productDetailView
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        let totalScrollViewHeight = productDetailView.frame.height + (self.tabBarController?.tabBar.frame.height ?? 49.0) + productDetailView.addToCartButton.frame.height + 32.0
-        productDetailView.scrollView.contentSize = CGSize(width: self.view.bounds.width, height: totalScrollViewHeight)
-    }
-    
     @objc func onShowReviewsButtonPressed() {
         if let productID = productID {
             let reviewsVC = ReviewsViewController(with: productID, requestFactory: requestFactory)

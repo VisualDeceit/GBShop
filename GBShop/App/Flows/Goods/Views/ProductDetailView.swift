@@ -132,10 +132,11 @@ class ProductDetailView: UIView {
             showReviewsButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 8),
             showReviewsButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 16),
             showReviewsButton.heightAnchor.constraint(equalToConstant: 44),
+            showReviewsButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -52),
 
-            addToCartButton.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -16 - 44),
-            addToCartButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 16),
-            addToCartButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16)
+            addToCartButton.bottomAnchor.constraint(equalTo: scrollView.readableContentGuide.bottomAnchor),
+            addToCartButton.leadingAnchor.constraint(equalTo: scrollView.readableContentGuide.leadingAnchor, constant: 16),
+            addToCartButton.trailingAnchor.constraint(equalTo: scrollView.readableContentGuide.trailingAnchor, constant: -16)
         ])
     }
 }

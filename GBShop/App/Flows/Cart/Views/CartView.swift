@@ -37,14 +37,12 @@ class CartView: UIView {
         self.addSubview(cartTableView)
         setupConstrains()
         
-        if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            keyWindow.addSubview(payButton)
-            NSLayoutConstraint.activate([
-                payButton.bottomAnchor.constraint(equalTo: keyWindow.bottomAnchor, constant: -16 - 44),
-                payButton.leadingAnchor.constraint(equalTo: keyWindow.leadingAnchor, constant: 16),
-                payButton.trailingAnchor.constraint(equalTo: keyWindow.trailingAnchor, constant: -16)
-            ])
-        }
+        addSubview(payButton)
+        NSLayoutConstraint.activate([
+            payButton.bottomAnchor.constraint(equalTo: readableContentGuide.bottomAnchor, constant: -8),
+            payButton.leadingAnchor.constraint(equalTo: readableContentGuide.leadingAnchor, constant: 16),
+            payButton.trailingAnchor.constraint(equalTo: readableContentGuide.trailingAnchor, constant: -16)
+        ])
     }
     
     required init?(coder: NSCoder) {
