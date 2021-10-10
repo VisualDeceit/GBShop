@@ -20,7 +20,7 @@ platform :ios do
   
   lane :project do
         # checkout release branch
-        #ensure_git_status_clean
+        ensure_git_status_clean
         
         # clear data
         clear_derived_data
@@ -28,6 +28,7 @@ platform :ios do
           workspace: "GBShop.xcworkspace",
           scheme: "GBShop"
         )
+
         # update a dependencies
         cocoapods(
           use_bundle_exec: false
@@ -40,7 +41,6 @@ platform :ios do
 
         # make snapshots
         capture_screenshots
-        frame_screenshots(white: true)
 
     gym(
       scheme: "GBShop",
@@ -54,13 +54,7 @@ platform :ios do
 
   # error block is executed when a error occurs
   error do |lane, exception|
-    slack(
-      # message with short human friendly message
-      message: exception.to_s, 
-      success: false, 
-      # Output containing extended log output
-      payload: { "Output" => exception.error_info.to_s } 
-    )
+    puts exception.to_s
 end
 
 end
