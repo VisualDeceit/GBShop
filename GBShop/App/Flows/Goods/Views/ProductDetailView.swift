@@ -82,6 +82,10 @@ class ProductDetailView: UIView {
         button.backgroundColor = .cinnabar
         button.tintColor = .white
         button.accessibilityIdentifier = "addToCartButton"
+        button.layer.shadowColor = UIColor.darkGray.cgColor
+        button.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowRadius = 5.0
         return button
     }()
     
