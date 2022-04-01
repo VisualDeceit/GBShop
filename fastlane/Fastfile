@@ -1,0 +1,60 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  
+  lane :project do
+        # checkout release branch
+        ensure_git_status_clean
+        
+        # clear data
+        clear_derived_data
+        xcclean(
+          workspace: "GBShop.xcworkspace",
+          scheme: "GBShop"
+        )
+
+        # update a dependencies
+        cocoapods(
+          use_bundle_exec: false
+        )
+
+        # run tests
+        run_tests(
+          scheme: "GBShop"
+          )
+
+        # make snapshots
+        capture_screenshots
+
+    gym(
+      scheme: "GBShop",
+      configuration: "Debug",
+      export_method: "development",
+      include_symbols: true,
+      include_bitcode: true,
+      silent: false
+    )
+  end
+
+  # error block is executed when a error occurs
+  error do |lane, exception|
+    puts exception.to_s
+end
+
+end
